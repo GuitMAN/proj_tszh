@@ -1,0 +1,17 @@
+﻿
+
+@if (Request.IsAuthenticated)
+{
+    @:Вы вошли как 
+    <strong>
+        @User.Identity.Name
+    </strong>
+    <span>
+        @Html.ActionLink("Выйти", "LogoOut", "Login")
+    </span>
+}
+else
+{
+    <span>@Html.ActionLink("Войти", "Index", "Login")</span>
+    <span>@Html.ActionLink("Регистрация", "Register", "Login")</span>
+}

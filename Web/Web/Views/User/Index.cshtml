@@ -1,0 +1,9 @@
+﻿@model Web.Models.Article
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+}
+
+<h2>@Html.DisplayFor(model => model.title)</h2>
+@Html.DisplayFor(Model => Model.content)
+

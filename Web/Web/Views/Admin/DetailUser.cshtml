@@ -1,0 +1,108 @@
+﻿@model Web.Models.UserProfile
+
+@{
+    ViewBag.Title = "DetailUser";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>DetailUser</h2>
+
+<div>
+    <h4>UserProfile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_uk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_uk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.login)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.login)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SurName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SurName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Personal_Account)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Personal_Account)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adress)
+            <br>@Html.Action("get_adr", "Home", new { id_adr = Model.Adress }),
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Квартира")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apartment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mobile)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "EditUser", new { login = Model.login }) |
+    @Html.ActionLink("Вернуться к списку", "ViewUsers")
+</p>

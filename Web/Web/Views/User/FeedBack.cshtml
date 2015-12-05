@@ -1,0 +1,54 @@
+﻿@model Web.Models.feedback
+
+@{
+    ViewBag.Title = "FeedBack";
+    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.id_uk)
+    @Html.HiddenFor(model => model.id_user)
+
+        <div class="form-horizontal">
+            <fieldset>
+                <legend>Форма обращения (заявок) в УК (ТСЖ)</legend>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.id_user, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.Action("getUser", new { area = "", controller = "Login" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.title, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        
+                        @Html.EditorFor(model => model.title, new { cols = 40 })
+                        @Html.ValidationMessageFor(model => model.title)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.message, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.message, new { cols = 30, rows = 5 })
+                        @Html.ValidationMessageFor(model => model.message)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Отправить" class="btn btn-default" />
+                    </div>
+                </div>
+                </fieldset>
+            </div>
+   
+}
+
+<div>
+    @Html.ActionLink("Вернуться к профилю", "profile")
+</div>
+
+

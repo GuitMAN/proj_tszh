@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Web.Models.webpages_Roles>
+
+@{
+    ViewBag.Title = "ViewRoles";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>ViewRoles</h2>
+<p>
+    @Html.ActionLink("Пользователи в ролях", "ViewUserInRoles")
+</p>
+<p>
+    @Html.ActionLink("Добавить роль", "EditRole")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.RoleName, "ViewUserInRoles", new { id = item.RoleId })
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "EditRole", new { id=item.RoleId }) |
+            @Html.ActionLink("Удалить роль", "DeleteRole", new { id=item.RoleName })
+        </td>
+    </tr>
+}
+
+</table>

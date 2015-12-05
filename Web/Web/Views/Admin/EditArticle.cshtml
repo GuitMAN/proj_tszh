@@ -1,0 +1,60 @@
+﻿@model Web.Models.Article
+
+@{
+    ViewBag.Title = "Article";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //  HtmlHelper.ClientValidationEnabled = false;
+    //  HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+
+@using (Html.BeginForm("EditArticle", "Admin"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.id)
+
+        <div class="form-horizontal">
+            <fieldset>
+                <legend>Редактирование статьи</legend>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.id_uk, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(model => model.id_uk, (IEnumerable<SelectListItem>)ViewData["uk_profile"], "Выберите УК")
+                    @Html.ValidationMessageFor(model => model.id_uk, "", new { @class = "text-danger" })
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.title)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.title, new { cols = 40 })
+                    @Html.ValidationMessageFor(model => model.title)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.summary)
+                </div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(model => model.summary, new { cols = 40, rows = 5 })
+                    @Html.ValidationMessageFor(model => model.summary)
+                </div>
+
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.content)
+                </div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(model => model.content, new { cols = 40, rows = 10 })
+                    @Html.ValidationMessageFor(model => model.content)
+                </div>
+
+                <p>
+                    <input type="submit" value="Сохранить" />
+                </p>
+                <div>
+                    @Html.ActionLink("Вернуться к списку статей", "Articles")
+                </div>
+            </fieldset>
+        </div>
+
+}
+
+

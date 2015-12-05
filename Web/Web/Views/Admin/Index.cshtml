@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Администраторский раздел";
+}
+
+<h2>Администраторский раздел</h2>
+
+<div>
+    Общая информация по движку
+</div>
+<br>@Html.ActionLink("Редактирование статей","Articles")
+<br>@Html.ActionLink("Пользователи", "ViewUsers")
