@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Web.Models.feedback>
+
+@{
+    ViewBag.Title = "readFeedBack";
+    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+}
+
+<h2>readFeedBack</h2>
+
+
+<table class="table" border="1">
+    <tr>
+        <th>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.id_user)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.message)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.datetime)
+        </th>
+        <th>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+        @if (item.status)
+        {
+            @: + 
+        } else
+        { 
+            @: - 
+        }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.Display()
+        </td>
+        <td>
+            @Html.Raw(item.message)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.datetime)
+        </td>
+        <td> @Html.ActionLink("Удалить", "DelMess", new { id = item.id })</td>
+</tr>
+}
+
+</table>

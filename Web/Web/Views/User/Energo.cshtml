@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Web.Models.Counter_data>
+
+@{
+    ViewBag.Title = "Energo";
+    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+}
+
+<h2>Energo</h2>
+
+<p>
+    @Html.ActionLink("Добавить электрический счетчик", "EditEnergo")
+</p>
+<p>
+    @Html.ActionLink("Внести показания", "SetEnergo", "User")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.write)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.write)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.data)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Web.Models.UserProfile>
+
+@{
+    ViewBag.Title = "ViewUsers";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Пользователи группы User</h2>
+    <br>
+ 
+<table class="table" border="1">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id_uk)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SurName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adress)
+        </th>
+        <th>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.Action("get_uk", "Login", new { uk = item.id_uk })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.login)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SurName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patronymic)
+        </td>
+
+        <td>
+            @Html.Action("get_adr", "Home", new { id_adr = item.Adress}), 
+            @Html.DisplayFor(modelItem => item.Apartment)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "EditUser", new { login=item.login }) |
+            @Html.ActionLink("Details", "DetailUser", new { id=item.id }) |
+            @Html.ActionLink("Удалить", "DeleteUser", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>

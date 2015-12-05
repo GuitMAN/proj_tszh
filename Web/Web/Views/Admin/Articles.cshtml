@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Web.Models.Article>
+
+@{
+    ViewBag.Title = "Все статьи";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<h2>Articles</h2>
+
+@Html.ActionLink("Добавить новую статью", "CreateArt")
+<p>
+    <ul>
+        @foreach (var p in Model)
+        {
+            <li>@Html.ActionLink(p.title + " " + p.id_uk, "EditArticle", new { id = p.id }, new { @class = "" })</li>
+        }
+</ul>

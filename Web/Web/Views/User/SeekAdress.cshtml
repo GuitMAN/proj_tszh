@@ -1,0 +1,69 @@
+﻿@model Web.Models.seek_adress
+
+@{
+    ViewBag.Title = "Поиск ТСЖ";
+    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+}
+
+<script type="text/javascript">
+    $(function ()
+    {
+        $('#stInput').autocomplete({
+            source: 'AjaxStreet',
+        })
+    });
+
+</script>
+
+
+<h2>Поиск управляющей компании</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <fieldset>
+                <legend>Введите ваш адрес</legend>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Street, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Street, new { @id = "stInput", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.House, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <label id="buf"></label>
+                        @Html.TextBoxFor(model => model.House, new { @id = "hsInput", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.House, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Apartment, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Apartment, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Apartment, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Поиск" class="btn btn-default" />
+                    </div>
+                </div>
+            </fieldset>
+</div>
+    }
+
+

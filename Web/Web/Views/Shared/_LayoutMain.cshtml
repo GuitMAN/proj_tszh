@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+
+    @Styles.Render("~/Styles/css")
+    @Styles.Render("~/Styles/error")
+    
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Styles/themes/start/jquery-ui")
+
+    
+  </head>
+
+<body>
+    <div class="main">
+        <header>
+        <div class="logo">
+            LOGO
+        </div>    
+        <div class="login">
+           
+        </div> 
+        </header>      
+        <nav>
+            <div class="l_menu">             
+                @Html.Partial("~/Views/Shared/_HomeMenu.cshtml")
+            </div>
+        </nav>
+            <div class="content">
+                @if (TempData["message"] != null)
+                {
+                    <div class="alert alert-success">@TempData["message"]</div>
+                }
+                @RenderBody()
+            </div>
+        <footer>
+            Все права защищены. CloudsSolution © 2015.
+        </footer>
+           
+</div>
+</body>
+</html>

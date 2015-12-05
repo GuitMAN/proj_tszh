@@ -1,0 +1,22 @@
+﻿@model Web.Models.UserProfile
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+    ViewBag.Title = "Профиль";
+}
+
+<h2>Profile</h2>
+@Html.ActionLink("Редактировать профиль","editprof","User")
+<br>
+@Html.ActionLink("Изменить пароль", "Manage", "Login")
+<br> Ваша УК:
+@ViewData["uk_name"]
+<br>Ф.И.О. :  @Model.SurName
+@Model.Name @Model.Patronymic
+<br> Ваш лицевой счет: @Model.Personal_Account
+<br> Ваш адрес: @ViewData["user_adr"], @Model.Apartment
+
+<br> Ваш E-mail: @Model.Email
+<br> Дата регистрации: @WebSecurity.GetCreateDate(User.Identity.Name).ToLocalTime()
+

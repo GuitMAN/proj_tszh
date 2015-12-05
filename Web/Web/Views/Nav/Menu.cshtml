@@ -1,0 +1,46 @@
+﻿@using Web.Models
+
+@model   IOrderedEnumerable<MenuItem>
+
+
+<ul>
+    @RenderMenuItem(Model, 0)
+</ul>
+
+@helper RenderMenuItem(IOrderedEnumerable<MenuItem> Model, int item)
+{
+    foreach (var cp in Model.Where(p => p.parent_id == item))
+    {
+ @: <li>
+        if ( cp.menu_id == 0) 
+        {
+            @Html.ActionLink(cp.title, cp.alias, "Home")
+        }       
+    
+        if ( cp.menu_id == 1) 
+        {
+            @Html.ActionLink(cp.title, "Index", new { area="", controller = "Home", id = cp.alias }, new { @class = "topmenu" })
+        }
+
+        if (cp.menu_id == 2)
+        {
+            @Html.ActionLink(cp.title, cp.alias, "Admin")
+        }
+
+        if (!Model.Count(p => p.parent_id == cp.id).Equals(0))
+        {
+        @:      <ul>
+        }
+        @RenderMenuItem(Model, cp.id)
+        if (!Model.Count(p => p.parent_id == cp.id).Equals(0))
+        {
+            
+        @:     
+        @: </ul>
+        }
+        else
+        {            
+        @: </li>
+        }
+    }
+}

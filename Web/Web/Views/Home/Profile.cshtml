@@ -1,0 +1,23 @@
+﻿@model Web.Models.UserProfile
+@using System.Web.Security;
+
+@{
+    Layout = "~/Views/Shared/_LayoutMain.cshtml";
+    ViewBag.Title = "Profile";
+}
+
+<h2>Profile</h2>
+<br> Ваша УК:
+ @ViewData["uk_name"]
+<br>Ф.И.О. :  @Model.SurName 
+@Model.Name @Model.Patronymic
+<br> Ваш лицевой счет: @Model.Personal_Account
+<br> Ваш адрес: @ViewData["user_adr"], @Model.Apartment
+
+<br> Ваш E-mail: @Model.Email
+<br> Дата регистрации: @WebSecurity.GetCreateDate(Model.login)
+
+
+
+
+
