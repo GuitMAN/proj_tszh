@@ -11,16 +11,21 @@ namespace Web
             bundles.Add(new StyleBundle("~/Styles/error").Include("~/Styles/error.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-            "~/Scripts/external/jquery/jquery.js"));
+                        "~/Scripts/jquery-{version}.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-            "~/Scripts/jquery-ui.js",
-            "~/Scripts/jquery-ui.min.js"));
-            bundles.Add(new StyleBundle("~/Styles/themes/start/jquery-ui").Include("~/Scripts/jquery-ui.css"));
+                                    "~/Scripts/jquery-ui.js",
+                                    "~/Scripts/jquery-ui.min.js"));
+            bundles.Add(new StyleBundle("~/Styles/jqueryui").Include("~/Scripts/jquery-ui.min.js"));
+
+            bundles.Add(new StyleBundle("~/Styles/themes/start/jquery-ui")
+                .Include("~/Scripts/jquery-ui.js",
+                         "~/Scripts/jquery-ui.css"));    
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-            "~/Scripts/jquery.validate.unobtrusive.js",
-            "~/Scripts/jquery.validate.unobtrusive.min.js"));
+            "~/Scripts/jquery.unobtrusive*",
+            "~/Scripts/jquery.validate*"));
         }
     }
 }

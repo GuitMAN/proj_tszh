@@ -6,10 +6,9 @@
         <li>@Html.ActionLink("Список пользователей", "ViewUsers", "Admtszh")</li>
     </ul>
 }    
-<ul>
-    <li>@Html.ActionLink("Профиль", "profile", "User")</li>
-    @if (User.IsInRole("User"))
+<ul>@if (User.IsInRole("User"))
     {
+        <li>@Html.ActionLink("Профиль", "profile", "User")</li>  
         <li>@Html.ActionLink("Обратная связь", "FeedBack", "User")</li>
         <li>@Html.ActionLink("Газовый счетчик", "Gas", "User")</li>
         <li>@Html.ActionLink("Электрический счетчик", "Energo", "User")</li>

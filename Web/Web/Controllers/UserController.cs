@@ -138,7 +138,7 @@ namespace Web.Controllers
                 mess.title = title;
                 mess.message = message;
                 FeedBack_from_nouk(mess);
-  //              SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, title, message);
+                SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, title, message);
                 repository.SaveUser(user);
             }
 

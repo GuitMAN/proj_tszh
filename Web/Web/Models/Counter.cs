@@ -16,6 +16,7 @@ namespace Web.Models
         public int UserId { get; set; }
         [DataType(DataType.DateTime)]
         [Display(Name = "Дата проверки")]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateOfReview { get; set; }
         [Display(Name = "Место установки")]
         public string place { get; set; }
@@ -31,6 +32,7 @@ namespace Web.Models
         [ScaffoldColumn(false)]
         [Column(TypeName = "datetime")]
         [Display(Name = "Дата внесения показаний")]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         public DateTime write { get; set; }
         [Display(Name = "Показания счетчика")]
         public decimal data { get; set; }
