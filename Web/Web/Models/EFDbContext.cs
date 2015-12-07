@@ -68,6 +68,7 @@ namespace Web.Models
             catch (Exception ex)
             {
                 string str = "АХТУНГ!!!: " + ex.Message + "; Метод, вызвавший исключение:  " + ex.TargetSite;
+
                 return str;
 
             };

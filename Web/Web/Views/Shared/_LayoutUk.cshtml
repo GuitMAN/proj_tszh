@@ -32,17 +32,16 @@
             </div>
         </header>
         <nav>
-        @if (User.Identity.IsAuthenticated)
-        {
+      
             <div class="topmenu">
                 @Html.Partial("_UserMenu")
             </div> 
-        }
-            <div class="l_menu">
-                @Html.Action("Menu_main", "Nav")
-            </div>
-        </nav>
-        <div class="content">
+       
+        <div class="l_menu">
+            @Html.Action("Menu_main", "Nav")
+        </div>
+    </nav>
+    <div class="content">
         @if (TempData["message"] != null)
         {
             <div class="alert alert-success">@TempData["message"]</div>

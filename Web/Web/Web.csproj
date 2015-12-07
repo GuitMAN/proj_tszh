@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
     <PublishDatabaseSettings>
       <Objects>
-        <ObjectGroup Name="EFDbContext-развертывание" Order="1" Enabled="True">
+        <ObjectGroup Name="EFDbContext-развертывание" Order="1" Enabled="False">
           <Destination Path="" />
           <Object Type="DbFullSql">
             <PreSource Path="Data Source=mssql2.win.agava.net%3bInitial Catalog=vjtncj37_tszh%3bUser ID=vjtncj37_tszh%3bPassword=gi%2aWs040%3bApplication Name=EntityFramework" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />

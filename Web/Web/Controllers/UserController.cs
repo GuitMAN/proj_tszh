@@ -359,7 +359,7 @@ namespace Web.Controllers
         public ActionResult Gas()
         {
             Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(1)).SingleOrDefault();
-            IEnumerable<Counter_data> data;
+            IEnumerable<Counter_data> data = null;
             if (counter != null)
             {
                 using (var context = new EFDbContext())
@@ -455,7 +455,7 @@ namespace Web.Controllers
             if (id == 0)
             {
                 counter = new Counter();
-                counter.type = 2;
+                counter.type = 1;
                 counter.UserId = WebSecurity.CurrentUserId;
             }
             else
@@ -483,7 +483,7 @@ namespace Web.Controllers
         public ActionResult SetEnergo()
         {
             Counter_data model;
-            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(2)).SingleOrDefault();
+            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(1)).SingleOrDefault();
             model = new Counter_data();
             model.id = counter.id;
             return View(model);

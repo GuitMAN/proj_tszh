@@ -1,10 +1,12 @@
 ﻿using System;
+
 using System.Collections.Generic;
+using  System.Data.Entity;
 using WebMatrix.WebData;
+using System.Data.SqlClient;
+using System.Configuration;
 using System.Data;
-using System.Linq;
-
-
+//using System.Data.Objects;
 
 namespace Web.Models.Repository
 {
@@ -357,15 +359,13 @@ namespace Web.Models.Repository
             DateTime seek = DateTime.Today;
             int month = seek.Month;
             int year = seek.Year;
-            DataSet t;
-            string sql = "SELECT * FROM [dbo].[Counter_data] WHERE id = " + cou.id.ToString() + " AND write >= '" + year.ToString() + "." + month.ToString() + ".01'";
-            if (context.SQLStringConnect(sql, out t) != null)
-            {
-                if (t.Tables.Count == 0)
-                    context.SQLStringConnect("INSERT INTO [dbo].[Counter_data] ([id],[write],[data]) VALUES    ( " + cou.id + "   , '" + cou.write + "' , '" + cou.data + "') ");
-                else
-                    context.SQLStringConnect("UPDATE [dbo].[Counter_data] SET write = '" + cou.write + "' , data = '" + cou.data + "' WHERE id = " + cou.id + " AND write >= '" + year + "." + month + ".01'");
-            }
+            var temp = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = " + cou.id + ", write >= '" + year + "." + month + ".01'", "");
+
+            if (temp==null)
+                context.SQLStringConnect("INSERT INTO [dbo].[Counter_data] ([id],[write],[data]) VALUES    ( "+ cou.id +"   , '"+cou.write+"' , '"+cou.data+"') ");
+            else
+                context.SQLStringConnect("UPDATE [dbo].[Counter_data] SET write = '" + cou.write + "' , data = '" + cou.data + "' WHERE write >= '" + year + "." + month + ".01'");
+  
         }
 
     }
