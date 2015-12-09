@@ -44,7 +44,9 @@
             @Html.DisplayFor(modelItem => item.title)
         </td>
         <td>
-            @Html.Display()
+            <div id="draggable">
+                @item.id_user
+            </div>
         </td>
         <td>
             @Html.Raw(item.message)
@@ -57,3 +59,13 @@
 }
 
 </table>
+
+@section Scripts {
+    @Styles.Render("~/Styles/jqueryui.min")
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryui.min")
+
+    <script>
+        $("#draggable").text()
+    </script>
+}

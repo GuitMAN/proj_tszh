@@ -242,5 +242,24 @@ namespace Web.Controllers
             return View(model);
         }
 
+        public ActionResult get_users()
+        {
+
+            IEnumerable<UserProfile> users = null;
+            uk_profile uk = null;
+            string requestDomain = Request.Headers["host"];
+            try
+            {
+                uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
+                users = repository.UserProfile.Where(u => u.id_uk.Equals(uk.id));
+
+            }
+            catch
+            { }
+
+
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

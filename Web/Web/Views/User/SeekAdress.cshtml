@@ -5,15 +5,7 @@
     Layout = "~/Views/Shared/_LayoutUk.cshtml";
 }
 
-<script type="text/javascript">
-    $(function ()
-    {
-        $('#stInput').autocomplete({
-            source: 'AjaxStreet',
-        })
-    });
 
-</script>
 
 
 <h2>Поиск управляющей компании</h2>
@@ -67,3 +59,17 @@
     }
 
 
+@section Scripts {
+    @Styles.Render("~/Styles/jqueryui.min")
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryui.min")
+
+    <script type="text/javascript">
+        $(function ()
+        {
+            $('#stInput').autocomplete({
+                source: 'AjaxStreet',   })
+        });
+
+</script>
+}
