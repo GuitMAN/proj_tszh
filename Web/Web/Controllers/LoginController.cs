@@ -40,7 +40,10 @@ namespace Web.Controllers
         public ActionResult Index(LoginModel model, string ReturnUrl)
         {
             //на всякий случай )) 
-            WebSecurity.Logout();
+            if (!WebSecurity.IsAuthenticated&&!WebSecurity.Initialized)
+            {
+                WebSecurity.Logout();
+            }
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 uk_profile uk = null;
