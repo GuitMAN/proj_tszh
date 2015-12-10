@@ -8,17 +8,18 @@
 
             @foreach (var link in Model)
             {
-                <li>
-                    @Html.RouteLink(link, new
-    {
-        controller = "User",
-        action = "Index",
-        id = link//,
-        //        page = 1
-    }, new
-    {
-        @class = "l_menu"
-            + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
-    })
+                <li> 
+                @if (link.Equals("Главная")) { continue; }
+                @Html.RouteLink(link, new
+                {
+                    controller = "User",
+                    action = "Index",
+                    id = link//,
+                    //        page = 1
+                }, new
+                {
+                @class = "l_menu"
+                 + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
+                })
                 </li>
             }
