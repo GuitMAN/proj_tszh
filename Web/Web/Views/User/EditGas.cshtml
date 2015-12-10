@@ -45,8 +45,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfReview, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfReview, new { htmlAttributes = new { @class = "form-control"} })
-                    <div id="date"></div>
+                @Html.EditorFor(model => model.DateOfReview, new { htmlAttributes = new { @class = "form-control", @id = "datepicker" } })
                 @Html.ValidationMessageFor(model => model.DateOfReview, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -83,13 +82,12 @@
 
 @section Scripts {
    
-    @Styles.Render("~/Styles/jquery-ui")
+    @Styles.Render("~/Styles/jquery-ui/start")
     <script src="~/Scripts/jquery-1.8.0.js"></script>
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
     <script type="text/javascript">
-        $("#date").datepicker({
-            minDate: new Date(2007, 1 - 1, 1),
-            maxDate: new Date(2016, 1 - 1, 1)
-        });
+        $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' })
+
     </script>
 }
