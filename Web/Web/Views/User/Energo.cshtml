@@ -8,7 +8,7 @@
 <h2>Energo</h2>
 
 <p>
-    @Html.ActionLink("Добавить электрический счетчик", "EditEnergo")
+    @Html.ActionLink("Добавить газовый счетчик", "EditGas", new { id = ViewData["counter_id"] }, new { @class = "" })
 </p>
 <p>
     @Html.ActionLink("Внести показания", "SetEnergo", "User")

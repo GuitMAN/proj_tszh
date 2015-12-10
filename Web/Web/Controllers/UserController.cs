@@ -371,6 +371,7 @@ namespace Web.Controllers
             {
                 data = new List<Counter_data>().ToArray();
             }
+            ViewData["counter_id"] = counter.id;
             return View(data);
         }
 
@@ -446,6 +447,7 @@ namespace Web.Controllers
             {
                 data = new List<Counter_data>().ToArray();
             }
+            ViewData["counter_id"] = counter.id;
             return View(data);
         }
 
