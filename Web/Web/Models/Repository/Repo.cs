@@ -1,12 +1,13 @@
 ﻿using System;
 
 using System.Collections.Generic;
-using  System.Data.Entity;
+using System.Data.Entity;
 using WebMatrix.WebData;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Data;
-//using System.Data.Objects;
+using System.Data.Objects;
+using System.Linq;
 
 namespace Web.Models.Repository
 {
@@ -359,9 +360,9 @@ namespace Web.Models.Repository
             DateTime seek = DateTime.Today;
             int month = seek.Month;
             int year = seek.Year;
-            var temp = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = " + cou.id + ", write >= '" + year + "." + month + ".01'", "");
+            List <Counter_data> temp = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = " + cou.id + " AND write >= '" + year + "." + month + ".01'", "").ToList(); ;
 
-            if (temp==null)
+            if (temp.Count==0)
                 context.SQLStringConnect("INSERT INTO [dbo].[Counter_data] ([id],[write],[data]) VALUES    ( "+ cou.id +"   , '"+cou.write+"' , '"+cou.data+"') ");
             else
                 context.SQLStringConnect("UPDATE [dbo].[Counter_data] SET write = '" + cou.write + "' , data = '" + cou.data + "' WHERE write >= '" + year + "." + month + ".01'");
