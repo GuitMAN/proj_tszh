@@ -47,8 +47,6 @@ namespace Web.Models
             }
 
             return res;
-
-
         }
 
         public string SQLStringConnect(string sqlcommand)

@@ -1,16 +1,22 @@
-﻿@if (User.IsInRole("Moder"))
+﻿@if (WebSecurity.IsAuthenticated)
 {
+    if (User.IsInRole("Moder"))
+    {
     <ul>
         <li>@Html.ActionLink("Профиль администратора", "profile", "Admtszh")</li>
         <li>@Html.ActionLink("Обращения от жильцов", "readFeedBack", "Admtszh")</li>
         <li>@Html.ActionLink("Список пользователей", "ViewUsers", "Admtszh")</li>
     </ul>
-}    
-<ul>@if (User.IsInRole("User"))
-    {
+    }    
+    <ul>
+   
         <li>@Html.ActionLink("Профиль", "profile", "User")</li>  
+    @if (User.IsInRole("User"))
+    {
+     
         <li>@Html.ActionLink("Обратная связь", "FeedBack", "User")</li>
         <li>@Html.ActionLink("Газовый счетчик", "Gas", "User")</li>
         <li>@Html.ActionLink("Электрический счетчик", "Energo", "User")</li>
-    }
+     }  
 </ul>
+}

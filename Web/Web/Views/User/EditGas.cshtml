@@ -45,7 +45,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfReview, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                   @Html.EditorFor(model => model.DateOfReview, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DateOfReview, new { htmlAttributes = new { @class = "form-control"} })
+                    <div id="date"></div>
                 @Html.ValidationMessageFor(model => model.DateOfReview, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -82,43 +83,13 @@
 
 @section Scripts {
    
-    <link href='@Url.Content("~/Scripts/jquery-ui/theme.min.css")' rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Styles/jquery-ui")
+    <script src="~/Scripts/jquery-1.8.0.js"></script>
     @Scripts.Render("~/bundles/jqueryui")
-    @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-        $(function () {
-            $("input[type='date']")
-                        .datepicker({ dateFormat: 'dd/mm/yy' })
-                        .get(0).setAttribute("type", "text");
-            $.datepicker.regional['ru'] = {
-                prevText: 'Пред',
-                nextText: 'След',
-                monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-                monthNamesShort: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
-                'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
-                dayNames: ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'],
-                dayNamesShort: ['вск', 'пнд', 'втр', 'срд', 'чтв', 'птн', 'сбт'],
-                dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                weekHeader: 'Не',
-                dateFormat: 'dd/mm/yy',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: ''
-            };
-            $.datepicker.setDefaults($.datepicker.regional['ru']);
-            $.validator.addMethod('date',
-                function (value, element) {
-                    var ok = true;
-                    try {
-                        $.datepicker.parseDate('dd/mm/yy', value);
-                    }
-                    catch (err) {
-                        ok = false;
-                    }
-                    return ok;
-                });
+        $("#date").datepicker({
+            minDate: new Date(2007, 1 - 1, 1),
+            maxDate: new Date(2016, 1 - 1, 1)
         });
     </script>
 }

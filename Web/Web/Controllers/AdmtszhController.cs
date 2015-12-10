@@ -7,8 +7,8 @@ using Web.Models.Repository;
 using System.Data;
 using WebMatrix.WebData;
 using System.Web.Security;
-using Web.Filter;
-using Microsoft.AspNet.Identity;
+//using Web.Filter;
+//using Microsoft.AspNet.Identity;
 
 namespace Web.Controllers
 {

@@ -22,7 +22,7 @@ namespace Web
 
             bundles.Add(new StyleBundle("~/Styles/jqueryui.min").Include("~/Scripts/jquery-ui.min.css"));
 
-            bundles.Add(new StyleBundle("~/Styles/themes/start/jquery-ui").Include("~/Scripts/jquery-ui.css"));    
+            bundles.Add(new StyleBundle("~/Styles/jquery-ui").Include("~/Scripts/jquery-ui.css"));    
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
             "~/Scripts/jquery.unobtrusive*",

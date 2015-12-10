@@ -25,8 +25,7 @@ namespace Web.Controllers
         // GET: /Login/
         [AllowAnonymous]
         public ActionResult Index(string returnUrl)
-        {
-            
+        {         
             //Если пользователь зарегистрирован, но вас кинуло именно сюда, значит вам на ту страницу нельзя 401
             if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
                 return RedirectToAction("error401", "User");
@@ -40,10 +39,7 @@ namespace Web.Controllers
         public ActionResult Index(LoginModel model, string ReturnUrl)
         {
             //на всякий случай )) 
-            if (!WebSecurity.IsAuthenticated&&!WebSecurity.Initialized)
-            {
-                WebSecurity.Logout();
-            }
+            WebSecurity.Logout();
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 uk_profile uk = null;
@@ -54,13 +50,20 @@ namespace Web.Controllers
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
-                        
-                    }
+                        if (requestDomain.Equals(uk.host))
+                        {
+                            return RedirectToAction("Index", "User");
+                        }
+                        else
+                        {
 
-                    if (requestDomain.Equals(uk.host))
+                        }
+                    }
+                    else
                     {
                         return RedirectToAction("Index", "User");
                     }
+                 
                     TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
                    
                 }
@@ -70,7 +73,7 @@ namespace Web.Controllers
                     ModelState.AddModelError("", "Логин следует вводить с учетом регистра");
                     TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
                 }        
-                   WebSecurity.Logout();           
+                WebSecurity.Logout();           
             }
             ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");        
             return View(model);
