@@ -10,8 +10,11 @@
     }    
     <ul>
    
-        <li>@Html.ActionLink("Профиль", "profile", "User")</li>  
-    @if (User.IsInRole("User"))
+        @if ((User.IsInRole("User") && !User.IsInRole("Moder")) || User.IsInRole("User") || (!User.IsInRole("User") && !User.IsInRole("Moder")))
+        {
+            <li>@Html.ActionLink("Профиль", "profile", "User")</li>  
+        }
+        @if (User.IsInRole("User"))
     {
      
         <li>@Html.ActionLink("Обратная связь", "FeedBack", "User")</li>

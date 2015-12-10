@@ -28,28 +28,28 @@
                 @Html.Partial("_UserMenu")
             </div> 
        
-        <div class="l_menu">
-            @Html.Action("Menu_main", "Nav")
-        </div>
-    </nav>
-    <div class="content">
-        @if (TempData["message"] != null)
-        {
-            <div class="alert alert-success">@TempData["message"]</div>
-        }
-        @RenderBody()
-    </div>
-    <footer>
-        <div class="footer">
-            Все права защищены. CloudsSolution © 2015. 
-            @if (User.IsInRole("Admin"))
+            <div class="l_menu">
+                @Html.Action("Menu_main", "Nav")
+            </div>
+        </nav>
+        <div class="content">
+            @if (TempData["message"] != null)
             {
-                @Html.ActionLink("Админка","Index","Admin")
-                @: ссылка видна только пользователю с ролью "Admin"
+                <div class="alert alert-success">@TempData["message"]</div>
             }
+            @RenderBody()
         </div>
-    </footer>
+        <footer>
+            <div class="footer">
+                Все права защищены. CloudsSolution © 2015. 
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Админка","Index","Admin")
+                    @: ссылка видна только пользователю с ролью "Admin"
+                }
+            </div>
+        </footer> 
+    </div>
     @RenderSection("Scripts", required: false)
-</div>
 </body>
 </html>
