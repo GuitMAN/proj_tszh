@@ -25,20 +25,21 @@
             </div>
     	    <div class="clr">   </div>
       
-            <div class="headertext">
+            <div class="headertext" >
             <h2>Read me first...</h2>         
             </div>
         </div>
     </div>
 
-    <div class="content">
+    <div class="content" >
         <div class="content_resize">
             <div class="mainbar">     
-                <div class="article">
-                @if (TempData["message"] != null)           
+                @if (TempData["message"] != null)
                 {
                     <div class="alert alert-success">@TempData["message"]</div>
-                }           
+                }              
+                <div class="article" id="test" >
+          
                 @RenderBody()
                 </div>    
             </div>
@@ -60,7 +61,11 @@
         <div class="clr"></div>
     </div>
 </div>
+    @RenderSection("Scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
- @RenderSection("Scripts", required: false)
+
+ 
 </body>
 </html>

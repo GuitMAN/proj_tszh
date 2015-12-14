@@ -1,13 +1,10 @@
 ﻿@model Web.Models.LoginModel
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUk.cshtml";
-}
+
 
 <h2>Index</h2>
 
-@using (Html.BeginForm())
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "test" }))
 {
     @Html.AntiForgeryToken()
     
