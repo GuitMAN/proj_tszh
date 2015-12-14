@@ -7,11 +7,11 @@
         @User.Identity.Name
     </strong>
     <span>
-        @Html.ActionLink("Выйти", "LogoOut", "Login")
+        @Ajax.ActionLink("Выйти", "LogoOut", "Login", new AjaxOptions { UpdateTargetId = "test" })
     </span>
 }
 else
 {
-    <span>@Html.ActionLink("Войти", "Index", "Login")</span>
-    <span>@Html.ActionLink("Регистрация", "Register", "Login")</span>
+    <span>@Ajax.ActionLink("Войти", "Index", "Login", new AjaxOptions { UpdateTargetId = "test" })</span>
+    <span>@Ajax.ActionLink("Регистрация", "Register", "Login", new AjaxOptions { UpdateTargetId = "test" })</span>
 }

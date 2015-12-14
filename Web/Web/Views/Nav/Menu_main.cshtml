@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<string>
         
         <ul>
-            <li>@Html.ActionLink("Главная", "Index", "User", null,
-                                    new { @class = "l_menu" })</li>
+            <li>@Ajax.ActionLink("Главная", "Index", "User",
+                                            new AjaxOptions { UpdateTargetId = "test" })</li>
             @foreach (var link in Model)
             {
                 if (link.Equals("Главная")) { continue; }
-            <li>@Html.RouteLink(link, new { controller = "User", action = "Index", id = link}, new { @class = "l_menu"
-                        + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
-                })</li>
+            <li>@Ajax.RouteLink(link, new { controller = "User", action = "Index", id = link}, new AjaxOptions { UpdateTargetId = "test" })</li>
             }
         </ul>
