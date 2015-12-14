@@ -7,7 +7,7 @@
         @User.Identity.Name
     </strong>
     <span>
-        @Ajax.ActionLink("Выйти", "LogoOut", "Login", new AjaxOptions { UpdateTargetId = "test" })
+        @Html.ActionLink("Выйти", "LogoOut", "Login")
     </span>
 }
 else

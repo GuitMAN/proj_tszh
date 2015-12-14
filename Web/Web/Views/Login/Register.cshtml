@@ -4,7 +4,7 @@
 
 <h2>Register</h2>
 
-@using (Html.BeginForm()) 
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "test" })) 
 {
     @Html.AntiForgeryToken()
     
