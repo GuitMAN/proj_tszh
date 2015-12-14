@@ -1,25 +1,13 @@
 ﻿@model IEnumerable<string>
-
-
-    <ul>
-        <li>
-            @Html.ActionLink("Главная", "Index", "User", null,
-             new { @class = "l_menu" })</li>
-
+        
+        <ul>
+            <li>@Html.ActionLink("Главная", "Index", "User", null,
+                                    new { @class = "l_menu" })</li>
             @foreach (var link in Model)
             {
-                <li> 
-                @if (link.Equals("Главная")) { continue; }
-                @Html.RouteLink(link, new
-                {
-                    controller = "User",
-                    action = "Index",
-                    id = link//,
-                    //        page = 1
-                }, new
-                {
-                @class = "l_menu"
-                 + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
-                })
-                </li>
+                if (link.Equals("Главная")) { continue; }
+            <li>@Html.RouteLink(link, new { controller = "User", action = "Index", id = link}, new { @class = "l_menu"
+                        + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
+                })</li>
             }
+        </ul>

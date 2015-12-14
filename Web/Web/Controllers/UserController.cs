@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using WebMatrix.WebData;
 using Web.Models;
 using Web.Models.Repository;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using WebMatrix.WebData;
 
 namespace Web.Controllers
 {
@@ -45,9 +45,9 @@ namespace Web.Controllers
         public ActionResult profile(string returnUrl)
         {
             //---------------------------
-            //Проверка на авторизацию
-            if (!WebSecurity.IsAuthenticated&&!WebSecurity.Initialized)
-                return RedirectToAction("Login", "Home");
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             UserProfile user=null;
             uk_profile uk = null;
@@ -72,9 +72,9 @@ namespace Web.Controllers
         public ActionResult send_profile()
         {
             //---------------------------
-            //Проверка на авторизацию
+            //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Index", "Login");
             UserProfile user=null;
             UserProfile_nouk_form model = new UserProfile_nouk_form();
             try
@@ -151,9 +151,9 @@ namespace Web.Controllers
         public ActionResult FeedBack()
         {
             //---------------------------
-            //Проверка на авторизацию
+            //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return Redirect("/Login");
+                return RedirectToAction("Index", "Login");
             //---------------------------
             //Проверка на принадлежность пользователя
             UserProfile user = null;
@@ -192,9 +192,9 @@ namespace Web.Controllers
         public ActionResult FeedBack(feedback mess)
         {
             //---------------------------
-            //Проверка на авторизацию
+            //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return Redirect("/Login");
+                return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             UserProfile user = null;
             uk_profile uk = null;
@@ -247,9 +247,9 @@ namespace Web.Controllers
         private ActionResult FeedBack_from_nouk(feedback mess)
         {
             //---------------------------
-            //Проверка на авторизацию
+            //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return Redirect("/Login");
+                return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             UserProfile user = null;
             uk_profile uk = null;
@@ -285,7 +285,9 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult SeekAdress()
         {
-            if (!WebSecurity.Initialized)
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
             return View();
         }
@@ -295,7 +297,9 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult SeekAdress(seek_adress model)
         {
-            if (!WebSecurity.Initialized)
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
             uk_adress adress;
             if (ModelState.IsValid)
@@ -318,7 +322,9 @@ namespace Web.Controllers
         [Authorize(Roles = "User")]
         public ActionResult editprof()
         {
-            if (!WebSecurity.Initialized)
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             UserProfile user = null;
@@ -342,7 +348,9 @@ namespace Web.Controllers
         [Authorize(Roles = "User")]
         public ActionResult editprof(UserProfile model)
         {
-            if (!WebSecurity.Initialized)
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
 
             if (ModelState.IsValid)
@@ -358,6 +366,10 @@ namespace Web.Controllers
         //type = 1;
         public ActionResult Gas()
         {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(1)).SingleOrDefault();
             IEnumerable<Counter_data> data = null;
             if (counter != null)
@@ -377,6 +389,10 @@ namespace Web.Controllers
 
         public ActionResult EditGas(int id = 0)
         {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             Counter counter;
             if (id == 0)
             {
@@ -395,8 +411,10 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult EditGas(Counter model)
         {
-            model.DateOfReview = DateTime.UtcNow;
-            
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             if (ModelState.IsValid)
             {
                 repository.SaveCounter(model);
@@ -419,6 +437,10 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult SetGas(Counter_data model)
         {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             model.write = DateTime.UtcNow;
 
             if (ModelState.IsValid)
@@ -434,6 +456,10 @@ namespace Web.Controllers
         //type = 2;
         public ActionResult Energo()
         {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(2)).SingleOrDefault();
             IEnumerable<Counter_data> data = null;
             if (counter != null)
@@ -453,6 +479,10 @@ namespace Web.Controllers
 
         public ActionResult EditEnergo(int id = 0)
         {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             Counter counter;
             if (id == 0)
             {
@@ -471,8 +501,10 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult EditEnergo(Counter model)
         {
-            model.DateOfReview = DateTime.UtcNow;
-
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             if (ModelState.IsValid)
             {
                 repository.SaveCounter(model);
@@ -484,6 +516,10 @@ namespace Web.Controllers
 
         public ActionResult SetEnergo()
         {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             Counter_data model;
             Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(2)).SingleOrDefault();
             model = new Counter_data();
@@ -495,6 +531,10 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult SetEnergo(Counter_data model)
         {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
             model.write = DateTime.UtcNow;
 
             if (ModelState.IsValid)

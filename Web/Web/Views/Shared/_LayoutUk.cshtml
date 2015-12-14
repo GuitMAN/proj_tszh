@@ -1,55 +1,66 @@
 ﻿<!DOCTYPE html>
-
-<html>
 <head>
-    <title>@ViewBag.Title</title>
-    <meta name="viewport" content="width=device-width" />
-    <meta charset="utf-8" />
+<title>@ViewBag.Title</title>
+<meta http-equiv="Content-Type" content="text/css; charset=UTF-8" />
+ @Styles.Render("~/Styles/css")
+ @Styles.Render("~/Styles/error")  
 
-    @Styles.Render("~/Styles/css")
-    @Styles.Render("~/Styles/error")  
-    
-   
 </head>
-
 <body>
-    <div class="main">
-        <header>
+
+<div class="login">
+               
+ 	@Html.Partial("~/Views/Shared/_LayoutLogin.cshtml")
+
+	</div>
+<div class="main">
+    <div class="header">
+        <div class="header_resize">
+            <div class="menu_nav">    
+            @Html.Action("Menu_main", "Nav")
+        
+            </div>
             <div class="logo">
-                LOGO
+                <h1><a>LOGO <small>наше лого, подпись и тд</small></a></h1>
             </div>
-            <div class="login">
-                @Html.Partial("~/Views/Shared/_LayoutLogin.cshtml")
-            </div>
-        </header>
-        <nav>
+    	    <div class="clr">   </div>
       
-            <div class="topmenu">
-                @Html.Partial("_UserMenu")
-            </div> 
-       
-            <div class="l_menu">
-                @Html.Action("Menu_main", "Nav")
+            <div class="headertext">
+            <h2>Read me first...</h2>         
             </div>
-        </nav>
-        <div class="content">
-            @if (TempData["message"] != null)
-            {
-                <div class="alert alert-success">@TempData["message"]</div>
-            }
-            @RenderBody()
         </div>
-        <footer>
-            <div class="footer">
-                Все права защищены. CloudsSolution © 2015. 
-                @if (User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Админка","Index","Admin")
-                    @: ссылка видна только пользователю с ролью "Admin"
-                }
-            </div>
-        </footer> 
     </div>
-    @RenderSection("Scripts", required: false)
+
+    <div class="content">
+        <div class="content_resize">
+            <div class="mainbar">     
+                <div class="article">
+                @if (TempData["message"] != null)           
+                {
+                    <div class="alert alert-success">@TempData["message"]</div>
+                }           
+                @RenderBody()
+                </div>    
+            </div>
+            <div class="gadget">      
+	            @Html.Partial("_UserMenu")
+            </div>
+        </div>
+    </div>
+   
+</div>
+    <div class="footer">
+    <div class="footer_resize">
+        Все права защищены. CloudsSolution © 2015.
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Админ", "Index", "Admin")
+            @:  ссылка видна только пользователю с ролью "Admin"
+                }
+        <div class="clr"></div>
+    </div>
+</div>
+
+ @RenderSection("Scripts", required: false)
 </body>
 </html>

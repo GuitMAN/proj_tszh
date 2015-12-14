@@ -16,7 +16,7 @@ namespace Web.Models
         public int UserId { get; set; }
         [DataType(DataType.DateTime)]
         [Display(Name = "Дата проверки")]
-        [DisplayFormat(DataFormatString = "{0:dd'/'mm'/'yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d/m/yy}")]
         public DateTime DateOfReview { get; set; }
         [Display(Name = "Место установки")]
         public string place { get; set; }

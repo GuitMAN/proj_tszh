@@ -1,4 +1,6 @@
-﻿@model Web.Models.Counter
+﻿@using System.Web.Mvc
+
+@model Web.Models.Counter
 
 @{
     ViewBag.Title = "EditGas";
@@ -45,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfReview, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfReview, new { htmlAttributes = new { @class = "form-control", @id = "datepicker" } })
+                @Html.Editor(Model.DateOfReview, new { htmlAttributes = new { @class = "form-control", @id = "datepicker" } })
                 @Html.ValidationMessageFor(model => model.DateOfReview, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -86,8 +88,8 @@
     <script src="~/Scripts/jquery-1.8.0.js"></script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/ bundles / jqueryval")
     <script type="text/javascript">
-        $("#datepicker").datepicker({ dateFormat: 'dd/mm/yy' })
-
+        $("#datepicker").datepicker({ dateFormat: 'd/m/yy' })
     </script>
 }
