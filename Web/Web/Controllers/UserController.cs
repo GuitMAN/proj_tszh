@@ -385,14 +385,12 @@ namespace Web.Controllers
                     }
                     model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( "+res+" )").ToArray();
                 }
-               // model.ListData = repository.Counter_data.Select(x => x).Where(q => q.id.Equals());
             }
             else
             {
                 model.ListData = new List<Counter_data>().ToArray();
             }
-            // ViewData["counter_id"] = counter.id;
-            
+          
              
             return View(model);
         }
@@ -470,21 +468,27 @@ namespace Web.Controllers
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
-            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(2)).SingleOrDefault();
-            IEnumerable<Counter_data> data = null;
-            if (counter != null)
+            Counter_model model = new Counter_model();
+            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(2));
+            model.ListData = null;
+            if (model.ListCounter.Count() != 0)
             {
                 using (var context = new EFDbContext())
                 {
-                    data = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = " + counter.id, "").ToArray();
+                    string res = "";
+                    foreach (var item in model.ListCounter)
+                    {
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
+                    }
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
                 }
             }
             else
             {
-                data = new List<Counter_data>().ToArray();
+                model.ListData = new List<Counter_data>().ToArray();
             }
-            ViewData["counter_id"] = counter.id;
-            return View(data);
+            return View(model);
         }
 
         public ActionResult EditEnergo(int id = 0)

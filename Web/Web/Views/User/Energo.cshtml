@@ -1,38 +1,54 @@
-﻿@model IEnumerable<Web.Models.Counter_data>
+﻿@model Web.Models.Counter_model
 
 @{
     ViewBag.Title = "Energo";
     Layout = "~/Views/Shared/_LayoutUk.cshtml";
 }
 
-<h2>Energo</h2>
-
-<p>
-    @Html.ActionLink("Добавить газовый счетчик", "EditGas", new { id = ViewData["counter_id"] }, new { @class = "" })
-</p>
+<h2>Газовый счетчик</h2>
+@Html.ActionLink("Добавить электросчетчик", "EditEnergo")
+@foreach (var item in Model.ListCounter)
+{
+    <div>
+        @Html.ActionLink(item.id.ToString() + " | " + item.status.ToString(), "EditEnegro", new { id = item.id })
+    </div>
+}
 <p>
     @Html.ActionLink("Внести показания", "SetEnergo", "User")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.write)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.data)
-        </th>
-    </tr>
 
-    @foreach (var item in Model)
+<table class="table" border="1">
+    @foreach (var item in Model.ListCounter)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.write)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.data)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => item.id)
+            </th>
+            <th>
+                @Html.DisplayName("Дата")
+            </th>
+            <th>
+                @Html.DisplayName("Показания")
+            </th>
         </tr>
-    }
 
+        foreach (var it in Model.ListData)
+        {
+            if (it.id.Equals(item.id))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => it.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => it.write)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => it.data)
+                    </td>
+                </tr>
+            }
+        }
+    }
 </table>
+
