@@ -15,7 +15,7 @@ namespace Web.Models
         [Display(Name = "Серийный номер")]
         public string serial { get; set; }
         public int UserId { get; set; }
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [Display(Name = "Дата проверки")]
         [DisplayFormat(DataFormatString = "{0:d/m/yy}")]
         public DateTime? DateOfReview { get; set; }
@@ -33,6 +33,7 @@ namespace Web.Models
         [ScaffoldColumn(false)]
         [Column(TypeName = "datetime")]
         [Display(Name = "Дата внесения показаний")]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? write { get; set; }
         [Display(Name = "Показания счетчика")]

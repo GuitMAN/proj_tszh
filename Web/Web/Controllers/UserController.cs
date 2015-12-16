@@ -16,6 +16,12 @@ namespace Web.Controllers
         Repo repository;
         //идентификатор УК ТСЖ
         //const string domain = ".мое-тсж.рф"; 
+        private Repo repo;
+        public UserController(Repo repo)
+        {
+            repository = repo;
+        }
+
         public UserController()
         {
             repository = new Repo();
