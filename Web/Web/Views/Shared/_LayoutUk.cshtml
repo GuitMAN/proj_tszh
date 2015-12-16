@@ -8,11 +8,9 @@
 </head>
 <body>
 
-<div class="login">
-               
+<div class="login">              
  	@Html.Partial("~/Views/Shared/_LayoutLogin.cshtml")
-
-	</div>
+</div>
 <div class="main">
     <div class="header">
         <div class="header_resize">
@@ -62,9 +60,6 @@
     </div>
 </div>
     @RenderSection("Scripts", required: false)
-    @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-
 
  
 </body>

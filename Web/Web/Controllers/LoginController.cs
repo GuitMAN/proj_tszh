@@ -28,7 +28,7 @@ namespace Web.Controllers
         {         
             //Если пользователь зарегистрирован, но вас кинуло именно сюда, значит вам на ту страницу нельзя 401
             if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
-                return RedirectToAction("error401", "User");
+                return RedirectToAction("Error_401", "Login");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -91,7 +91,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid && !WebSecurity.UserExists(model.UserName))
+            if (ModelState.IsValid )
             {   
                 try
                 {
@@ -104,10 +104,10 @@ namespace Web.Controllers
                 }
                 catch (MembershipCreateUserException e)
                 {
-                    ModelState.AddModelError("Ошибка при регистрации", ErrorCodeToString(e.StatusCode));                       
+                    ModelState.AddModelError("Ошибка при регистрации: ", ErrorCodeToString(e.StatusCode));                       
                 }
             }
-            
+
             return View(model);
         }
 

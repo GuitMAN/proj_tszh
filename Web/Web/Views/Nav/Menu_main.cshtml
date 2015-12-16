@@ -2,10 +2,16 @@
         
         <ul>
             <li>@Ajax.ActionLink("Главная", "Index", "User",
-                                            new AjaxOptions { UpdateTargetId = "test" })</li>
+                                            new AjaxOptions { UpdateTargetId = "container" })</li>
             @foreach (var link in Model)
             {
                 if (link.Equals("Главная")) { continue; }
-            <li>@Ajax.RouteLink(link, new { controller = "User", action = "Index", id = link}, new AjaxOptions { UpdateTargetId = "test" })</li>
+            <li>@Ajax.RouteLink(link, new { controller = "User", action = "Index", id = link}, new AjaxOptions { UpdateTargetId = "container" })</li>
             }
         </ul>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}

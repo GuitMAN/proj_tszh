@@ -355,6 +355,13 @@ namespace Web.Models.Repository
             context.SaveChanges();
         }
 
+
+        public IEnumerable<Counter_data> Counter_data
+        {
+            get { return context.counter_data; }
+        }
+
+
         public void SaveCounder_data(Counter_data cou)
         {
             DateTime seek = DateTime.Today;

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Web.Models.Counter_data>
+﻿@model Web.Models.Counter_model
 
 @{
     ViewBag.Title = "Gas";
@@ -6,11 +6,13 @@
 }
 
 <h2>Газовый счетчик</h2>
-
-<p>
-    @Html.ActionLink("Добавить газовый счетчик", "EditGas", new { id = ViewData["counter_id"] }, new { @class = "" })
-</p>
-
+@Html.ActionLink("Добавить газовый счетчик", "EditGas")
+@foreach (var item in Model.ListCounter)
+{
+<div>
+    @Html.ActionLink( item.place + " | " + item.status.ToString() , "EditGas", new { id = item.id })
+</div>
+}
 <p>
     @Html.ActionLink("Внести показания", "SetGas", "User")
 </p>
@@ -18,14 +20,14 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.write)
+            @Html.DisplayNameFor(model => model.ListData)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.data)
+            @Html.DisplayNameFor(model => model.ListData)
         </th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.ListData) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.write)
