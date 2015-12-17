@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Web.Models;
 using Web.Models.Repository;
 using WebMatrix.WebData;
+using Web.Utils;
 
 namespace Web.Controllers
 {
@@ -39,7 +40,8 @@ namespace Web.Controllers
            else
                uk_id = uk.id;
            Article art = repository.Articles.Where(t => t.title.Equals(id)).Where(u => u.id_uk.Equals(uk_id)).SingleOrDefault();
-           return View(art);
+
+            return View(art);
         }
 
         public ViewResult No_uk()
@@ -67,7 +69,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-
+                Log.Write(ex);
                 return Redirect("send_profile");    
             }
             //----------------------------
@@ -99,6 +101,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Write(ex);
                 model.UserId = WebSecurity.CurrentUserId;
             }
 
@@ -180,6 +183,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Write(ex);
                 return RedirectToAction("LogoOut", "Login");
             }
             //----------------------------
@@ -218,8 +222,9 @@ namespace Web.Controllers
  //                   return Redirect("http://" + uk.host);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Log.Write(ex);
                 TempData["message"] = string.Format("Ошибка доступа \"{0}\"", e.Message);
                 return Redirect("/Login/LogoOut");
             }
@@ -268,8 +273,9 @@ namespace Web.Controllers
                     //генерация исключения
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Log.Write(ex);
                 return Redirect("/Login/LogoOut");
             }
             //------------------------------------
@@ -338,9 +344,9 @@ namespace Web.Controllers
             {
                 user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             }
-            catch
+            catch (Exception ex)
             {
-                
+                Log.Write(ex);
             }
             if (user == null)
             {
@@ -603,7 +609,8 @@ namespace Web.Controllers
             }
             catch (Exception e)
             {
-           //     ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+                Log.Write(ex);
+                ModelState.AddModelError("City", "УК или ТСЖ не найдена");
             }
         }
 

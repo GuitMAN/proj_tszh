@@ -46,7 +46,7 @@ namespace Web.Controllers
                 try
                 {
                     string requestDomain =Request.Headers["host"];
-                    UserProfile user = repository.UserProfile.Where(p => p.login.Equals(model.UserName)).SingleOrDefault();
+                    UserProfile user = repository.UserProfile.Where(p => p.id.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
@@ -67,11 +67,12 @@ namespace Web.Controllers
                     TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
                    
                 }
-                catch
+                catch (Exception ex)
                 {
                     string requestDomain = Request.Headers["host"];
                     ModelState.AddModelError("", "Логин следует вводить с учетом регистра");
                     TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                    
                 }        
                 WebSecurity.Logout();           
             }
