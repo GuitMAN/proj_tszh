@@ -6,6 +6,7 @@ using Web.Controllers;
 using Web.Models;
 using Web.Models.Repository;
 
+
 namespace UnitTest
 {
     [TestClass]
@@ -21,7 +22,7 @@ namespace UnitTest
             });
             UserController controller = new UserController(mock.Object);
 
-            //controller.Gas();
+            controller.Gas();
 
 
         }
