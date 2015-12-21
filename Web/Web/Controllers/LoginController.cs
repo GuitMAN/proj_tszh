@@ -38,8 +38,9 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(LoginModel model, string ReturnUrl)
         {
-            //на всякий случай )) 
-            WebSecurity.Logout();
+            //If User Autorized, but him redirected here, then error 401 
+            if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
+                return RedirectToAction("Error_401", "Login");
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 uk_profile uk = null;
