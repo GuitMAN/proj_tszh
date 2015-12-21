@@ -225,7 +225,7 @@ namespace Web.Controllers
             catch (Exception ex)
             {
                 Log.Write(ex);
-                TempData["message"] = string.Format("Ошибка доступа \"{0}\"", e.Message);
+                TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
                 return Redirect("/Login/LogoOut");
             }
             //------------------------------------
@@ -607,10 +607,10 @@ namespace Web.Controllers
                 client.Send(mail);
                 mail.Dispose();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 Log.Write(ex);
-                ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+              //  ModelState.AddModelError("City", "УК или ТСЖ не найдена");
             }
         }
 
