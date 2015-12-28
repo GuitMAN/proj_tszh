@@ -1,0 +1,54 @@
+﻿@model Web.Models.Counter_model
+
+@{
+    ViewBag.Title = "HotWater";
+    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+}
+
+<h2>Газовый счетчик</h2>
+@Html.ActionLink("Добавить счетчик горячей воды", "EditGas")
+@foreach (var item in Model.ListCounter)
+{
+    <div>
+        @Html.ActionLink(item.id.ToString() + " | " + item.status.ToString(), "EditHotWater", new { id = item.id })
+    </div>
+}
+<p>
+    @Html.ActionLink("Внести показания", "SetHotWater", "User")
+</p>
+
+<table class="table" border="1">
+    @foreach (var item in Model.ListCounter)
+    {
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => item.id)
+            </th>
+            <th>
+                @Html.DisplayName("Дата")
+            </th>
+            <th>
+                @Html.DisplayName("Показания")
+            </th>
+        </tr>
+
+        foreach (var it in Model.ListData)
+        {
+            if (it.id.Equals(item.id))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => it.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => it.write)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => it.data)
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
+

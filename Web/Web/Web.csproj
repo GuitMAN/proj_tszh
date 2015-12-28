@@ -770,6 +770,9 @@
     <Content Include="Views\User\ColdWater.cshtml" />
     <Content Include="Views\User\EditColdWater.cshtml" />
     <Content Include="Views\User\SetColdWater.cshtml" />
+    <Content Include="Views\User\HotWater.cshtml" />
+    <Content Include="Views\User\EditHotWater.cshtml" />
+    <Content Include="Views\User\SetHotWater.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
