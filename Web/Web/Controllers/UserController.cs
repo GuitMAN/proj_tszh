@@ -461,12 +461,18 @@ namespace Web.Controllers
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
+
             model.write = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
+                
                 repository.SaveCounder_data(model);
                 TempData["message"] = string.Format("Показания газового счетчика успешно отправлены");
+            }
+            else
+            {
+                ModelState.AddModelError("", String.Format("Введите корректное показание счетчика"));
             }
 
             return RedirectToAction("Gas");
