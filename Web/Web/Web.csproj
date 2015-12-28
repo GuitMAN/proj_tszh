@@ -767,6 +767,9 @@
     <Content Include="Views\User\SetEnergo.cshtml" />
     <Content Include="Scripts\MANIFEST" />
     <Content Include="Scripts\package.json" />
+    <Content Include="Views\User\ColdWater.cshtml" />
+    <Content Include="Views\User\EditColdWater.cshtml" />
+    <Content Include="Views\User\SetColdWater.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
