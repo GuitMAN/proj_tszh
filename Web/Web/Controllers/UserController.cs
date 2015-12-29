@@ -656,7 +656,14 @@ namespace Web.Controllers
             Counter_data model;
             Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(3)).SingleOrDefault();
             model = new Counter_data();
-            model.id = counter.id;
+            if (counter != null)
+            {
+                model.id = counter.id;
+            }
+            else
+            {
+                model = new Counter_data();
+            }
             return View(model);
         }
 
