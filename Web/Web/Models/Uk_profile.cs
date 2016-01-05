@@ -50,4 +50,13 @@ namespace Web.Models
         public string Apartment { get; set; }
     }
 
+    [Table("Monitoring")]
+    public class Monitoring
+    {
+        public bool gas { get; set; }
+        public bool energo { get; set; }
+        public bool water { get; set; }
+    }
+
+
 }

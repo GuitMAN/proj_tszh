@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Web
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{6C2EA635-DD7C-40A6-9DC5-A506BA9C5AB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{6144E223-9A9C-4253-8B1E-6AB2DDC6B822}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6C2EA635-DD7C-40A6-9DC5-A506BA9C5AB8} = {6C2EA635-DD7C-40A6-9DC5-A506BA9C5AB8}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{6C2EA635-DD7C-40A6-9DC5-A506BA9C5AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C2EA635-DD7C-40A6-9DC5-A506BA9C5AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C2EA635-DD7C-40A6-9DC5-A506BA9C5AB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6144E223-9A9C-4253-8B1E-6AB2DDC6B822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6144E223-9A9C-4253-8B1E-6AB2DDC6B822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6144E223-9A9C-4253-8B1E-6AB2DDC6B822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6144E223-9A9C-4253-8B1E-6AB2DDC6B822}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

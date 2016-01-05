@@ -242,6 +242,27 @@ namespace Web.Controllers
             return View(model);
         }
 
+
+        public ActionResult ViewCounters()
+        {
+            Admtszh admuser = null;
+            uk_profile uk = null;
+            Counter_model model = new Counter_model();
+            IEnumerable<UserProfile> users;
+            string requestDomain = Request.Headers["host"];
+            try
+            {
+                uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
+                users = repository.UserProfile.Where(p => p.id_uk.Equals(uk.id));
+            }
+            catch
+            { }
+            return View();
+        }
+
+
+
+
         public ActionResult get_users()
         {
 

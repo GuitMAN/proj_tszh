@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,10 +15,10 @@ namespace Web.Models
         [Display(Name = "Серийный номер")]
         public string serial { get; set; }
         public int UserId { get; set; }
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         [Display(Name = "Дата проверки")]
         [DisplayFormat(DataFormatString = "{0:d/m/yy}")]
-        public DateTime DateOfReview { get; set; }
+        public DateTime? DateOfReview { get; set; }
         [Display(Name = "Место установки")]
         public string place { get; set; }
         [Display(Name = "Статус")]
@@ -32,9 +33,16 @@ namespace Web.Models
         [ScaffoldColumn(false)]
         [Column(TypeName = "datetime")]
         [Display(Name = "Дата внесения показаний")]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime write { get; set; }
+        public DateTime? write { get; set; }
         [Display(Name = "Показания счетчика")]
         public decimal data { get; set; }
+    }
+
+    public class Counter_model
+    {
+        public IEnumerable<Counter> ListCounter;
+        public IEnumerable<Counter_data> ListData;
     }
 }

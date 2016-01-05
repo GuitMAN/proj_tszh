@@ -3,17 +3,18 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
-using WebMatrix.WebData;
+using System.Web.Mvc.Filters;
 using Web.Models;
-//using System.Web.Mvc.Filters;
-using System.Web.Routing;
+using WebMatrix.WebData;
 using System.Security.Principal;
-
+using System.Web.Routing;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Web.Filter
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class InitializeMembershipAttribute : ActionFilterAttribute
+    public sealed class InitializeMembershipAttribute : ActionFilterAttribute, IAuthorizationFilter
     {
         private static SimpleMembershipInitializer _initializer;
         private static object _initializerLock = new object();
@@ -25,28 +26,26 @@ namespace Web.Filter
             LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
         }
 
-     //   public void OnAuthentication(AuthenticationContext context)
-     //   {
-     //       IIdentity ident = context.Principal.Identity;
-     //       if (!ident.IsAuthenticated)
-     //       {
-     ////           context.Result = new HttpUnauthorizedResult();
-     //       }
 
-     //   }
 
-     //   public void OnAuthenticationChallenge(AuthenticationChallengeContext context)
-     //   {
-     //       if (context.Result == null|| context.Result is HttpUnauthorizedResult)
-     //       {
-     //           context.Result = new RedirectToRouteResult(new RouteValueDictionary {
-     //               {"controller", "Login"}, 
-     //               {"action",  "Index"}, 
-     //               {"returnUrl", context.HttpContext.Request.RawUrl}
-     //           });
-     //       }                  
-       
-     //   }
+
+
+        public void OnAuthorization(AuthorizationContext filterContext)
+        {
+
+        }
+
+        public void OnAuthenticationChallenge(AuthenticationChallengeContext context)
+        {
+            if (context.Result == null || context.Result is HttpUnauthorizedResult)
+            {
+                // ...
+            }
+            else
+            {
+                //Вам сюда нельзя
+            }
+        }
 
         private class SimpleMembershipInitializer
         {
@@ -76,4 +75,5 @@ namespace Web.Filter
             }
         }
     }
+
 }

@@ -1,19 +1,38 @@
-﻿@using Web.Models
-
-@model   Article
-
-@{
+﻿@{
     Layout = "~/Views/Shared/_LayoutMain.cshtml";
     ViewBag.Title = "Главная";
 }
 
-<h2></h2>
+<div id="content"></div>
 
-   
 
-<hr>
-   
-<hr>
-    
+
+@section Scripts {
+    @Styles.Render("~/Styles/jqueryui.min")
+    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryui.min")
+
+    <script type="text/javascript">
+
+
+        $.ajax({
+            url: "getArticle", 
+            type: "GET",
+            dataType: 'json',
+            success: function (result) {
+                var text = '';
+                for (var n in result)
+                    text += '<p>' + result[n];
+                $("#content").html(text);
+            }
+        });
+
+    </script>
+    }
+
+
+
+
+<hr>   
 <br>Время UTC: @System.DateTime.UtcNow;
 <br>Местное время: @System.DateTime.Now;

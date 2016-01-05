@@ -28,7 +28,7 @@ namespace Web.Controllers
         {         
             //Если пользователь зарегистрирован, но вас кинуло именно сюда, значит вам на ту страницу нельзя 401
             if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
-                return RedirectToAction("error401", "User");
+                return RedirectToAction("Error_401", "Login");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -38,15 +38,16 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(LoginModel model, string ReturnUrl)
         {
-            //на всякий случай )) 
-            WebSecurity.Logout();
+            //If User Autorized, but him redirected here, then error 401 
+            if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
+                return RedirectToAction("Error_401", "Login");
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 uk_profile uk = null;
                 try
                 {
                     string requestDomain =Request.Headers["host"];
-                    UserProfile user = repository.UserProfile.Where(p => p.login.Equals(model.UserName)).SingleOrDefault();
+                    UserProfile user = repository.UserProfile.Where(p => p.id.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
@@ -67,11 +68,12 @@ namespace Web.Controllers
                     TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
                    
                 }
-                catch
+                catch (Exception ex)
                 {
                     string requestDomain = Request.Headers["host"];
                     ModelState.AddModelError("", "Логин следует вводить с учетом регистра");
                     TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                    
                 }        
                 WebSecurity.Logout();           
             }
@@ -91,7 +93,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid && !WebSecurity.UserExists(model.UserName))
+            if (ModelState.IsValid )
             {   
                 try
                 {
@@ -104,10 +106,10 @@ namespace Web.Controllers
                 }
                 catch (MembershipCreateUserException e)
                 {
-                    ModelState.AddModelError("Ошибка при регистрации", ErrorCodeToString(e.StatusCode));                       
+                    ModelState.AddModelError("Ошибка при регистрации: ", ErrorCodeToString(e.StatusCode));                       
                 }
             }
-            
+
             return View(model);
         }
 

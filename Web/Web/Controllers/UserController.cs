@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Web.Models;
 using Web.Models.Repository;
 using WebMatrix.WebData;
+using Web.Utils;
 
 namespace Web.Controllers
 {
@@ -16,6 +17,12 @@ namespace Web.Controllers
         Repo repository;
         //идентификатор УК ТСЖ
         //const string domain = ".мое-тсж.рф"; 
+        private Repo repo;
+        public UserController(Repo repo)
+        {
+            repository = repo;
+        }
+
         public UserController()
         {
             repository = new Repo();
@@ -33,7 +40,8 @@ namespace Web.Controllers
            else
                uk_id = uk.id;
            Article art = repository.Articles.Where(t => t.title.Equals(id)).Where(u => u.id_uk.Equals(uk_id)).SingleOrDefault();
-           return View(art);
+
+            return View(art);
         }
 
         public ViewResult No_uk()
@@ -61,7 +69,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-
+                Log.Write(ex);
                 return Redirect("send_profile");    
             }
             //----------------------------
@@ -93,6 +101,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Write(ex);
                 model.UserId = WebSecurity.CurrentUserId;
             }
 
@@ -174,6 +183,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Write(ex);
                 return RedirectToAction("LogoOut", "Login");
             }
             //----------------------------
@@ -212,9 +222,10 @@ namespace Web.Controllers
  //                   return Redirect("http://" + uk.host);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                TempData["message"] = string.Format("Ошибка доступа \"{0}\"", e.Message);
+                Log.Write(ex);
+                TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
                 return Redirect("/Login/LogoOut");
             }
             //------------------------------------
@@ -262,8 +273,9 @@ namespace Web.Controllers
                     //генерация исключения
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Log.Write(ex);
                 return Redirect("/Login/LogoOut");
             }
             //------------------------------------
@@ -332,9 +344,9 @@ namespace Web.Controllers
             {
                 user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             }
-            catch
+            catch (Exception ex)
             {
-                
+                Log.Write(ex);
             }
             if (user == null)
             {
@@ -370,21 +382,29 @@ namespace Web.Controllers
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
-            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(1)).SingleOrDefault();
-            IEnumerable<Counter_data> data = null;
-            if (counter != null)
+            Counter_model model = new Counter_model();
+            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(1));
+            model.ListData = null;
+            if (model.ListCounter.Count() != 0)
             {
                 using (var context = new EFDbContext())
                 {
-                    data = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = "+counter.id ,"").ToArray();
+                    string res = "";
+                    foreach (var item in model.ListCounter)
+                    {
+                        if (!res.Equals("")) { res = res + ","; } 
+                        res = res + item.id.ToString();
+                    }
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( "+res+" )").ToArray();
                 }
             }
             else
             {
-                data = new List<Counter_data>().ToArray();
+                model.ListData = new List<Counter_data>().ToArray();
             }
-            ViewData["counter_id"] = counter.id;
-            return View(data);
+          
+             
+            return View(model);
         }
 
         public ActionResult EditGas(int id = 0)
@@ -441,12 +461,18 @@ namespace Web.Controllers
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
+
             model.write = DateTime.UtcNow;
 
             if (ModelState.IsValid)
             {
+                
                 repository.SaveCounder_data(model);
                 TempData["message"] = string.Format("Показания газового счетчика успешно отправлены");
+            }
+            else
+            {
+                ModelState.AddModelError("", String.Format("Введите корректное показание счетчика"));
             }
 
             return RedirectToAction("Gas");
@@ -460,21 +486,27 @@ namespace Web.Controllers
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
-            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(2)).SingleOrDefault();
-            IEnumerable<Counter_data> data = null;
-            if (counter != null)
+            Counter_model model = new Counter_model();
+            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(2));
+            model.ListData = null;
+            if (model.ListCounter.Count() != 0)
             {
                 using (var context = new EFDbContext())
                 {
-                    data = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = " + counter.id, "").ToArray();
+                    string res = "";
+                    foreach (var item in model.ListCounter)
+                    {
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
+                    }
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
                 }
             }
             else
             {
-                data = new List<Counter_data>().ToArray();
+                model.ListData = new List<Counter_data>().ToArray();
             }
-            ViewData["counter_id"] = counter.id;
-            return View(data);
+            return View(model);
         }
 
         public ActionResult EditEnergo(int id = 0)
@@ -547,7 +579,215 @@ namespace Web.Controllers
         }
 
 
-    #region Вспомогательные методы
+        //Методы с водяным счетчиком
+        //type = 3;
+        public ActionResult ColdWater()
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            Counter_model model = new Counter_model();
+            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(3));
+            model.ListData = null;
+            if (model.ListCounter.Count() != 0)
+            {
+                using (var context = new EFDbContext())
+                {
+                    string res = "";
+                    foreach (var item in model.ListCounter)
+                    {
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
+                    }
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                }
+            }
+            else
+            {
+                model.ListData = new List<Counter_data>().ToArray();
+            }
+            return View(model);
+        }
+
+        public ActionResult EditColdWater(int id = 0)
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            Counter counter;
+            if (id == 0)
+            {
+                counter = new Counter();
+                counter.type = 3;
+                counter.UserId = WebSecurity.CurrentUserId;
+            }
+            else
+            {
+                counter = repository.Counter.Where(i => i.id.Equals(id)).SingleOrDefault();
+            }
+
+            return View(counter);
+        }
+
+        [HttpPost]
+        public ActionResult EditColdWater(Counter model)
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            if (ModelState.IsValid)
+            {
+                repository.SaveCounter(model);
+                TempData["message"] = string.Format("Счетчик холодной воды успешно добавлен(обновлен)");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult SetColdWater()
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            Counter_data model;
+            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(3)).SingleOrDefault();
+            model = new Counter_data();
+            if (counter != null)
+            {
+                model.id = counter.id;
+            }
+            else
+            {
+                model = new Counter_data();
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SetColdWater(Counter_data model)
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            model.write = DateTime.UtcNow;
+
+            if (ModelState.IsValid)
+            {
+                repository.SaveCounder_data(model);
+                TempData["message"] = string.Format("Показания счетчика холодной воды успешно отправлены");
+            }
+
+            return RedirectToAction("Energo");
+        }
+
+
+
+        //Методы с водяным счетчиком
+        //type = 4;
+        public ActionResult HotWater()
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            Counter_model model = new Counter_model();
+            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(4));
+            model.ListData = null;
+            if (model.ListCounter.Count() != 0)
+            {
+                using (var context = new EFDbContext())
+                {
+                    string res = "";
+                    foreach (var item in model.ListCounter)
+                    {
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
+                    }
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                }
+            }
+            else
+            {
+                model.ListData = new List<Counter_data>().ToArray();
+            }
+            return View(model);
+        }
+
+        public ActionResult EditHotWater(int id = 0)
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            Counter counter;
+            if (id == 0)
+            {
+                counter = new Counter();
+                counter.type = 4;
+                counter.UserId = WebSecurity.CurrentUserId;
+            }
+            else
+            {
+                counter = repository.Counter.Where(i => i.id.Equals(id)).SingleOrDefault();
+            }
+
+            return View(counter);
+        }
+
+        [HttpPost]
+        public ActionResult EditHotWater(Counter model)
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            if (ModelState.IsValid)
+            {
+                repository.SaveCounter(model);
+                TempData["message"] = string.Format("Счетчик холодной воды успешно добавлен(обновлен)");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult SetHotWater()
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            Counter_data model;
+            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(4)).SingleOrDefault();
+            model = new Counter_data();
+            model.id = counter.id;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SetHotWater(Counter_data model)
+        {
+            //---------------------------
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+            model.write = DateTime.UtcNow;
+
+            if (ModelState.IsValid)
+            {
+                repository.SaveCounder_data(model);
+                TempData["message"] = string.Format("Показания счетчика холодной воды успешно отправлены");
+            }
+
+            return RedirectToAction("Energo");
+        }
+
+
+        #region Вспомогательные методы
         public string get_adr(int id_adr = 0)
         {
             if (id_adr == 0) return "Адрес не назначен";
@@ -581,9 +821,10 @@ namespace Web.Controllers
                 client.Send(mail);
                 mail.Dispose();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-           //     ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+                Log.Write(ex);
+              //  ModelState.AddModelError("City", "УК или ТСЖ не найдена");
             }
         }
 
