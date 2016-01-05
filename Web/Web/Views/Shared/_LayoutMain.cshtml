@@ -8,10 +8,6 @@
 
     @Styles.Render("~/Styles/css")
     @Styles.Render("~/Styles/error")
-    
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
     @Styles.Render("~/Styles/themes/start/jquery-ui")
 
     
@@ -44,5 +40,6 @@
         </footer>
            
 </div>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

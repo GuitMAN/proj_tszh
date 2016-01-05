@@ -20,17 +20,23 @@ namespace Web.Models
 
         //
         // GET: /Home/        
-        public ViewResult Index(string id = "1")
+        public ActionResult Index()
         {
-            int i;
-            try
-            {
-                i = Convert.ToInt32(id);
-            }
-            catch { return View(new Article()); }
-
             return View();         
+        }
 
+        public JsonResult getArticle(string id = "Главная")
+        {
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
+            int uk_id;
+            if (uk == null)
+                uk_id = 0;
+            else
+                uk_id = uk.id;
+            Article art = repository.Articles.Where(t => t.title.Equals(id)).Where(u => u.id_uk.Equals(uk_id)).SingleOrDefault();
+
+            return Json(art, JsonRequestBehavior.AllowGet);
         }
 
         public string test()
