@@ -33,7 +33,7 @@ namespace Web.Models
             if (uk == null)
                 uk_id = 0;
             else
-                uk_id = uk.id;
+                uk_id = uk.id; 
             Article art = repository.Articles.Where(t => t.title.Equals(id)).Where(u => u.id_uk.Equals(uk_id)).SingleOrDefault();
 
             return Json(art, JsonRequestBehavior.AllowGet);
