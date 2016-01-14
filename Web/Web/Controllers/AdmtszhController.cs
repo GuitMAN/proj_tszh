@@ -243,11 +243,11 @@ namespace Web.Controllers
         }
 
 
-        public ActionResult ViewCounters()
+        public ActionResult ViewCounters(int type = 0)
         {
             Admtszh admuser = null;
             uk_profile uk = null;
-            Counter_model model = new Counter_model();
+            //Counter_model model = new Counter_model();
             IEnumerable<UserProfile> users;
             string requestDomain = Request.Headers["host"];
             try
@@ -257,7 +257,29 @@ namespace Web.Controllers
             }
             catch
             { }
-            return View();
+
+            //To do add array of user's counters 
+            Counter_model model = new Counter_model();
+            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(type));
+            model.ListData = null;
+            if (model.ListCounter.Count() != 0)
+            {
+                using (var context = new EFDbContext())
+                {
+                    string res = "";
+                    foreach (var item in model.ListCounter)
+                    {
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
+                    }
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                }
+            }
+            else
+            {
+                model.ListData = new List<Counter_data>().ToArray();
+            }
+            return View(model);
         }
 
 

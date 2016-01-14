@@ -773,6 +773,7 @@
     <Content Include="Views\User\HotWater.cshtml" />
     <Content Include="Views\User\EditHotWater.cshtml" />
     <Content Include="Views\User\SetHotWater.cshtml" />
+    <Content Include="Views\Admtszh\ViewCounters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
