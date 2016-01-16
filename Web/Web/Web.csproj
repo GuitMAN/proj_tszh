@@ -268,12 +268,6 @@
     <Content Include="Scripts\angular-1.4.8\version.txt" />
     <Content Include="Scripts\AUTHORS.txt" />
     <Content Include="Scripts\external\jquery\jquery.js" />
-    <Content Include="Scripts\images\ui-icons_444444_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_555555_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_777620_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_777777_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_cc0000_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Scripts\index.html" />
     <Content Include="Scripts\angular-1.4.8\angular-animate.min.js.map" />
     <Content Include="Scripts\angular-1.4.8\angular-aria.min.js.map" />
@@ -306,12 +300,14 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\controllers.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Styles\app.css" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.css" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.min.css" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap.css" />
@@ -818,6 +814,7 @@
     <Content Include="Views\User\SetHotWater.cshtml" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.css.map" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap.css.map" />
+    <Content Include="Views\Home\Article.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
