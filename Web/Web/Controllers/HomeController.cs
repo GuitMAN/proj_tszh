@@ -25,6 +25,11 @@ namespace Web.Models
             return View();         
         }
 
+        public ActionResult Article()
+        {
+            return View();
+        }
+
         public JsonResult getArticle(string id = "Главная")
         {
             string requestDomain = Request.Headers["host"];

@@ -240,15 +240,48 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\мое-тсж.рф - Web Deploy.pubxml" />
+    <Content Include="Scripts\angular-1.4.8\angular-animate.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-animate.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-aria.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-aria.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-cookies.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-cookies.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-csp.css" />
+    <Content Include="Scripts\angular-1.4.8\angular-loader.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-loader.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-message-format.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-message-format.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-messages.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-messages.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-mocks.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-resource.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-resource.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-route.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-route.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-sanitize.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-sanitize.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-scenario.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-touch.js" />
+    <Content Include="Scripts\angular-1.4.8\angular-touch.min.js" />
+    <Content Include="Scripts\angular-1.4.8\angular.js" />
+    <Content Include="Scripts\angular-1.4.8\angular.min.js" />
+    <Content Include="Scripts\angular-1.4.8\version.txt" />
     <Content Include="Scripts\AUTHORS.txt" />
     <Content Include="Scripts\external\jquery\jquery.js" />
-    <Content Include="Scripts\images\ui-icons_444444_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_555555_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_777620_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_777777_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_cc0000_256x240.png" />
-    <Content Include="Scripts\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Scripts\index.html" />
+    <Content Include="Scripts\angular-1.4.8\angular-animate.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-aria.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-cookies.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-loader.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-message-format.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-messages.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-resource.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-route.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-sanitize.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular-touch.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\angular.min.js.map" />
+    <Content Include="Scripts\angular-1.4.8\errors.json" />
+    <Content Include="Scripts\angular-1.4.8\version.json" />
     <None Include="Scripts\jquery-1.8.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.0.js" />
     <Content Include="Scripts\jquery-1.8.0.min.js" />
@@ -267,12 +300,18 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\controllers.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
     <Content Include="Scripts\MicrosoftMvcAjax.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Styles\app.css" />
+    <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.css" />
+    <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.min.css" />
+    <Content Include="Styles\bootstrap-dist\css\bootstrap.css" />
+    <Content Include="Styles\bootstrap-dist\css\bootstrap.min.css" />
     <Content Include="Styles\themes\black-tie\images\ui-bg_diagonals-thick_8_333333_40x40.png" />
     <Content Include="Styles\themes\black-tie\images\ui-bg_flat_65_ffffff_40x100.png" />
     <Content Include="Styles\themes\black-tie\images\ui-bg_glass_40_111111_1x400.png" />
@@ -773,7 +812,9 @@
     <Content Include="Views\User\HotWater.cshtml" />
     <Content Include="Views\User\EditHotWater.cshtml" />
     <Content Include="Views\User\SetHotWater.cshtml" />
-    <Content Include="Views\Admtszh\ViewCounters.cshtml" />
+    <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.css.map" />
+    <Content Include="Styles\bootstrap-dist\css\bootstrap.css.map" />
+    <Content Include="Views\Home\Article.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -795,7 +836,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53574</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

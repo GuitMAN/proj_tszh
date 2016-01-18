@@ -3,14 +3,27 @@
     ViewBag.Title = "Главная";
 }
 
-<div id="content"></div>
+
+    <ng-view></ng-view>
+
+<hr>
+<br>Время UTC: @System.DateTime.UtcNow;
+<br>Местное время: @System.DateTime.Now;
+
+
+@section Scripts 
+    {
+    <script src="~/Scripts/angular-1.4.8/angular.js"></script>
+    <script src="~/Scripts/angular-1.4.8/angular-route.js"></script>
+    <script src="~/Scripts/angular-1.4.8/angular-resource.js"></script>
+    <script src="~/Scripts/js/controllers.js"></script>
 
 
 
-@section Scripts {
-    @Styles.Render("~/Styles/jqueryui.min")
+    <!--
+    Styles.Render("~/Styles/jqueryui.min")
     <script src="~/Scripts/jquery-1.8.0.min.js"></script>
-    @Scripts.Render("~/bundles/jqueryui.min")
+    Scripts.Render("~/bundles/jqueryui.min")
 
     <script type="text/javascript">
 
@@ -27,12 +40,10 @@
             }
         });
 
-    </script>
+    </script>-->
     }
 
 
 
 
-<hr>   
-<br>Время UTC: @System.DateTime.UtcNow;
-<br>Местное время: @System.DateTime.Now;
+
