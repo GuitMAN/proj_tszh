@@ -27,6 +27,7 @@ phonecatApp.config([
 ]);
 
 /* Factory */
+
 phonecatApp.factory('Phone', [
   '$resource', function($resource) {
     return $resource('getarticle/:phoneId', {
