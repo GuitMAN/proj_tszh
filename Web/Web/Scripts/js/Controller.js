@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 /* Controllers */
-var phonecatApp = angular.module('phonecatApp', ['ngRoute', 'ngResource']);
+var phonecatApp = angular.module('HomeApp', ['ngRoute', 'ngResource']);
 
 /* Config */
 phonecatApp.config([
@@ -9,22 +9,18 @@ phonecatApp.config([
   function($routeProvide, $locationProvider){
     $routeProvide
         .when('/',{
-          templateUrl:'template/home.html',
+          templateUrl:'article?phones=главная',
           controller:'PhoneListCtrl'
         })
         .when('/about',{
-          templateUrl:'template/about.html',
-          controller:'AboutCtrl'
+          templateUrl:'article',
+          controller:'HomeCtrl'
         })
         .when('/contact',{
-          templateUrl:'template/contact.html',
+          templateUrl:'home/contact',
           controller:'ContactCtrl'
         })
-        .when('/phones/:phoneId', {
-          templateUrl:'template/phone-detail.html',
-          controller:'PhoneDetailCtrl'
-        })
-        .otherwise({
+		.otherwise({
           redirectTo: '/'
         });
   }
@@ -33,10 +29,8 @@ phonecatApp.config([
 /* Factory */
 phonecatApp.factory('Phone', [
   '$resource', function($resource) {
-    return $resource('phones/:phoneId.:format', {
-      phoneId: 'phones',
-      format: 'json',
-      apiKey: 'someKeyThis'
+    return $resource('getarticle/:phoneId', {
+      phoneId: 'phones'
       /* http://localhost:8888/phones/phones.json?apiKey=someKeyThis */
     }, {
       // action: {method: <?>, params: <?>, isArray: <?>, ...}
@@ -89,20 +83,15 @@ phonecatApp.controller('ContactCtrl',[
 ]);
 
 /* Phone Detail Controller */
-phonecatApp.controller('PhoneDetailCtrl',[
+phonecatApp.controller('HomeCtrl',[
   '$scope','$http', '$location', '$routeParams', 'Phone',
   function($scope, $http, $location, $routeParams, Phone) {
     $scope.phoneId = $routeParams.phoneId;
 
     Phone.get({phoneId: $routeParams.phoneId}, function(data) {
       $scope.phone = data;
-      $scope.mainImageUrl = data.images[0];
       //data.$save();
     });
-
-    $scope.setImage = function(imageUrl) {
-      $scope.mainImageUrl = imageUrl;
-    }
 
   }
 ]);
