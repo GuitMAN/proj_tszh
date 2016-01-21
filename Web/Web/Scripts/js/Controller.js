@@ -9,16 +9,16 @@ phonecatApp.config([
   function($routeProvide, $locationProvider){
     $routeProvide
         .when('/',{
-          templateUrl:'article?phones=главная',
-          controller:'PhoneListCtrl'
+          templateUrl:'home/article',
+          controller: 'PhoneListCtrl'
         })
-        .when('/about',{
-          templateUrl:'article',
+        .when('/about/:artId',{
+          templateUrl:'home/article',
+          controller: 'PhoneListCtrl'
+        })
+        .when('/contact/:articles',{
+            templateUrl: 'home/article',
           controller:'HomeCtrl'
-        })
-        .when('/contact',{
-          templateUrl:'home/contact',
-          controller:'ContactCtrl'
         })
 		.otherwise({
           redirectTo: '/'
@@ -28,14 +28,15 @@ phonecatApp.config([
 
 /* Factory */
 
-phonecatApp.factory('Phone', [
+phonecatApp.factory('Article', [
   '$resource', function($resource) {
-    return $resource('getarticle/:phoneId', {
-      phoneId: 'phones'
-      /* http://localhost:8888/phones/phones.json?apiKey=someKeyThis */
-    }, {
-      // action: {method: <?>, params: <?>, isArray: <?>, ...}
-      update: {method: 'PUT', params: {phoneId: '@phone'}, isArray: true}
+      return $resource('home/getarticle/:articles',
+          {
+              method: 'getTask',
+              artId: 'articles'
+          }, // Query parameters
+          {'query': { method: 'GET' }
+    
     });
     //Phone.update(params, successcb, errorcb);
   }
@@ -49,12 +50,12 @@ phonecatApp.filter('checkmark', function() {
 });
 
 phonecatApp.controller('PhoneListCtrl',[
-  '$scope','$http', '$location', 'Phone',
-  function($scope, $http, $location, Phone) {
-
-    Phone.query({phoneId: 'phones'}, function(data) {
-      $scope.phones = data;
-    });
+  '$scope','$http', '$location', 'Article',
+  function ($scope, $http, $location, Article)
+  {
+     $scope.article = Article.query();
+          
+     console.log("Вывод - ", $scope.article.title);
 
     //Phone.query(params, successcb, errorcb)
 
@@ -67,30 +68,14 @@ phonecatApp.controller('PhoneListCtrl',[
   }
 ]);
 
-/* About Controller */
-phonecatApp.controller('AboutCtrl',[
-  '$scope','$http', '$location',
-  function($scope, $http, $location) {
-
-  }
-]);
-
-/* Contact Controller */
-phonecatApp.controller('ContactCtrl',[
-  '$scope','$http', '$location',
-  function($scope, $http, $location) {
-
-  }
-]);
-
 /* Phone Detail Controller */
 phonecatApp.controller('HomeCtrl',[
-  '$scope','$http', '$location', '$routeParams', 'Phone',
-  function($scope, $http, $location, $routeParams, Phone) {
-    $scope.phoneId = $routeParams.phoneId;
+  '$scope','$http', '$location', '$routeParams', 'Article',
+  function($scope, $http, $location, $routeParams, Article) {
+    $scope.artId = $routeParams.artId;
 
-    Phone.get({phoneId: $routeParams.phoneId}, function(data) {
-      $scope.phone = data;
+    Article.get({artId: $routeParams.artId}, function(data) {
+      $scope.article = data;
       //data.$save();
     });
 
