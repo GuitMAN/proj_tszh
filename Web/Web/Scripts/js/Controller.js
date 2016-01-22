@@ -9,15 +9,15 @@ phonecatApp.config([
   function ($routeProvide, $locationProvider) {
       $routeProvide
           .when('/', {
-              templateUrl: 'home/article',
-              controller: 'PhoneListCtrl'
+              templateUrl: '/home/article',
+              controller: 'HomeCtrl'
           })
           .when('/about/:artId', {
-              templateUrl: 'home/article',
-              controller: 'PhoneListCtrl'
+              templateUrl: '/home/article',
+              controller: 'HomeCtrl'
           })
-          .when('/contact/:articles', {
-              templateUrl: 'home/article',
+          .when('/contact/:artId', {
+              templateUrl: '/home/article',
               controller: 'HomeCtrl'
           })
           .otherwise({
@@ -30,7 +30,7 @@ phonecatApp.config([
 
 phonecatApp.factory('Article', [
   '$resource', function ($resource) {
-      return $resource('home/getarticle/:articles',
+      return $resource('/home/getarticle/:artId',
           {
               method: 'getTask',
               artId: 'articles'
