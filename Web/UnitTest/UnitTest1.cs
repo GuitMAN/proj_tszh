@@ -22,7 +22,7 @@ namespace UnitTest
             });
             UserController controller = new UserController(mock.Object);
 
-            controller.Gas();
+            //controller.Gas();
 
 
         }

@@ -242,44 +242,48 @@ namespace Web.Controllers
             return View(model);
         }
 
-
+        [AllowAnonymous]
         public ActionResult ViewCounters(int type = 0)
         {
             Admtszh admuser = null;
             uk_profile uk = null;
             //Counter_model model = new Counter_model();
-            IEnumerable<UserProfile> users;
+            IEnumerable<UserProfile> users = null;
             string requestDomain = Request.Headers["host"];
             try
             {
                 uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
-                users = repository.UserProfile.Where(p => p.id_uk.Equals(uk.id));
+                users = repository.UserProfile.Where(p => p.id_uk.Equals(1));//uk.id));
             }
             catch
             { }
 
             //To do add array of user's counters 
-            Counter_model model = new Counter_model();
-            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(type));
-            model.ListData = null;
-            if (model.ListCounter.Count() != 0)
+            Counter_model model = null;
+            foreach (var it in users)
             {
-                using (var context = new EFDbContext())
+                model = new Counter_model();
+                model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(it.id)).Where(p => p.type.Equals(type));
+                model.ListData = null;
+                if (model.ListCounter.Count() != 0)
                 {
-                    string res = "";
-                    foreach (var item in model.ListCounter)
+                    using (var context = new EFDbContext())
                     {
-                        if (!res.Equals("")) { res = res + ","; }
-                        res = res + item.id.ToString();
+                        string res = "";
+                        foreach (var item in model.ListCounter)
+                        {
+                            if (!res.Equals("")) { res = res + ","; }
+                            res = res + item.id.ToString();
+                        }
+                        model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
                     }
-                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                }
+              //  else
+                {
+             //       model.ListData = new List<Counter_data>().ToArray();
                 }
             }
-            else
-            {
-                model.ListData = new List<Counter_data>().ToArray();
-            }
-            return View(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
 

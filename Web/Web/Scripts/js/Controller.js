@@ -1,4 +1,5 @@
-﻿'use strict';
+﻿;
+'use strict';
 
 /* Controllers */
 var phonecatApp = angular.module('HomeApp', ['ngRoute', 'ngResource']);
@@ -34,12 +35,12 @@ phonecatApp.factory('Article', [
           {
               method: 'getTask',
               artId: 'articles'
-          }, // Query parameters
+          }, 
           {
               'query': { method: 'GET' }
 
           });
-      //Phone.update(params, successcb, errorcb);
+      
   }
 ]);
 
@@ -57,14 +58,6 @@ phonecatApp.controller('PhoneListCtrl', [
 
       console.log("Вывод - ", $scope.article.title);
 
-      //Phone.query(params, successcb, errorcb)
-
-      //Phone.get(params, successcb, errorcb)
-
-      //Phone.save(params, payloadData, successcb, errorcb)
-
-      //Phone.delete(params, successcb, errorcb)
-
   }
 ]);
 
@@ -76,7 +69,7 @@ phonecatApp.controller('HomeCtrl', [
 
       Article.get({ artId: $routeParams.artId }, function (data) {
           $scope.article = data;
-          //data.$save();
+
       });
 
   }

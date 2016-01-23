@@ -29,8 +29,8 @@ namespace Web.Models
         {
             return View();
         }
-
-        public JsonResult getArticle(string id = "Главная")
+        [AllowAnonymous]
+        public ActionResult getarticle(string id = "Главная")
         {
             string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
