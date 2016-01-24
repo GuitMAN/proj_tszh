@@ -41,7 +41,10 @@ namespace Web.Models
     }
 
     public class Counter_model
-    {
+    { // Project of model
+      //| Фамилия Имя Отчество | [ Газ ] | [Электро] | [ХВ] | [ГВ] | Улица | Дом | Квартира | [Дата]
+      //  public int 
+      //  public string Name;
         public IEnumerable<Counter> ListCounter;
         public IEnumerable<Counter_data> ListData;
     }

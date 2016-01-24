@@ -706,9 +706,9 @@ namespace Web.Controllers
                     foreach (var item in model.ListCounter)
                     {
                         if (!res.Equals("")) { res = res + ","; }
-                        res = res + item.id.ToString();
+                        res = res + item.UserId.ToString();
                     }
-                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE UserId IN  ( " + res + " )").ToArray();
                 }
             }
             else

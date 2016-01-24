@@ -2,10 +2,10 @@
 'use strict';
 
 /* Controllers */
-var phonecatApp = angular.module('HomeApp', ['ngRoute', 'ngResource']);
+var HomeApp = angular.module('HomeApp', ['ngRoute', 'ngResource']);
 
 /* Config */
-phonecatApp.config([
+HomeApp.config([
   '$routeProvider', '$locationProvider',
   function ($routeProvide, $locationProvider) {
       $routeProvide
@@ -17,10 +17,6 @@ phonecatApp.config([
               templateUrl: '/home/article',
               controller: 'HomeCtrl'
           })
-          .when('/contact/:artId', {
-              templateUrl: '/home/article',
-              controller: 'HomeCtrl'
-          })
           .otherwise({
               redirectTo: '/'
           });
@@ -29,7 +25,7 @@ phonecatApp.config([
 
 /* Factory */
 
-phonecatApp.factory('Article', [
+HomeApp.factory('Article', [
   '$resource', function ($resource) {
       return $resource('/home/getarticle/:artId',
           {
@@ -45,13 +41,13 @@ phonecatApp.factory('Article', [
 ]);
 
 /* Filter */
-phonecatApp.filter('checkmark', function () {
+HomeApp.filter('checkmark', function () {
     return function (input) {
         return input ? '\u2713' : '\u2718';
     }
 });
 
-phonecatApp.controller('PhoneListCtrl', [
+HomeApp.controller('PhoneListCtrl', [
   '$scope', '$http', '$location', 'Article',
   function ($scope, $http, $location, Article) {
       $scope.article = Article.query();
@@ -62,7 +58,7 @@ phonecatApp.controller('PhoneListCtrl', [
 ]);
 
 /* Phone Detail Controller */
-phonecatApp.controller('HomeCtrl', [
+HomeApp.controller('HomeCtrl', [
   '$scope', '$http', '$location', '$routeParams', 'Article',
   function ($scope, $http, $location, $routeParams, Article) {
       $scope.artId = $routeParams.artId;

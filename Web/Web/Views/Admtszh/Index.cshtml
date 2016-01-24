@@ -1,16 +1,15 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" ng-app="HomeApp">
+<html lang="en" ng-app="AdminApp">
 <head>
     <title>@ViewBag.Title</title>
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
     <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Styles/app.css" rel="stylesheet" />
-    
-  </head>
+</head>
 
-<body >
+<body>
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -25,27 +24,39 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#/">Главная</a></li>
-                    <li><a href="#/about/Главная">О Нас</a></li>
-                    <li><a href="#/about/Контакты">Контакты</a></li>
-                    @Html.Action("Menu_main", "Nav")
+                    <li><a href="#/ViewCounters">Отобразить счетчики пользователей </a></li>
                 </ul>
             </div><!-- /.nav-collapse -->
         </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
-            <div class="content">
-                @if (TempData["message"] != null)
-                {
-                    <div class="alert alert-success">@TempData["message"]</div>
-                }
+    <div class="content">
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success">@TempData["message"]</div>
+        }
 
-                @RenderBody()
-            </div>
-        <footer>
-            Все права защищены. CloudsSolution © 2015.
-        </footer>
-           
+        <h2>Панель администрации ТСЖ</h2>
 
-    @RenderSection("Scripts", required: false)
+        <ng-view></ng-view>
+
+
+            <script src="~/Scripts/angular-1.4.8/angular.js"></script>
+            <script src="~/Scripts/angular-1.4.8/angular-route.js"></script>
+            <script src="~/Scripts/angular-1.4.8/angular-resource.js"></script>
+            <script src="~/Scripts/js/admdirect.js"></script>
+
+    </div>
+    <footer>
+        Все права защищены. CloudsSolution © 2015.
+    </footer>
+
+
 </body>
+
+
+
+
+
+
 </html>

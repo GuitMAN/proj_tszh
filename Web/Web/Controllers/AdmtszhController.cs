@@ -260,27 +260,31 @@ namespace Web.Controllers
 
             //To do add array of user's counters 
             Counter_model model = null;
-            foreach (var it in users)
+            model = new Counter_model();
+            using (var context = new EFDbContext())
             {
-                model = new Counter_model();
-                model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(it.id)).Where(p => p.type.Equals(type));
+                string u = "";
+                foreach (var item in users)
+                {
+                    if (!u.Equals("")) { u = u + ","; }
+                    u = u + item.UserId.ToString();
+                }
+                model.ListCounter = context.Database.SqlQuery<Counter>("SELECT * FROM [dbo].[Counter] WHERE UserId IN  ( " + u + " )").ToArray(); //repository.Counter.Where(u => u.UserId.Equals(it.id)).Where(p => p.type.Equals(type));
                 model.ListData = null;
                 if (model.ListCounter.Count() != 0)
                 {
-                    using (var context = new EFDbContext())
+
+                    string res = "";
+                    foreach (var item in model.ListCounter)
                     {
-                        string res = "";
-                        foreach (var item in model.ListCounter)
-                        {
-                            if (!res.Equals("")) { res = res + ","; }
-                            res = res + item.id.ToString();
-                        }
-                        model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
                     }
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
                 }
-              //  else
+                else
                 {
-             //       model.ListData = new List<Counter_data>().ToArray();
+                    model.ListData = new List<Counter_data>().ToArray();
                 }
             }
             return Json(model, JsonRequestBehavior.AllowGet);

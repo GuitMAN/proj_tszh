@@ -300,6 +300,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\admdirect.js" />
     <Content Include="Scripts\js\Controller.js" />
     <Content Include="Scripts\MicrosoftAjax.debug.js" />
     <Content Include="Scripts\MicrosoftAjax.js" />
@@ -815,6 +816,8 @@
     <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.css.map" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap.css.map" />
     <Content Include="Views\Home\Article.cshtml" />
+    <Content Include="Views\Admtszh\Index.cshtml" />
+    <Content Include="Views\Home\ViewCounter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

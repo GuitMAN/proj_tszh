@@ -29,11 +29,17 @@ namespace Web
                defaults: new { controller = "User", action = "Index", id = "Главная" }
             );
             routes.MapRoute(
+                name: "",
+                url: "Home#/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
                     name: "",
                     url: "{controller}/{action}/{id}",
                     defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }
-                );
-          
+            );
+
+
             //int i = 0;
             //foreach (string p in subhosts)
             //{

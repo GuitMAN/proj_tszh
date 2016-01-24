@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<string>
         
-        <ul>
-            <li>@Html.ActionLink("Главная", "Index", "User")</li>
+        <ul class="nav navbar-nav">
+            <li class="active">@Html.ActionLink("Главная", "Index", "Home")</li>
             @foreach (var link in Model)
             {
                 if (link.Equals("Главная")) { continue; }
-            <li>@Html.RouteLink(link, new { controller = "User", action = "Index", id = link})</li>
+            <li>@Html.RouteLink(link, new { controller = "Home", action = "about", id = link})</li>
             }
-        </ul>
+        </ulclass="nav>
 
 @section Scripts {
 

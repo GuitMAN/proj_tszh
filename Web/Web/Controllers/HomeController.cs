@@ -48,41 +48,11 @@ namespace Web.Models
         {
             return "Тестовое сообщение";
         }
-/*
-        [Authorize]
-        public ActionResult profile()
+
+        public ActionResult ViewCounter()
         {
-            if (!WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
-            UserProfile user;
-            user = repository.UserProfile.Where(p => p.id.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            if (user.id_uk==0)
-                return RedirectToAction("No_uk", "Home");
-            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
-            if (uk != null)
-                return Redirect("http://" + uk.host + ".мое-тсж.рф/");         
             return View();
         }
-
-        [HttpGet]
-        [Authorize]
-        public ActionResult FeedBack()
-        {
-            if (!WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
-            UserProfile user;
-            user = repository.UserProfile.Where(p => p.id.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            if (user.id_uk == 0)
-                return RedirectToAction("No_uk", "Home");
-
-            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
-            if (uk != null)
-                return Redirect("http://" + uk.host + ".мое-тсж.рф/"); 
-
-            return View();
-        }
-
-    //*/
 
 
         [HttpGet]
