@@ -4,13 +4,14 @@
     <p>Sort Type: {{ sortType }}</p>
     <p>Sort Reverse: {{ sortReverse }}</p>
     <p>Search Query: {{ searchDef }}</p>
+    <p>Search Query: {{ searchDef2 }}</p>
 </div>
 <form>
     <div class="form-group">
         <div class="input-group">
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Search da Fish" ng-model="searchDef">
-            <input type="text" class="form-control" placeholder="Search da Fish" ng-model="searchDef2">
+            <input type="text" class="form-control" placeholder="Поиск счетчика" ng-model="searchDef">
+            <input type="text" class="form-control" placeholder="Поиск данных счетчика" ng-model="searchDef2">
         </div>
     </div>
 </form>
@@ -61,7 +62,7 @@
             <td>{{ list.id }}</td>
             <td>{{ list.type }}</td>
             <td>{{ list.serial }}</td>
-            <td>{{ list.DateOfReview }}</td>
+            <td>{{ list.DateOfReview | aspDate | date : 'dd.MM.y' }}</td>
             <td>{{ list.place }}</td>
             <td>{{ list.status }}</td>
         </tr>
@@ -97,9 +98,10 @@
     <tbody>
         <tr ng-repeat="data in counter.ListData | orderBy:sortType:sortReverse | filter:searchDef2">
             <td>{{data.id }}</td>
-            <td>{{ data.write }}</td>
+            <td>{{ data.write | aspDate | date : 'MM.y' }}</td>
             <td>{{ data.data }}</td>
         </tr>
     </tbody>
 </table>
+<hr>
 <pre>{{counter | json}}</pre>

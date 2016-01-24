@@ -243,7 +243,7 @@ namespace Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult ViewCounters(int type = 0)
+        public JsonResult ViewCounters(int type = 0)
         {
             Admtszh admuser = null;
             uk_profile uk = null;

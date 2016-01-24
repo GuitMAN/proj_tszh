@@ -47,6 +47,19 @@ HomeApp.filter('checkmark', function () {
     }
 });
 
+HomeApp.filter('aspDate', function () {
+    'use strict';
+    return function (input) {
+        if (input) {
+            return parseInt(input.substr(6));
+        }
+        else {
+            return;
+        }
+    };
+});
+
+
 HomeApp.controller('PhoneListCtrl', [
   '$scope', '$http', '$location', 'Article',
   function ($scope, $http, $location, Article) {

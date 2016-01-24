@@ -36,11 +36,30 @@ admtszhApp.factory('Counters', [
 ]);
 
 /* Filter */
-admtszhApp.filter('checkmark', function () {
+admtszhApp.filter('checkmark', function ()
+{
     return function (input) {
         return input ? '\u2713' : '\u2718';
     }
 });
+
+admtszhApp.filter('aspDate', function ()
+{
+    'use strict';
+    return function (input)
+    {
+        if (input)
+        {
+            return parseInt(input.substr(6));
+        }
+        else
+        {
+            return;
+        }
+    };
+});
+
+
 
 /*
 phonecatApp.controller('PhoneListCtrl', [
@@ -65,8 +84,8 @@ admtszhApp.controller('ViewCounterCtrl', [
           $scope.searchDef = '';     // значение поиска по умолчанию
           $scope.searchDef2 = '';     // значение поиска по умолчанию
           $scope.counter = data;
-
       });
 
   }
 ]);
+

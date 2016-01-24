@@ -2,8 +2,9 @@
     Layout = null;
 }
 
-<pre> {{article | json}} </pre>
 <h1>{{article.title}} </h1>
 <h2>{{article.summary}}</h2>
 <div>{{article.content}}</div>
-<div>{{article.publicDate}}</div>
+<div>Дата публикации: {{article.publicDate | aspDate | date : 'dd.MM.y'}}</div>
+<hr>
+<pre>{{article | json}} </pre>

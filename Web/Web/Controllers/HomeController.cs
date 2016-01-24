@@ -29,8 +29,9 @@ namespace Web.Models
         {
             return View();
         }
+        [HttpGet]
         [AllowAnonymous]
-        public ActionResult getarticle(string id = "Главная")
+        public JsonResult getarticle(string id = "Главная")
         {
             string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
@@ -57,7 +58,7 @@ namespace Web.Models
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult AjaxHouse(string term = "")
+        public JsonResult AjaxHouse(string term = "")
         {
             if (term=="") return null;
             IEnumerable<string> categories = repository.uk_adress
