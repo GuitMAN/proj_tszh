@@ -13,7 +13,7 @@ HomeApp.config([
               templateUrl: '/home/article',
               controller: 'HomeCtrl'
           })
-          .when('/about/:artId', {
+          .when('/article/:artId', {
               templateUrl: '/home/article',
               controller: 'HomeCtrl'
           })

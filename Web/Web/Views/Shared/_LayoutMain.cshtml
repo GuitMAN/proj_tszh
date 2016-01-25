@@ -1,13 +1,22 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" ng-app="HomeApp">
+<html lang="ru" ng-app="HomeApp">
 <head>
     <title>@ViewBag.Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
     <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Styles/app.css" rel="stylesheet" />
-    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
   </head>
 
 <body >
@@ -25,8 +34,8 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#/">Главная</a></li>
-                    <li><a href="#/about/Главная">О Нас</a></li>
-                    <li><a href="#/about/Контакты">Контакты</a></li>
+                    <li><a href="#/article/Главная">О Нас</a></li>
+                    <li><a href="#/article/Контакты">Контакты</a></li>
                     @Html.Action("Menu_main", "Nav")
                 </ul>
             </div><!-- /.nav-collapse -->
@@ -47,5 +56,6 @@
            
 
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>

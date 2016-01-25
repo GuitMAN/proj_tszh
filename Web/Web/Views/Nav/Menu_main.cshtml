@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<string>
         
         <ul class="nav navbar-nav">
-            <li class="active">@Html.ActionLink("Главная", "Index", "Home")</li>
+            <li class="active">@Html.ActionLink("Главная", "article", "Home")</li>
             @foreach (var link in Model)
             {
                 if (link.Equals("Главная")) { continue; }
-            <li>@Html.RouteLink(link, new { controller = "Home", action = "about", id = link})</li>
+            <li>@Html.RouteLink(link, new { controller = "Home", action = "article", id = link})</li>
             }
         </ulclass="nav>
 
