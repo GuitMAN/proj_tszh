@@ -62,7 +62,7 @@
             <td>{{ list.id }}</td>
             <td>{{ list.type }}</td>
             <td>{{ list.serial }}</td>
-            <td>{{ list.DateOfReview | aspDate | date : 'dd.MM.y' }}</td>
+            <td>{{ list.DateOfReview  | date : 'dd.MM.y' }}</td>
             <td>{{ list.place }}</td>
             <td>{{ list.status }}</td>
         </tr>
@@ -85,7 +85,7 @@
             <td>
                 <a href="#/ViewCounters" ng-click="sortType = 'write'">
                     <span ng-show="sortType == 'write'" class="fa fa-caret-down"></span>
-                    Тип счетчика
+                    Дата показаний
                 </a>
             </td>
             <td>
@@ -98,7 +98,7 @@
     <tbody>
         <tr ng-repeat="data in counter.ListData | orderBy:sortType:sortReverse | filter:searchDef2">
             <td>{{data.id }}</td>
-            <td>{{ data.write | aspDate | date : 'MM.y' }}</td>
+            <td>{{ data.write | date : 'short' }}</td>
             <td>{{ data.data }}</td>
         </tr>
     </tbody>
