@@ -4,7 +4,6 @@
     <p>Sort Type: {{ sortType }}</p>
     <p>Sort Reverse: {{ sortReverse }}</p>
     <p>Search Query: {{ searchDef }}</p>
-    <p>Search Query: {{ searchDef2 }}</p>
 </div>
 <form>
     <div class="form-group">
@@ -20,88 +19,45 @@
     <thead>
         <tr>
             <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'list.id'">
-                    id
-                    <span ng-show="sortType == 'list.id'" class="fa fa-caret-down"></span>
+                <a href="#/ViewCounters" ng-click="sortType = 'Name'">
+                    Фамилия Имя 
+                    <span ng-show="sortType == 'Name'" class="fa fa-caret-down"></span>
                 </a>
             </td>
             <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'type'">
-                    <span ng-show="sortType == 'type'" class="fa fa-caret-down"></span>
-                    Тип счетчика
-                </a>
+                
+                    
+                    Газ
+                
             </td>
             <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'serial'">
-                    <span ng-show="sortType == 'serial'" class="fa fa-caret-down"></span>
-                    Серийный номер
-                </a>
+                    Электроэнергия             
             </td>
             <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'DateOfReview'">
-                    <span ng-show="sortType == 'DateOfReview'" class="fa fa-caret-down"></span>
-                    Дата проверки
-                </a>
+                    Холодная вода
             </td>
             <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'place'">
-                    <span ng-show="sortType == 'place'" class="fa fa-caret-down"></span>
-                    Расположение
-                </a>
+                    Горячая вода
             </td>
             <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'status'">
-                    <span ng-show="sortType == 'status'" class="fa fa-caret-down"> </span>
-                    Статус
-                </a>
+                Улица, дом
+            </td>
+            <td>
+                Месяц
             </td>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="list in counter.ListCounter | orderBy:sortType:sortReverse | filter:searchDef">
-            <td>{{ list.id }}</td>
-            <td>{{ list.type }}</td>
-            <td>{{ list.serial }}</td>
-            <td>{{ list.DateOfReview | aspDate | date : 'dd.MM.y' }}</td>
-            <td>{{ list.place }}</td>
-            <td>{{ list.status }}</td>
-        </tr>
-    </tbody>
-    <thead>
-        <tr>
-            <td>
-                <h2>Данные счетчиков</h2>
-            </td>
-        </tr>
-    </thead>
-    <thead>
-        <tr>
-            <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'id'">
-                    UserId
-                    <span ng-show="sortType == 'id'" class="fa fa-caret-down"></span>
-                </a>
-            </td>
-            <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'write'">
-                    <span ng-show="sortType == 'write'" class="fa fa-caret-down"></span>
-                    Тип счетчика
-                </a>
-            </td>
-            <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'data'">
-                    <span ng-show="sortType == 'data'" class="fa fa-caret-down"></span>
-                    Показания счетчика
-                </a>
-            </td>
-    </thead>
-    <tbody>
-        <tr ng-repeat="data in counter.ListData | orderBy:sortType:sortReverse | filter:searchDef2">
-            <td>{{data.id }}</td>
-            <td>{{ data.write | aspDate | date : 'MM.y' }}</td>
-            <td>{{ data.data }}</td>
+        <tr ng-repeat="item in counter | orderBy:sortType:sortReverse | filter:searchDef">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.gas }}</td>
+            <td>{{ item.energo }}</td>
+            <td>{{ item.cw }}</td>
+            <td>{{ item.hw }}</td>
+            <td>{{ item.street }}</td>
+            <td>{{ item.month |  }}</td>
         </tr>
     </tbody>
 </table>
 <hr>
-<pre>{{counter | json}}</pre>
+<pre>{{counter}}</pre>

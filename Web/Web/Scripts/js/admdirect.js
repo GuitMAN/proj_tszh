@@ -22,18 +22,19 @@ admtszhApp.config([
 /* Factory */
 
 admtszhApp.factory('Counters', [
-  '$resource', function ($resource) {
-      return $resource('/admtszh/ViewCounters/:Id',
+  '$resource', function ($resource) 
+  {
+      return $resource('/admtszh/viewcounters/:Id',
           {
               method: 'getTask',
               Id: 'id'
           }, 
           {
-              'query': { method: 'GET' }
-          });
-      
-  }
-]);
+              'query': { method: 'GET',  isArray:true }
+          }      
+   
+      );
+  }])
 
 /* Filter */
 admtszhApp.filter('checkmark', function ()
@@ -78,11 +79,11 @@ admtszhApp.controller('ViewCounterCtrl', [
   function ($scope, $http, $location, $routeParams, Counters) {
       $scope.Id = $routeParams.Id;
 
-      Counters.get({ Id: $routeParams.Id }, function (data) {
-          $scope.sortType = 'list.id'; // значение сортировки по умолчанию
+      Counters.query({ Id: $routeParams.Id }, function (data) {
+          $scope.sortType = 'Name'; // значение сортировки по умолчанию
           $scope.sortReverse = false;  // обратная сортировка
           $scope.searchDef = '';     // значение поиска по умолчанию
-          $scope.searchDef2 = '';     // значение поиска по умолчанию
+       //   $scope.searchDef2 = '';     // значение поиска по умолчанию
           $scope.counter = data;
       });
 

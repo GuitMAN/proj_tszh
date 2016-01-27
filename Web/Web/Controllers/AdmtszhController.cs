@@ -259,8 +259,9 @@ namespace Web.Controllers
             { }
 
             //To do add array of user's counters 
-            Counter_model model = null;
-            model = new Counter_model();
+            List < Counter_model> model = new List<Counter_model>();
+            IEnumerable<Counter> ListCounter = null;
+            IEnumerable<Counter_data> ListData = null;
             using (var context = new EFDbContext())
             {
                 string u = "";
@@ -269,22 +270,72 @@ namespace Web.Controllers
                     if (!u.Equals("")) { u = u + ","; }
                     u = u + item.UserId.ToString();
                 }
-                model.ListCounter = context.Database.SqlQuery<Counter>("SELECT * FROM [dbo].[Counter] WHERE UserId IN  ( " + u + " )").ToArray(); //repository.Counter.Where(u => u.UserId.Equals(it.id)).Where(p => p.type.Equals(type));
-                model.ListData = null;
-                if (model.ListCounter.Count() != 0)
-                {
+                ListCounter = context.Database.SqlQuery<Counter>("SELECT * FROM [dbo].[Counter] WHERE UserId IN  ( " + u + " )").ToArray(); //repository.Counter.Where(u => u.UserId.Equals(it.id)).Where(p => p.type.Equals(type));
 
+                if (ListCounter.Count() != 0)
+                {
                     string res = "";
-                    foreach (var item in model.ListCounter)
+                    foreach (var item in ListCounter)
                     {
                         if (!res.Equals("")) { res = res + ","; }
                         res = res + item.id.ToString();
                     }
-                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                    ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
                 }
                 else
                 {
-                    model.ListData = new List<Counter_data>().ToArray();
+                    ListData = new List<Counter_data>().ToArray();
+                }
+ 
+                foreach (var user in users)
+                {
+                    Counter_model temp = new Counter_model();
+                    temp.Name = user.SurName + " " + user.Name;
+                    //temp.street = get_adr(user.Adress);
+                    temp.flat = user.Apartment;
+                    //IEnumerable<Counter_data> Data = 
+                    DateTime d_start = new DateTime(2015,12,1);
+                    DateTime d_end = d_start.AddMonths(1);
+                    try
+                    {
+                        temp.gas =      ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).Where(d =>d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                    }
+                    catch
+                    {
+
+                    }
+                    try
+                    {
+                        temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                    }
+                    catch
+                    {
+
+                    }
+                    try
+                    {
+                        temp.cw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                    }
+                    catch
+                    {
+
+                    }
+                    try
+                    {
+                        temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                    }
+                    catch
+                    {
+
+                    }
+                    try
+                    {
+                        temp.month =    ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).FirstOrDefault().write.GetValueOrDefault();
+                    }
+                    catch { }
+                   
+                        model.Add(temp);
+                    
                 }
             }
             return Json(model, JsonRequestBehavior.AllowGet);
@@ -310,6 +361,15 @@ namespace Web.Controllers
 
 
             return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
+        public string get_adr(int id_adr = 0)
+        {
+            if (id_adr == 0) return "Адрес не назначен";
+            uk_adress adr = repository.uk_adress.Where(id => id.id.Equals(id_adr)).SingleOrDefault();
+            if (adr == null)
+                return "Ошибка! Адрес не найден!";
+            return adr.City + ", " + adr.Street + ", " + adr.House;
         }
 
     }
