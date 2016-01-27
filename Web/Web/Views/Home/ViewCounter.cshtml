@@ -14,6 +14,13 @@
         </div>
     </div>
 </form>
+<section>
+    <h4>Выберите месяц</h4>
+    <select ng-change="select_month()" ng-model="selectedLanguage">
+        <option value="11">Ноябрь</option>
+        <option value="12">Декарь</option>
+    </select>
+</section>
 <h2>Все счетчики жильцов</h2>
 <table class="table table-bordered table-striped">
     <thead>
@@ -25,19 +32,16 @@
                 </a>
             </td>
             <td>
-                
-                    
-                    Газ
-                
+               Газ             
             </td>
             <td>
-                    Электроэнергия             
+               Электроэнергия             
             </td>
             <td>
-                    Холодная вода
+               Холодная вода
             </td>
             <td>
-                    Горячая вода
+               Горячая вода
             </td>
             <td>
                 Улица, дом
@@ -54,8 +58,8 @@
             <td>{{ item.energo }}</td>
             <td>{{ item.cw }}</td>
             <td>{{ item.hw }}</td>
-            <td>{{ item.street }}</td>
-            <td>{{ item.month |  }}</td>
+            <td>{{ item.street}}, {{item.house}}, {{item.flat}}</td>
+            <td>{{ item.month | JsonDate | date : 'MMM - y' }}</td>
         </tr>
     </tbody>
 </table>

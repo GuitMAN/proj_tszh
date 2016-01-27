@@ -2,14 +2,14 @@
 'use strict';
 
 /* Controllers */
-var admtszhApp = angular.module('AdminApp', ['ngRoute', 'ngResource']);
+var admtszhApp = angular.module('AdminApp', ['ngRoute', 'ngResource', 'ngLocale']);
 
 /* Config */
 admtszhApp.config([
   '$routeProvider', '$locationProvider',
   function ($routeProvide, $locationProvider) {
       $routeProvide
-          .when('/ViewCounters', {
+          .when('/ViewCounters/:month', {
               templateUrl: '/home/ViewCounter',
               controller: 'ViewCounterCtrl'
           })
@@ -27,7 +27,7 @@ admtszhApp.factory('Counters', [
       return $resource('/admtszh/viewcounters/:Id',
           {
               method: 'getTask',
-              Id: 'id'
+              month: '11'
           }, 
           {
               'query': { method: 'GET',  isArray:true }
@@ -77,9 +77,9 @@ phonecatApp.controller('PhoneListCtrl', [
 admtszhApp.controller('ViewCounterCtrl', [
   '$scope', '$http', '$location', '$routeParams', 'Counters',
   function ($scope, $http, $location, $routeParams, Counters) {
-      $scope.Id = $routeParams.Id;
+      $scope.month = $routeParams.month;
 
-      Counters.query({ Id: $routeParams.Id }, function (data) {
+      Counters.query({ month: $routeParams.month }, function (data) {
           $scope.sortType = 'Name'; // значение сортировки по умолчанию
           $scope.sortReverse = false;  // обратная сортировка
           $scope.searchDef = '';     // значение поиска по умолчанию
@@ -90,3 +90,20 @@ admtszhApp.controller('ViewCounterCtrl', [
   }
 ]);
 
+admtszhApp.controller('myController', [
+  '$scope', '$http', '$location', '$routeParams', 'Counters',
+  function ($scope, $http, $location, $routeParams, Counters) {
+      $scope.month = $routeParams.month;
+
+      $scope.translate = function () {
+          Counters.query({ month: $routeParams.month }, function (data) {
+              $scope.sortType = 'Name'; // значение сортировки по умолчанию
+              $scope.sortReverse = false;  // обратная сортировка
+              $scope.searchDef = '';     // значение поиска по умолчанию
+              //   $scope.searchDef2 = '';     // значение поиска по умолчанию
+              $scope.counter = data;
+          });
+      };
+      $scope.select_month();
+
+}]);

@@ -247,7 +247,7 @@ namespace Web.Controllers
 
         [AllowAnonymous]
  //       [JsonNetFilter]
-        public JsonResult ViewCounters(int type = 0)
+        public JsonResult ViewCounters(int month = 11, int year=2015)
         {
             Admtszh admuser = null;
             uk_profile uk = null;
@@ -290,15 +290,17 @@ namespace Web.Controllers
                 {
                     ListData = new List<Counter_data>().ToArray();
                 }
- 
+                uk_adress adr;
                 foreach (var user in users)
                 {
                     Counter_model temp = new Counter_model();
                     temp.Name = user.SurName + " " + user.Name;
-                    //temp.street = get_adr(user.Adress);
+
+                    adr = context.uk_adresses.Where(pu => pu.id.Equals(user.Adress)).FirstOrDefault();
+                    temp.street = adr.Street;
+                    temp.house = adr.House;
                     temp.flat = user.Apartment;
-                    //IEnumerable<Counter_data> Data = 
-                    DateTime d_start = new DateTime(2015,12,1);
+                    DateTime d_start = new DateTime(year, month,1);
                     DateTime d_end = d_start.AddMonths(1);
                     try
                     {
