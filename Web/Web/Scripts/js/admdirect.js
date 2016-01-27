@@ -44,7 +44,7 @@ admtszhApp.filter('checkmark', function ()
     }
 });
 
-admtszhApp.filter('aspDate', function ()
+admtszhApp.filter('JsonDate', function ()
 {
     'use strict';
     return function (input)

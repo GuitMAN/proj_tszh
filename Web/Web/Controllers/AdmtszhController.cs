@@ -7,6 +7,9 @@ using Web.Models.Repository;
 using System.Data;
 using WebMatrix.WebData;
 using System.Web.Security;
+using System.Web;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json;
 //using Web.Filter;
 //using Microsoft.AspNet.Identity;
 
@@ -243,6 +246,7 @@ namespace Web.Controllers
         }
 
         [AllowAnonymous]
+ //       [JsonNetFilter]
         public JsonResult ViewCounters(int type = 0)
         {
             Admtszh admuser = null;
@@ -344,7 +348,7 @@ namespace Web.Controllers
 
 
 
-        public ActionResult get_users()
+        public JsonResult get_users()
         {
 
             IEnumerable<UserProfile> users = null;
@@ -373,4 +377,55 @@ namespace Web.Controllers
         }
 
     }
+/*
+    public class JsonNetFilterAttribute : ActionFilterAttribute
+    {
+        private const string _dateFormat = "";
+
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            if (filterContext.Result is JsonResult == false)
+                return;
+
+            filterContext.Result = new JsonNetResult((JsonResult)filterContext.Result);
+        }
+
+        private class JsonNetResult : JsonResult
+        {
+            public JsonNetResult(JsonResult jsonResult)
+            {
+                this.ContentEncoding = jsonResult.ContentEncoding;
+                this.ContentType = jsonResult.ContentType;
+                this.Data = jsonResult.Data;
+                this.JsonRequestBehavior = jsonResult.JsonRequestBehavior;
+                this.MaxJsonLength = jsonResult.MaxJsonLength;
+                this.RecursionLimit = jsonResult.RecursionLimit;
+            }
+
+            public override void ExecuteResult(ControllerContext context)
+            {
+                if (context == null)
+                    throw new ArgumentNullException("context");
+
+                if (this.JsonRequestBehavior == JsonRequestBehavior.DenyGet
+                    && String.Equals(context.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidOperationException("GET not allowed! Change JsonRequestBehavior to AllowGet.");
+
+                var response = context.HttpContext.Response;
+
+                response.ContentType = String.IsNullOrEmpty(this.ContentType) ? "application/json" : this.ContentType;
+
+                if (this.ContentEncoding != null)
+                    response.ContentEncoding = this.ContentEncoding;
+
+                if (this.Data != null)
+                {
+                    var isoConvert = new IsoDateTimeConverter();
+                    isoConvert.DateTimeFormat = _dateFormat;
+                    response.Write(JsonConvert.SerializeObject(this.Data, isoConvert));
+                }
+            }
+        }
+    }
+    //*/
 }
