@@ -9,7 +9,15 @@ admtszhApp.config([
   '$routeProvider', '$locationProvider',
   function ($routeProvide, $locationProvider) {
       $routeProvide
-          .when('/ViewCounters/:month:year', {
+          .when('/ViewCounters', {
+              templateUrl: '/home/ViewCounter',
+              controller: 'ViewCounterCtrl'
+          })
+          .when('/ViewCounters/:year', {
+              templateUrl: '/home/ViewCounter',
+              controller: 'ViewCounterCtrl'
+          })
+          .when('/ViewCounters/:year/:month', {
               templateUrl: '/home/ViewCounter',
               controller: 'ViewCounterCtrl'
           })
@@ -27,8 +35,8 @@ admtszhApp.factory('Counters', [
       return $resource('/admtszh/viewcounters?month=:month&year=:year',
           {
               method: 'getTask',
-              month: '',
-              year: ''
+              month: '0',
+              year: '0'
           }, 
           {
               'query': { method: 'GET',  isArray:true }
@@ -78,45 +86,86 @@ phonecatApp.controller('PhoneListCtrl', [
 admtszhApp.controller('ViewCounterCtrl', [
   '$scope', '$http', '$location', '$routeParams', 'Counters',
   function ($scope, $http, $location, $routeParams, Counters) {
-      $scope.month = $routeParams.month;
-      $scope.year = $routeParams.year;
+
+      var now = new Date();
+      if (!$routeParams.year) {
+          $scope.year = now.getFullYear();
+          $scope.month = now.getMonth();
+      }
+      else {
+          if (parseInt($routeParams.year) > now.getFullYear()) {
+              $scope.year = now.getFullYear();
+              if ($routeParams.month) {
+                  $scope.month = $routeParams.month;
+              }
+              else {
+                  $scope.month = now.getMonth();
+
+              }
+          }
+          else {
+              $scope.year = parseInt($routeParams.year);
+              if ($routeParams.month) {
+                  $scope.month = parseInt($routeParams.month);
+              }
+              else {
+                  $scope.month = now.getMonth();
+              }
+          }
+      }
+
+//      $scope.my = $scope.year--;
+ //     $scope.py = $scope.year++;
+
+    
+      ArrMonth = [
+        { id: '1', name: 'Январь' },
+        { id: '2', name: 'Февраль' },
+        { id: '3', name: 'Март' },
+        { id: '4', name: 'Апрель' },
+        { id: '5', name: 'Май' },
+        { id: '6', name: 'Июнь' },
+        { id: '7', name: 'Июль' },
+        { id: '8', name: 'Август' },
+        { id: '8', name: 'Сентябрь' },
+        { id: '10', name: 'Октябрь' },
+        { id: '11', name: 'Ноябрь' },
+        { id: '12', name: 'Декабрь' }
+      ];
+
+      $scope.test = ArrMonth[$scope.month].name;
+      
+      $scope.monthOptions = [];
+      for (var i = 0; i < 12; ++i) {
+          $scope.monthOptions[i] = ArrMonth[i];
+          if ($scope.year == now.getFullYear()) {
+              if (i == now.getMonth()) {
+                  break;
+              }
+          }
+      };
       Counters.query({ month: $routeParams.month, year: $routeParams.year }, function (data) {
           $scope.sortType = 'Name'; // значение сортировки по умолчанию
           $scope.sortReverse = false;  // обратная сортировка
           $scope.searchDef = '';     // значение поиска по умолчанию
-          //   $scope.searchDef2 = '';     // значение поиска по умолчанию
-          
-          $scope.sum = function (a)
-          {
-              if (!a || Object.prototype.toString.call(a) != "[object Array]") return 0;
-              var s = 0;
-              for (var i=0;i<a.length;++i)
-              {
-                  s= s + a[i].data;
-              }
-              return s;
-          }
-
           $scope.counter = data;
-      });
+          });
 
-  }
-]);
+      $scope.sum = function (a) {
+          if (!a || Object.prototype.toString.call(a) != "[object Array]") return 0;
+          var s = 0;
+          for (var i = 0; i < a.length; ++i) {
+              s = s + a[i].data;
+          }
+          return s;
+      }
 
-admtszhApp.controller('myController', [
-  '$scope', '$http', '$location', '$routeParams', 'Counters',
-  function ($scope, $http, $location, $routeParams, Counters) {
-      $scope.month = $routeParams.month;
-
-      $scope.translate = function () {
-          Counters.query({ month: $routeParams.month }, function (data) {
-              $scope.sortType = 'Name'; // значение сортировки по умолчанию
-              $scope.sortReverse = false;  // обратная сортировка
-              $scope.searchDef = '';     // значение поиска по умолчанию
-              //   $scope.searchDef2 = '';     // значение поиска по умолчанию
+      $scope.select_month = function () {
+          Counters.query({ month: $scope.selectedMonth, year: $routeParams.year }, function (data) {
               $scope.counter = data;
           });
       };
-      $scope.select_month();
 
-}]);
+
+  }
+]);

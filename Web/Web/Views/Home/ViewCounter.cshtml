@@ -10,15 +10,15 @@
         <div class="input-group">
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
             <input type="text" class="form-control" placeholder="Поиск счетчика" ng-model="searchDef">
-            <input type="text" class="form-control" placeholder="Поиск данных счетчика" ng-model="searchDef2">
         </div>
     </div>
 </form>
+
 <section>
-    <h4>Выберите месяц</h4>
-    <select ng-change="select_month()" ng-model="selectedLanguage">
-        <option value="11">Ноябрь</option>
-        <option value="12">Декарь</option>
+     <h4>Год: <a href="#/ViewCounters/{{year-1}}"><<</a> | {{year}} | <a href="#/ViewCounters/{{year+1}}">  >></a> Выберите месяц: {{test}}</h4>
+    <select ng-change="select_month()" ng-model="selectedMonth" value"{{month}}">
+        <option value="">---Please select---</option>
+        <option ng-repeat="option in monthOptions" value="{{option.id}}">{{option.name}}</option>
     </select>
 </section>
 <h2>Все счетчики жильцов</h2>

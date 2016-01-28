@@ -248,7 +248,7 @@ namespace Web.Controllers
         [AllowAnonymous]
         //       [JsonNetFilter]
         [HttpGet]
-        public JsonResult ViewCounters(int month = 11, int year=2015)
+        public JsonResult ViewCounters(int month = 0, int year=0)
         {
             Admtszh admuser = null;
             uk_profile uk = null;
@@ -301,6 +301,8 @@ namespace Web.Controllers
                     temp.street = adr.Street;
                     temp.house = adr.House;
                     temp.flat = user.Apartment;
+                    if (year == 0)   year = DateTime.Now.Year;
+                    if (month == 0) month = DateTime.Now.Month;
                     DateTime d_start = new DateTime(year, month,1);
                     DateTime d_end = d_start.AddMonths(1);
                     try
