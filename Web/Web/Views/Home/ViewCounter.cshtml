@@ -54,10 +54,10 @@
     <tbody>
         <tr ng-repeat="item in counter | orderBy:sortType:sortReverse | filter:searchDef">
             <td>{{ item.Name }}</td>
-            <td>{{ item.gas }}</td>
-            <td>{{ item.energo }}</td>
-            <td>{{ item.cw }}</td>
-            <td>{{ item.hw }}</td>
+            <td> <div ng-repeat="ig in item.gasi">{{ig.data}} | {{ig.place}}</div><hr>Итого: {{ sum(item.gasi) }}</td>
+            <td> <div ng-repeat="ie in item.energoi">{{ie.data}} | {{ie.place}}</div><hr>Итого: {{ sum(item.energoi) }}<hr></td>
+            <td> <div ng-repeat="icw in item.cwi">{{icw.data}} | {{icw.place}}</div><hr>Итого: {{ sum(item.cwi) }}</td>
+            <td> <div ng-repeat="ihw in item.hwi">{{ihw.data}} | {{ihw.place}}</div><hr>Итого: {{ sum(item.hwi) }}</td>
             <td>{{ item.street}}, {{item.house}}, {{item.flat}}</td>
             <td>{{ item.month | JsonDate | date : 'MMM - y' }}</td>
         </tr>

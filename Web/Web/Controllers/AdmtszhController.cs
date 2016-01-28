@@ -246,7 +246,8 @@ namespace Web.Controllers
         }
 
         [AllowAnonymous]
- //       [JsonNetFilter]
+        //       [JsonNetFilter]
+        [HttpGet]
         public JsonResult ViewCounters(int month = 11, int year=2015)
         {
             Admtszh admuser = null;
@@ -257,7 +258,7 @@ namespace Web.Controllers
             try
             {
                 uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
-                users = repository.UserProfile.Where(p => p.id_uk.Equals(1));//uk.id));
+                users = repository.UserProfile.Where(p => p.id_uk.Equals(3));//uk.id));
             }
             catch
             { }
@@ -304,7 +305,22 @@ namespace Web.Controllers
                     DateTime d_end = d_start.AddMonths(1);
                     try
                     {
-                        temp.gas =      ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).Where(d =>d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1));
+                        foreach (Counter counter in counters)
+                        {
+
+                            temp.gasi = new List<count_place>();
+
+                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                            foreach (var it in t_data)
+                            {
+                                count_place cp = new count_place();
+                                cp.data = it.data;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                temp.gasi.Add(cp);
+                            }
+                        }
+       //                 temp.gas =      ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).Where(d =>d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
                     catch
                     {
@@ -312,7 +328,22 @@ namespace Web.Controllers
                     }
                     try
                     {
-                        temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2));
+                        foreach (Counter counter in counters)
+                        {
+
+                            temp.energoi = new List<count_place>();
+
+                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                            foreach (var it in t_data)
+                            {
+                                count_place cp = new count_place();
+                                cp.data = it.data;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().place;
+                                temp.energoi.Add(cp);
+                            }
+                        }
+ //                       temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
                     catch
                     {
@@ -320,7 +351,22 @@ namespace Web.Controllers
                     }
                     try
                     {
-                        temp.cw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3));
+                        foreach (Counter counter in counters)
+                        {
+
+                            temp.cwi = new List<count_place>();
+
+                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                            foreach (var it in t_data)
+                            {
+                                count_place cp = new count_place();
+                                cp.data = it.data;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                temp.cwi.Add(cp);
+                            }
+                        }
+//                        temp.cw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;                  
                     }
                     catch
                     {
@@ -328,7 +374,22 @@ namespace Web.Controllers
                     }
                     try
                     {
-                        temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4));
+                        foreach (Counter counter in counters)
+                        {
+
+                            temp.hwi = new List<count_place>();
+
+                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                            foreach (var it in t_data)
+                            {
+                                count_place cp = new count_place();
+                                cp.data = it.data;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                temp.hwi.Add(cp);
+                            }
+                        }
+  //                      temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
                     catch
                     {
@@ -336,7 +397,7 @@ namespace Web.Controllers
                     }
                     try
                     {
-                        temp.month =    ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).FirstOrDefault().write.GetValueOrDefault();
+                        temp.month = d_start;                    
                     }
                     catch { }
                    

@@ -41,19 +41,28 @@ namespace Web.Models
 //        public int status { get; set; } //1 - отправлено 2 - принято 3 - отклонено
     }
 
+
+
+
+    public class count_place
+    {
+        public decimal data { get; set; }
+        public string place { get; set; }
+    }
+
     public class Counter_model
     { // Project of model
       //| Фамилия Имя Отчество | [ Газ ] | [Электро] | [ХВ] | [ГВ] | Улица | Дом | Квартира | месяц
         public IEnumerable<int> id; //список инедтификаторов счетчиков с данными
         public string Name; //FIO users
         [Display(Name = "Показания счетчика газа")]
-        public decimal gas { get; set; }
+        public List<count_place> gasi { get; set; }
         [Display(Name = "Показания счетчика электроэнергии")]
-        public decimal energo { get; set; }
-        [Display(Name = "Показания счетчика холодной воды")]
-        public decimal cw { get; set; }
+        public List<count_place> energoi { get; set; }
+        [Display(Name = "Показания счетчиков холодной воды")]
+        public List<count_place> cwi { get; set; } 
         [Display(Name = "Показания счетчика горячей воды")]
-        public decimal hw { get; set; }
+        public List<count_place> hwi { get; set; }
         [Display(Name = "Улица")]
         public string street { get; set; }
         [Display(Name = "Дом")]
@@ -62,7 +71,9 @@ namespace Web.Models
         public string flat { get; set; }
         [Display(Name = "Месяц")]
         public DateTime month { get; set; }
+        //В будущем избавиться
         public IEnumerable<Counter> ListCounter;
         public IEnumerable<Counter_data> ListData;
+
     }
 }

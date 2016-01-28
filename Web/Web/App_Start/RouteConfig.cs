@@ -30,7 +30,7 @@ namespace Web
             );
             routes.MapRoute(
                 name: "",
-                url: "Home#/{action}/{id}",
+                url: "Home/"+'#'+"/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
             routes.MapRoute(

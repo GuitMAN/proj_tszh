@@ -708,7 +708,7 @@ namespace Web.Controllers
                         if (!res.Equals("")) { res = res + ","; }
                         res = res + item.UserId.ToString();
                     }
-                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE UserId IN  ( " + res + " )").ToArray();
+                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
                 }
             }
             else

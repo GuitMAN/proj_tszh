@@ -9,7 +9,7 @@ admtszhApp.config([
   '$routeProvider', '$locationProvider',
   function ($routeProvide, $locationProvider) {
       $routeProvide
-          .when('/ViewCounters/:month', {
+          .when('/ViewCounters/:month:year', {
               templateUrl: '/home/ViewCounter',
               controller: 'ViewCounterCtrl'
           })
@@ -24,10 +24,11 @@ admtszhApp.config([
 admtszhApp.factory('Counters', [
   '$resource', function ($resource) 
   {
-      return $resource('/admtszh/viewcounters/:Id',
+      return $resource('/admtszh/viewcounters?month=:month&year=:year',
           {
               method: 'getTask',
-              month: '11'
+              month: '',
+              year: ''
           }, 
           {
               'query': { method: 'GET',  isArray:true }
@@ -78,12 +79,24 @@ admtszhApp.controller('ViewCounterCtrl', [
   '$scope', '$http', '$location', '$routeParams', 'Counters',
   function ($scope, $http, $location, $routeParams, Counters) {
       $scope.month = $routeParams.month;
-
-      Counters.query({ month: $routeParams.month }, function (data) {
+      $scope.year = $routeParams.year;
+      Counters.query({ month: $routeParams.month, year: $routeParams.year }, function (data) {
           $scope.sortType = 'Name'; // значение сортировки по умолчанию
           $scope.sortReverse = false;  // обратная сортировка
           $scope.searchDef = '';     // значение поиска по умолчанию
-       //   $scope.searchDef2 = '';     // значение поиска по умолчанию
+          //   $scope.searchDef2 = '';     // значение поиска по умолчанию
+          
+          $scope.sum = function (a)
+          {
+              if (!a || Object.prototype.toString.call(a) != "[object Array]") return 0;
+              var s = 0;
+              for (var i=0;i<a.length;++i)
+              {
+                  s= s + a[i].data;
+              }
+              return s;
+          }
+
           $scope.counter = data;
       });
 
