@@ -38,7 +38,7 @@ namespace Web.Models
         public DateTime? write { get; set; }
         [Display(Name = "Показания счетчика")]
         public decimal data { get; set; }
-//        public int status { get; set; } //1 - отправлено 2 - принято 3 - отклонено
+        public bool status { get; set; } //1 - отправлено 2 - принято 3 - отклонено
     }
 
 
@@ -71,9 +71,15 @@ namespace Web.Models
         public string flat { get; set; }
         [Display(Name = "Месяц")]
         public DateTime month { get; set; }
+        [Display(Name = "Статус")]
+        public bool status { get; set; } //1 - отправлено 2 - принято 3 - отклонено
         //В будущем избавиться
         public IEnumerable<Counter> ListCounter;
         public IEnumerable<Counter_data> ListData;
-
     }
+
+    public class ListCounters
+    {
+        public List<Counter_data> Counters { get; set; }
+    };
 }

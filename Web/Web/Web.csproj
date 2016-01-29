@@ -1599,7 +1599,6 @@
     <Content Include="Views\User\SetColdWater.cshtml" />
     <Content Include="Views\User\HotWater.cshtml" />
     <Content Include="Views\User\EditHotWater.cshtml" />
-    <Content Include="Views\User\SetHotWater.cshtml" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.css.map" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap.css.map" />
     <Content Include="Views\Home\Article.cshtml" />
@@ -1609,6 +1608,7 @@
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Views\User\SetHotWater.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

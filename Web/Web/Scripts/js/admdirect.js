@@ -1,4 +1,24 @@
 ﻿;
+//Const
+
+
+ArrMonth = [
+  { id: '1', name: 'Январь' },
+  { id: '2', name: 'Февраль' },
+  { id: '3', name: 'Март' },
+  { id: '4', name: 'Апрель' },
+  { id: '5', name: 'Май' },
+  { id: '6', name: 'Июнь' },
+  { id: '7', name: 'Июль' },
+  { id: '8', name: 'Август' },
+  { id: '8', name: 'Сентябрь' },
+  { id: '10', name: 'Октябрь' },
+  { id: '11', name: 'Ноябрь' },
+  { id: '12', name: 'Декабрь' }
+];
+
+
+
 'use strict';
 
 /* Controllers */
@@ -29,7 +49,7 @@ admtszhApp.config([
 
 /* Factory */
 
-admtszhApp.factory('Counters', [
+admtszhApp.service('Counters', [
   '$resource', function ($resource) 
   {
       return $resource('/admtszh/viewcounters?month=:month&year=:year',
@@ -81,6 +101,9 @@ phonecatApp.controller('PhoneListCtrl', [
 
   }
 ]);
+*/
+
+
 
 /* Phone Detail Controller */
 admtszhApp.controller('ViewCounterCtrl', [
@@ -90,18 +113,15 @@ admtszhApp.controller('ViewCounterCtrl', [
       var now = new Date();
       if (!$routeParams.year) {
           $scope.year = now.getFullYear();
+          $routeParams.year = now.getFullYear();
           $scope.month = now.getMonth();
       }
       else {
           if (parseInt($routeParams.year) > now.getFullYear()) {
               $scope.year = now.getFullYear();
-              if ($routeParams.month) {
-                  $scope.month = $routeParams.month;
-              }
-              else {
-                  $scope.month = now.getMonth();
-
-              }
+              $routeParams.year = now.getFullYear();
+              $scope.month = now.getMonth();
+          
           }
           else {
               $scope.year = parseInt($routeParams.year);
@@ -114,26 +134,7 @@ admtszhApp.controller('ViewCounterCtrl', [
           }
       }
 
-//      $scope.my = $scope.year--;
- //     $scope.py = $scope.year++;
-
-    
-      ArrMonth = [
-        { id: '1', name: 'Январь' },
-        { id: '2', name: 'Февраль' },
-        { id: '3', name: 'Март' },
-        { id: '4', name: 'Апрель' },
-        { id: '5', name: 'Май' },
-        { id: '6', name: 'Июнь' },
-        { id: '7', name: 'Июль' },
-        { id: '8', name: 'Август' },
-        { id: '8', name: 'Сентябрь' },
-        { id: '10', name: 'Октябрь' },
-        { id: '11', name: 'Ноябрь' },
-        { id: '12', name: 'Декабрь' }
-      ];
-
-      $scope.test = ArrMonth[$scope.month].name;
+      $scope.NameMonth = ArrMonth[$scope.month].name;
       
       $scope.monthOptions = [];
       for (var i = 0; i < 12; ++i) {
@@ -169,3 +170,5 @@ admtszhApp.controller('ViewCounterCtrl', [
 
   }
 ]);
+
+

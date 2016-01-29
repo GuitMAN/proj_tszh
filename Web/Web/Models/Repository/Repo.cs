@@ -367,13 +367,14 @@ namespace Web.Models.Repository
             DateTime seek = DateTime.Today;
             int month = seek.Month;
             int year = seek.Year;
-            List <Counter_data> temp = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = " + cou.id + " AND write >= '" + year + "." + month + ".01'", "").ToList(); ;
-
+            List<Counter_data> temp = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id = " + cou.id + " AND write >= '" + year + "." + month + ".01'", "").ToList(); ;
             if (temp.Count == 0)
+            {
                 context.SQLStringConnect("INSERT INTO [dbo].[Counter_data] ([id],[write],[data]) VALUES    ( " + cou.id + "   , '" + cou.write + "' , '" + cou.data + "') ");
+            }
             else
             {
-               context.SQLStringConnect("UPDATE [dbo].[Counter_data] SET write = '" + cou.write + "' , data = '" + cou.data + "' WHERE write >= '" + year + "." + month + ".01'");
+                context.SQLStringConnect("UPDATE [dbo].[Counter_data] SET write = '" + cou.write + "' , data = '" + cou.data + "' WHERE write >= '" + year + "." + month + ".01'");
             }
         }
 

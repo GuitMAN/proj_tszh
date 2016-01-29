@@ -305,6 +305,7 @@ namespace Web.Controllers
                     if (month == 0) month = DateTime.Now.Month;
                     DateTime d_start = new DateTime(year, month,1);
                     DateTime d_end = d_start.AddMonths(1);
+                    bool status = true;
                     try
                     {
                         IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1));
@@ -319,6 +320,7 @@ namespace Web.Controllers
                                 count_place cp = new count_place();
                                 cp.data = it.data;
                                 cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                status = status && it.status;
                                 temp.gasi.Add(cp);
                             }
                         }
@@ -342,6 +344,7 @@ namespace Web.Controllers
                                 count_place cp = new count_place();
                                 cp.data = it.data;
                                 cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().place;
+                                status = status && it.status;
                                 temp.energoi.Add(cp);
                             }
                         }
@@ -365,6 +368,7 @@ namespace Web.Controllers
                                 count_place cp = new count_place();
                                 cp.data = it.data;
                                 cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                status = status && it.status;
                                 temp.cwi.Add(cp);
                             }
                         }
@@ -388,9 +392,11 @@ namespace Web.Controllers
                                 count_place cp = new count_place();
                                 cp.data = it.data;
                                 cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                status = status && it.status;
                                 temp.hwi.Add(cp);
                             }
                         }
+                        
   //                      temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
                     catch
@@ -402,13 +408,52 @@ namespace Web.Controllers
                         temp.month = d_start;                    
                     }
                     catch { }
-                   
-                        model.Add(temp);
+
+                    temp.status = status;
+                    model.Add(temp);
                     
                 }
             }
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult SetsSatusCounterData(int id = 0, int year, int month, bool status)
+        {
+            Admtszh admuser = null;
+            uk_profile uk = null;
+            //Counter_model model = new Counter_model();
+            UserProfile user = null;
+            string requestDomain = Request.Headers["host"];
+            try
+            {
+                uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
+                user = repository.UserProfile.Where(p => p.id.Equals(id)).FirstOrDefault();
+            }
+            catch
+            { }
+            string result = null;
+            using (var context = new EFDbContext())
+            {
+
+                IEnumerable<Counter> ListCounters = repository.Counter.Where(u => u.UserId.Equals(id));
+                if (ListCounters.Count() != 0)
+                {
+                    string res = "";
+                    foreach (var item in ListCounters)
+                    {
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
+                    }
+                    result = context.SQLStringConnect("UPDATE[dbo].[Counter_data] SET status = 1 WHERE id IN( " + res + ")");
+                }
+            }
+            if (result!=null)
+                return new HttpStatusCodeResult(400, "result");
+            else
+                return new HttpStatusCodeResult(200);
+        }
+
 
 
 

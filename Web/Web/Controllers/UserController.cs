@@ -465,8 +465,7 @@ namespace Web.Controllers
             model.write = DateTime.UtcNow;
 
             if (ModelState.IsValid)
-            {
-                
+            {    
                 repository.SaveCounder_data(model);
                 TempData["message"] = string.Format("Показания газового счетчика успешно отправлены");
             }
@@ -761,10 +760,15 @@ namespace Web.Controllers
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
-            Counter_data model;
-            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(4)).SingleOrDefault();
-            model = new Counter_data();
-            model.id = counter.id;
+            ListCounters model;
+            IEnumerable<Counter> counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.type.Equals(4));
+            model = new ListCounters();
+            foreach (var item in counter)
+            {
+                Counter_data temp = new Counter_data();
+                temp.id = item.id;
+                model.Counters.Add(temp);
+            }
             return View(model);
         }
 
@@ -776,12 +780,12 @@ namespace Web.Controllers
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
             model.write = DateTime.UtcNow;
-
             if (ModelState.IsValid)
             {
                 repository.SaveCounder_data(model);
                 TempData["message"] = string.Format("Показания счетчика холодной воды успешно отправлены");
             }
+            int ss =  Response.StatusCode;
 
             return RedirectToAction("Energo");
         }

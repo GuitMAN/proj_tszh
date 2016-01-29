@@ -45,9 +45,10 @@ namespace Web.Models
             return Json(art, JsonRequestBehavior.AllowGet);
         }
 
-        public string test()
+        public ActionResult test(int id = 0)
         {
-            return "Тестовое сообщение";
+
+            return new HttpStatusCodeResult(id, "You broke the Internet!");
         }
 
         public ActionResult ViewCounter()

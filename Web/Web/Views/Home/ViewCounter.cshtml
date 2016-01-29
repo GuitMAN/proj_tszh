@@ -15,7 +15,7 @@
 </form>
 
 <section>
-     <h4>Год: <a href="#/ViewCounters/{{year-1}}"><<</a> | {{year}} | <a href="#/ViewCounters/{{year+1}}">  >></a> Выберите месяц: {{test}}</h4>
+     <h4>Год: <a href="#/ViewCounters/{{year-1}}"><<</a> | {{year}} | <a href="#/ViewCounters/{{year+1}}">  >></a></h4>
     <select ng-change="select_month()" ng-model="selectedMonth" value"{{month}}">
         <option value="">---Please select---</option>
         <option ng-repeat="option in monthOptions" value="{{option.id}}">{{option.name}}</option>
@@ -49,6 +49,9 @@
             <td>
                 Месяц
             </td>
+            <td>
+                Статус
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -60,6 +63,7 @@
             <td> <div ng-repeat="ihw in item.hwi">{{ihw.data}} | {{ihw.place}}</div><hr>Итого: {{ sum(item.hwi) }}</td>
             <td>{{ item.street}}, {{item.house}}, {{item.flat}}</td>
             <td>{{ item.month | JsonDate | date : 'MMM - y' }}</td>
+            <td>{{ item.status | checkmark }}</td>
         </tr>
     </tbody>
 </table>
