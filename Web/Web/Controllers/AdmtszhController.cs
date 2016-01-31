@@ -418,7 +418,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult SetsSatusCounterData(int id = 0, int year, int month, bool status)
+        public ActionResult SetsSatusCounterData(int id, int year, int month, bool status)
         {
             Admtszh admuser = null;
             uk_profile uk = null;

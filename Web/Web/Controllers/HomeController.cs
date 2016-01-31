@@ -45,12 +45,30 @@ namespace Web.Models
             return Json(art, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult test(int id = 0)
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult test()
         {
 
-            return new HttpStatusCodeResult(id, "You broke the Internet!");
+            return View();
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult test(string author, string text)
+        {
+            System.Web.HttpRequestBase ss = Request;
+            //on.
+
+             return new HttpStatusCodeResult(404, "Fucking duck");
+           // return Json(author);
+        }
+
+
+
+
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult ViewCounter()
         {
             return View();

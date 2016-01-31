@@ -8,6 +8,10 @@ var HomeApp = angular.module('HomeApp', ['ngRoute', 'ngResource']);
 HomeApp.config([
   '$routeProvider', '$locationProvider',
   function ($routeProvide, $locationProvider) {
+      //$locationProvider.html5Mode({
+      //    enabled: true,
+      //    requestMode: false
+      //});
       $routeProvide
           .when('/', {
               templateUrl: '/home/article',
@@ -16,6 +20,10 @@ HomeApp.config([
           .when('/article/:artId', {
               templateUrl: '/home/article',
               controller: 'HomeCtrl'
+          })
+          .when('/test', {
+              templateUrl: '/login/index',
+              controller: 'TestCtrl'
           })
           .otherwise({
               redirectTo: '/'
@@ -60,15 +68,7 @@ HomeApp.filter('aspDate', function () {
 });
 
 
-HomeApp.controller('PhoneListCtrl', [
-  '$scope', '$http', '$location', 'Article',
-  function ($scope, $http, $location, Article) {
-      $scope.article = Article.query();
 
-      console.log("Вывод - ", $scope.article.title);
-
-  }
-]);
 
 /* Phone Detail Controller */
 HomeApp.controller('HomeCtrl', [
@@ -80,6 +80,52 @@ HomeApp.controller('HomeCtrl', [
           $scope.article = data;
 
       });
+
+  }
+]);
+
+
+
+
+HomeApp.factory('Test', [
+  '$resource', function ($resource) {
+      return $resource('/home/test',
+          {
+              method: 'getTask',
+              author: 'Пиздец вещает'
+          },
+          {
+              'save': { method: 'POST' }
+          });
+
+  }
+]);
+
+
+HomeApp.controller('TestCtrl', [
+  '$scope', '$http', '$location', '$routeParams', 'Test',
+  function ($scope, $http, $location, $routeParams, Test) {
+      $scope.login = $routeParams.author;
+      $scope.autoApplications = "Y";
+      $scope.save = function (login, answerForm)
+      {
+          if (answerForm.$valid) {
+              
+              $http.post("/Login?AspxAutoDetectCookieSupport=1", $scope.login).then(function (data) {
+                  $scope.status = data.status;
+                  $scope.data = data.statusText;
+                  if (data.status==200)
+                        $scope.autoApplications = "N";
+
+              },function (data) {
+                  $scope.status = data.status;
+                  $scope.data = data.statusText;
+              }) ;
+          }
+      }
+
+
+
 
   }
 ]);

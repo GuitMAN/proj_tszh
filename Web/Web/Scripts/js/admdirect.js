@@ -146,7 +146,7 @@ admtszhApp.controller('ViewCounterCtrl', [
           }
       };
       Counters.query({ month: $routeParams.month, year: $routeParams.year }, function (data) {
-          $scope.sortType = 'Name'; // значение сортировки по умолчанию
+          $scope.sortType = 'Item.Name'; // значение сортировки по умолчанию
           $scope.sortReverse = false;  // обратная сортировка
           $scope.searchDef = '';     // значение поиска по умолчанию
           $scope.counter = data;
@@ -171,4 +171,28 @@ admtszhApp.controller('ViewCounterCtrl', [
   }
 ]);
 
+admtszhApp.directive('cs-select', function () {
+    return {
+        require: 'st-table',
+        template: '<input type="checkbox"/>',
+        scope: {
+            row: 'cs-select'
+        },
+        link: function (scope, element, attr, ctrl) {
 
+            element.bind('change', function (evt) {
+                scope.$apply(function () {
+                    ctrl.select(scope.row, 'multiple');
+                });
+            });
+
+            scope.$watch('row.isSelected', function (newValue, oldValue) {
+                if (newValue === true) {
+                    element.parent().addClass('st-selected');
+                } else {
+                    element.parent().removeClass('st-selected');
+                }
+            });
+        }
+    };
+});

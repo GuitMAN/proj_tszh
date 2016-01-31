@@ -1,7 +1,9 @@
 ﻿<!DOCTYPE html>
 
 <html lang="ru" ng-app="HomeApp">
+
 <head>
+   
     <title>@ViewBag.Title</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width" />
@@ -36,7 +38,8 @@
                     <li class="active"><a href="#/">Главная</a></li>
                     <li><a href="#/article/Главная">О Нас</a></li>
                     <li><a href="#/article/Контакты">Контакты</a></li>
-                    @Html.Action("Menu_main", "Nav")
+                    <li><a href="#/test">Тестовая форма</a></li>
+                    @*@Html.Action("Menu_main", "Nav")*@
                 </ul>
             </div><!-- /.nav-collapse -->
         </div><!-- /.container -->

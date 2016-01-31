@@ -1609,6 +1609,7 @@
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Views\User\SetHotWater.cshtml" />
+    <Content Include="Views\Home\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
