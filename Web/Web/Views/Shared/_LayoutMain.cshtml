@@ -8,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
-    <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Styles/app.css" rel="stylesheet" />
+    <link href="http://moe-tszh.ru/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="http://moe-tszh.ru/Styles/app.css" rel="stylesheet" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -45,14 +45,15 @@
         </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
-            <div class="content">
+            <div class="content_resize">
                 @if (TempData["message"] != null)
                 {
                     <div class="alert alert-success">@TempData["message"]</div>
                 }
-
-                @RenderBody()
-            </div>
+                
+                    @RenderBody()
+                </div>
+             
         <footer>
             Все права защищены. CloudsSolution © 2015.
         </footer>

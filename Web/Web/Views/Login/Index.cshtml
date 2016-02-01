@@ -7,49 +7,66 @@
 
 <h2>Index</h2>
 
-<h2>Index</h2>
-<div ng-controller="TestCtrl">
-    <div ng-show="autoApplications == 'Y'">
-        <form name="answerForm">
+<div ng-controller="ApplicationCtrl">
+    <div ng-controller="LoginCtrl">
+        <div>
+            @*<form name="loginForm"  novalidate>
 
-            @*@Html.AntiForgeryToken()*@
-            <h4>LoginModel</h4>
-            <hr />
+                    @Html.AntiForgeryToken()
+                    <h4>LoginModel</h4>
+                    <hr />
 
-            <div class="form-group">
-                <label class="control-label col-md-2" for="UserName">Логин</label>
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" ng-model="login.UserName" required placeholder="введите логин" value="" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-2" for="Password">Пароль</label>
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line password" ng-model="login.Password" required placeholder="Password" type="password" value="выаыв" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-2" for="RememberMe">Сохранить?</label>
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        <input class="check-box" id="RememberMe" ng-model="login.RememberMe" type="checkbox" value="true" />
-
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="UserName">Логин</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" ng-model="credentials.username" required placeholder="введите логин" />
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Войти" ng-click="save(answer, answerForm)" />
-                </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Password">Пароль</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line password" ng-model="credentials.password" required placeholder="Password" type="password" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="RememberMe">Сохранить?</label>
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                <input class="check-box" id="RememberMe" ng-model="login.RememberMe" type="checkbox" value="true" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" ngClick="login(credentials)">Login</button>
+                        </div>
+                    </div>
+                </form>*@
+
+            <form name="loginForm" ng-submit="login(credentials)" novalidate>
+                <label class="control-label col-md-2" for="username">Username:</label>
+                <input class="form-control text-box single-line" type="text" id="username" ng-model="credentials.username">
+                <label class="control-label col-md-2" for="password">Password:</label>
+                <input class="form-control text-box single-line" type="password" id="password" ng-model="credentials.password">
+                <button type="submit">Login</button>
+            </form>
+
+
+        </div>
+        <div>
+            <div>Ответ:</div>
+            <p ng-bind="status"></p>
+            <p ng-bind="data"></p>
+            <div ng-if="currentUser">Welcome, {{ currentUser.name }}</div>
+            <div ng-if="isAuthorized(userRoles.admin)">You're admin.</div>
+            <div ng-switch on="currentUser.role">
+                <div ng-switch-when="userRoles.admin">You're admin.</div>
+                <div ng-switch-when="userRoles.editor">You're editor.</div>
+                <div ng-switch-default>You're something else.</div>
             </div>
-        </form>
-    </div>
-    <div ng-show="autoApplications == 'N'">
-        <div>Ответ:</div>
-        <p ng-bind="status"></p>
-        <p ng-bind="data"></p>
+            <a href="/Login/logoout">Выйти</a>
+        </div>
     </div>
 </div>

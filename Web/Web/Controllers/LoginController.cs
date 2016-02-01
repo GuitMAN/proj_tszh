@@ -27,8 +27,8 @@ namespace Web.Controllers
         public ActionResult Index(string returnUrl)
         {         
             //Если пользователь зарегистрирован, но вас кинуло именно сюда, значит вам на ту страницу нельзя 401
-            if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
-                return RedirectToAction("Error_401", "Login");
+         //   if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
+         //       return RedirectToAction("Error_401", "Login");
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -40,8 +40,8 @@ namespace Web.Controllers
         {
 
             //If User Autorized, but him redirected here, then error 401 
-            if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
-                return RedirectToAction("Error_401", "Login");
+            //if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
+            //    return RedirectToAction("Error_401", "Login");
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 uk_profile uk = null;
@@ -58,7 +58,8 @@ namespace Web.Controllers
                         }
                         else
                         {
-
+                            WebSecurity.Logout();
+                            return new HttpStatusCodeResult(203, "Доступ запрещен.");
                         }
                     }
                     else
@@ -119,7 +120,8 @@ namespace Web.Controllers
         public ActionResult LogoOut(string ReturnUrl)
         {
             WebSecurity.Logout();
-            return RedirectToLocal(ReturnUrl);
+            return new HttpStatusCodeResult(200);
+            //return RedirectToLocal(ReturnUrl);
         }
 
 
