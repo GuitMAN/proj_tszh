@@ -22,6 +22,23 @@
   </head>
 
 <body >
+    <div ng-controller="ApplicationCtrl">
+        <div lass="form-group">
+            <div>Ответ:</div>
+            <p ng-bind="status"></p>
+            <p ng-bind="data"></p>
+            <p ng-bind="myFactory.data"></p>
+            <p ng-bind="Session.status"></p>
+            <div ng-if="Session.currentUser">Welcome, {{ Session.currentUser }}</div>
+                <div ng-if="isAuthorized(userRoles.admin)">You're admin.</div>
+                <div ng-switch on="currentUser.role">
+                    <div ng-switch-when="userRoles.admin">You're admin.</div>
+                    <div ng-switch-when="userRoles.editor">You're editor.</div>
+                    <div ng-switch-default>You're something else.</div>
+
+                <a href="/Login/logoout">Выйти</a>    </div>
+        </div>
+    </div>
     <nav class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -38,8 +55,8 @@
                     <li class="active"><a href="#/">Главная</a></li>
                     <li><a href="#/article/Главная">О Нас</a></li>
                     <li><a href="#/article/Контакты">Контакты</a></li>
-                    <li><a href="#/test">Тестовая форма</a></li>
-                    @*@Html.Action("Menu_main", "Nav")*@
+                    <li><a href="#/login">Вход</a></li>
+                     @*@Html.Action("Menu_main", "Nav")*@
                 </ul>
             </div><!-- /.nav-collapse -->
         </div><!-- /.container -->

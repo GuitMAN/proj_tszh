@@ -21,7 +21,7 @@ HomeApp.config([
               templateUrl: '/home/article',
               controller: 'HomeCtrl'
           })
-          .when('/test', {
+          .when('/login', {
               templateUrl: '/login/index',
               controller: 'LoginCtrl'
           })
@@ -67,8 +67,6 @@ HomeApp.filter('aspDate', function () {
 });
 
 
-
-
 /* Phone Detail Controller */
 HomeApp.controller('HomeCtrl', [
   '$scope', '$http', '$location', '$routeParams', 'Article',
@@ -77,22 +75,28 @@ HomeApp.controller('HomeCtrl', [
 
       Article.get({ artId: $routeParams.artId }, function (data) {
           $scope.article = data;
-
       });
-
   }
 ]);
 
-HomeApp.controller('ApplicationCtrl', function ($scope,
-                                               USER_ROLES,
-                                               AuthService) {
-    $scope.currentUser = null;
+
+HomeApp.controller('ApplicationCtrl', function ($scope, USER_ROLES, AuthService, $rootScope, myFactory, Session)
+{
+    $scope.myFactory = myFactory;
+    $scope.Session = Session;
+    $scope.$on('myEvent', function (event, args) {
+        $scope.data = args;
+    });
     $scope.userRoles = USER_ROLES;
     $scope.isAuthorized = AuthService.isAuthorized;
+});
 
-  //  $scope.data = "data";
-})
-
+HomeApp.factory('myFactory', function ($rootScope) {
+    
+    return {   
+        data: 'hello world'
+    }
+});
 
 
 
@@ -103,30 +107,30 @@ HomeApp.factory('AuthService', function ($http, Session) {
             return $http.post('/Login?AspxAutoDetectCookieSupport=1', credentials)
               .then(function (res)
               {
-                  Session.create(res.id, res.userid, res.role, "Факи");
+                  Session.create(res.id, res.userid, res.role, credentials.username);
                   return res;
-              }),
-                {
-                }
+              })
               
-        }//,
-        //isAuthenticated: function () {
-        //    return !!Session.userId;
-        //},
-        //isAuthorized: function (authorizedRoles) {
-        //    if (!angular.isArray(authorizedRoles)) {
-        //        authorizedRoles = [authorizedRoles];
-        //    }
-        //    return (this.isAuthenticated() &&
-        //      authorizedRoles.indexOf(Session.userRole) !== -1);
-        //}
+        },
+        isAuthenticated: function () {
+            return Session.userId;
+        },
+        isAuthorized: function (authorizedRoles) {
+            if (!angular.isArray(authorizedRoles)) {
+                authorizedRoles = [authorizedRoles];
+            }
+            return (Session.userId &&
+              authorizedRoles.indexOf(Session.userRole) !== -1);
+        }
     }
 });
 
+
 HomeApp.service('Session', function () {
-    this.create = function (sessionId, userId, userRole, status) {
+    this.create = function (sessionId, userId, userRole, currentUser) {
         this.id = sessionId;
         this.userId = userId;
+        this.currentUser = currentUser;
         this.userRole = userRole;
         this.status = status;
     };
@@ -135,6 +139,7 @@ HomeApp.service('Session', function () {
         this.userId = null;
         this.userRole = null;
         this.status = null;
+        this.currentUser = null;
     };
     return this;
 })
@@ -156,26 +161,35 @@ HomeApp.constant('AUTH_EVENTS', {
 })
 
 
-
-
-HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
+HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService,myFactory, Session) {
     $scope.credentials = {
         username: '',
         password: ''
     };
-    
+    $scope.myFactory = myFactory;
     $scope.login = function (credentials) {
-        AuthService.login(credentials).then(function (data) {
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            if (data.status==203)
+        AuthService.login(credentials)
+            .then(function (data)
+            {             
+                $rootScope.$broadcast('myEvent', "рутскоп");
+                Session.status = "сервис";
+                if (data.status == 200) {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $scope.data = "Ok";
+                    $scope.myFactory.data = "Фабрика";
+                    $scope.status = data.status;
+                    Session.status = "сервис пиздат";
+                } else
+                {
+                    Session.status = "сервис хуева";
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                    $scope.status = data.status;
+                    $scope.myFactory.data = "Фабрика";
+                    $scope.data = data.statusText;
+                }
+            },
+            function (data)
             {
-                $scope.data = "Ok";
-                $scope.status = data.status;
-            }
-        }, function (data) {
-            $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-            $scope.status = Session.status;
-            $scope.data = "no Ok";
         });
     };
 })

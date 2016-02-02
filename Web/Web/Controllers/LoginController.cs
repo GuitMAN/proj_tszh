@@ -54,12 +54,13 @@ namespace Web.Controllers
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
                         if (requestDomain.Equals(uk.host))
                         {
-                            return new HttpStatusCodeResult(200, "Авторизация успешна для полноценного пользователя");
+                            
+                            return new HttpStatusCodeResult(200, "{id:}");
                         }
                         else
                         {
                             WebSecurity.Logout();
-                            return new HttpStatusCodeResult(203, "Доступ запрещен.");
+                            return new HttpStatusCodeResult(203, "login или пароль");
                         }
                     }
                     else
