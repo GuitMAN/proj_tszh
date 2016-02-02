@@ -9,7 +9,7 @@
     <div class="form-group">
         <div class="input-group">
             <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Поиск счетчика" ng-model="searchDef">
+            <input type="text" class="form-control" placeholder="Поиск счетчика" st-search="Name" ng-model="searchDef">
         </div>
     </div>
 </form>
@@ -22,9 +22,10 @@
     </select>
 </section>
 <h2>Все счетчики жильцов</h2>
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped" st-table="rowCollection">
     <thead>
         <tr>
+            <th></th>
             <td>
                 <a href="#/ViewCounters" ng-click="sortType = 'Name'">
                     Фамилия Имя 
@@ -56,6 +57,7 @@
     </thead>
     <tbody>
         <tr ng-repeat="item in counter | orderBy:sortType:sortReverse | filter:searchDef">
+            <td cs-select="row"></td>
             <td>{{ item.Name }}</td>
             <td> <div ng-repeat="ig in item.gasi">{{ig.data}} | {{ig.place}}</div><hr>Итого: {{ sum(item.gasi) }}</td>
             <td> <div ng-repeat="ie in item.energoi">{{ie.data}} | {{ie.place}}</div><hr>Итого: {{ sum(item.energoi) }}<hr></td>
