@@ -82,16 +82,15 @@ HomeApp.controller('HomeCtrl', [
 
 HomeApp.controller('ApplicationCtrl', function ($scope, $cookies, USER_ROLES, AuthService, $rootScope, myFactory, Session)
 {
-    //$scope.myFactory = myFactory;
-    //$scope.Session = Session;
+    $scope.myFactory = myFactory;
+    $scope.Session = Session;
     $scope.$on('myEvent', function (event, args) {
         $scope.data = args;
     });
     $scope.userRoles = USER_ROLES;
     $scope.isAuthorized = AuthService.isAuthorized;
-    
-    $scope.cookie = $cookies.get('userid');
-
+    $scope.cookie = $cookies.get('cookie');
+    console.log("cookie", $cookies.get('cookie'));
     });
 
 HomeApp.factory('myFactory', function ($rootScope) {
@@ -112,9 +111,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
               {
                   if (res.status == 200) {
                       //Setting a cookie
-                  var id = $cookies.put('userid', res.data.id);
-                  var name = $cookies.put('username', res.data.login);
-                  var role = $cookies.get('cookie', res.data.role);
+                  var role = $cookies.get('cookie');
                   Session.create(1, name, role, res.data);
 
                }
