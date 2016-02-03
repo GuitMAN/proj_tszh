@@ -1037,7 +1037,6 @@
     <Content Include="Scripts\angular-1.5.0-rc.1\i18n\angular-locale_zu.js" />
     <Content Include="Scripts\angular-1.5.0-rc.1\version.txt" />
     <Content Include="Scripts\AUTHORS.txt" />
-    <Content Include="Scripts\external\jquery\jquery.js" />
     <Content Include="Scripts\index.html" />
     <Content Include="Scripts\angular-1.4.8\angular-animate.min.js.map" />
     <Content Include="Scripts\angular-1.4.8\angular-aria.min.js.map" />
@@ -1610,6 +1609,7 @@
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Views\User\SetHotWater.cshtml" />
     <Content Include="Views\Home\test.cshtml" />
+    <Content Include="Views\Nav\menu_top.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

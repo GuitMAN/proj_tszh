@@ -2,7 +2,7 @@
 'use strict';
 
 /* Controllers */
-var HomeApp = angular.module('HomeApp', ['ngRoute', 'ngResource']);
+var HomeApp = angular.module('HomeApp', ['ngRoute', 'ngResource', 'ngCookies']);
 
 /* Config */
 HomeApp.config([
@@ -80,16 +80,19 @@ HomeApp.controller('HomeCtrl', [
 ]);
 
 
-HomeApp.controller('ApplicationCtrl', function ($scope, USER_ROLES, AuthService, $rootScope, myFactory, Session)
+HomeApp.controller('ApplicationCtrl', function ($scope, $cookies, USER_ROLES, AuthService, $rootScope, myFactory, Session)
 {
-    $scope.myFactory = myFactory;
-    $scope.Session = Session;
+    //$scope.myFactory = myFactory;
+    //$scope.Session = Session;
     $scope.$on('myEvent', function (event, args) {
         $scope.data = args;
     });
     $scope.userRoles = USER_ROLES;
     $scope.isAuthorized = AuthService.isAuthorized;
-});
+    
+    $scope.cookie = $cookies.get('userid');
+
+    });
 
 HomeApp.factory('myFactory', function ($rootScope) {
     
@@ -100,16 +103,24 @@ HomeApp.factory('myFactory', function ($rootScope) {
 
 
 
-HomeApp.factory('AuthService', function ($http, Session) {
+HomeApp.factory('AuthService', function ($http, $cookies, Session) {
     return {
         login: function (credentials)
         {
             return $http.post('/Login?AspxAutoDetectCookieSupport=1', credentials)
               .then(function (res)
               {
-                  Session.create(res.id, res.userid, res.role, credentials.username);
+                  if (res.status == 200) {
+                      //Setting a cookie
+                  var id = $cookies.put('userid', res.data.id);
+                  var name = $cookies.put('username', res.data.login);
+                  var role = $cookies.get('cookie', res.data.role);
+                  Session.create(1, name, role, res.data);
+
+               }
                   return res;
-              })
+                
+            })
               
         },
         isAuthenticated: function () {
@@ -126,7 +137,7 @@ HomeApp.factory('AuthService', function ($http, Session) {
 });
 
 
-HomeApp.service('Session', function () {
+HomeApp.service('Session', function ($cookies) {
     this.create = function (sessionId, userId, userRole, currentUser) {
         this.id = sessionId;
         this.userId = userId;
@@ -135,6 +146,9 @@ HomeApp.service('Session', function () {
         this.status = status;
     };
     this.destroy = function () {
+        $cookies.put('userid','');
+        $cookies.put('username','');
+        $cookies.put('userrole','');
         this.id = null;
         this.userId = null;
         this.userRole = null;
@@ -186,6 +200,7 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
                     $scope.status = data.status;
                     $scope.myFactory.data = "Фабрика";
                     $scope.data = data.statusText;
+                    Session.destroy()
                 }
             },
             function (data)

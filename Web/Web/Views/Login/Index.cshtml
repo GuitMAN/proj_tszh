@@ -44,26 +44,12 @@
                 </form>*@
 
             <form name="loginForm" ng-submit="login(credentials)" novalidate>
+                @*@Html.AntiForgeryToken()*@
                 <label class="control-label col-md-2" for="username">Username:</label>
                 <input class="form-control text-box single-line" type="text" id="username" ng-model="credentials.username">
                 <label class="control-label col-md-2" for="password">Password:</label>
                 <input class="form-control text-box single-line" type="password" id="password" ng-model="credentials.password">
                 <button type="submit">Login</button>
             </form>
-
-
-        </div>
-        <div lass="form-group">
-            <div>Ответ:</div>
-            <p ng-bind="status"></p>
-            <p ng-bind="data"></p>
-            <div ng-if="currentUser">Welcome, {{ currentUser.name }}</div>
-            <div ng-if="isAuthorized(userRoles.admin)">You're admin.</div>
-            <div ng-switch on="currentUser.role">
-                <div ng-switch-when="userRoles.admin">You're admin.</div>
-                <div ng-switch-when="userRoles.editor">You're editor.</div>
-                <div ng-switch-default>You're something else.</div>
-            </div>
-            <a href="/Login/logoout">Выйти</a>
         </div>
     </div>

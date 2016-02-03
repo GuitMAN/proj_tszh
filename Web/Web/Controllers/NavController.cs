@@ -42,5 +42,16 @@ namespace Web.Controllers
             return PartialView(categories);
         }
 
+        public PartialViewResult menu_top(string category = null)
+        {
+            ViewBag.SelectedCategory = category;
+
+            IEnumerable<string> categories = repository.Articles
+                .Select(title => title.title)
+                .Distinct()
+                .OrderBy(x => x);
+            return PartialView(categories);
+        }
+
     }
 }

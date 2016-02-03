@@ -35,41 +35,45 @@ namespace Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-  //      [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Index(LoginModel model, string returnUrl)
         {
-
             //If User Autorized, but him redirected here, then error 401 
             //if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
-            //    return RedirectToAction("Error_401", "Login");
+            //    return httpStatusCodeResult(401);
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
+                if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                    return RedirectToAction("Index", "Login");
                 uk_profile uk = null;
                 try
                 {
+                    int id;
                     string requestDomain =Request.Headers["host"];
                     UserProfile user = repository.UserProfile.Where(p => p.id.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
-                        if (requestDomain.Equals(uk.host))
+                    //    if (requestDomain.Equals(uk.host))
                         {
-                            
-                            return new HttpStatusCodeResult(200, "{id:}");
-                        }
-                        else
-                        {
-                            WebSecurity.Logout();
-                            return new HttpStatusCodeResult(203, "login или пароль");
+                            id = WebSecurity.CurrentUserId;
+                            return Json(user);
+                    //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
+                    //    }
+                    //    else
+                    //    {
+                    //      WebSecurity.Logout();
+                    //      return new HttpStatusCodeResult(203, "login или пароль");
                         }
                     }
                     else
                     {
-                        return new HttpStatusCodeResult(200, "Авторизация успешна для пользователя без статуса");
-                      //  return RedirectToAction("Index", "Admtszh");
+                        //return new HttpStatusCodeResult(200, "Авторизация успешна для пользователя без статуса");
+                        id = WebSecurity.CurrentUserId;
+                        return Json("хуйня");
                     }
-                 
-                    TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+
+                  //  TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
                    
                 }
                 catch (Exception ex)
@@ -94,7 +98,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+//        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
             if (ModelState.IsValid )

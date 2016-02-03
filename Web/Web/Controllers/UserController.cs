@@ -286,7 +286,7 @@ namespace Web.Controllers
                 mess.id_uk = uk.id;
                 mess.id_user = WebSecurity.CurrentUserId;
                 if (uk.Email != null)
-                    SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, mess.title, mess.message);
+                    SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, "Обращение от "+ user.SurName + user.Name + ": " + mess.title, mess.message);
                 repository.SaveFeedBack(mess);
                 return RedirectToAction("Index");
             }
