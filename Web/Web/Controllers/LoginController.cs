@@ -126,7 +126,7 @@ namespace Web.Controllers
         {
             WebSecurity.Logout();
             return new HttpStatusCodeResult(200);
-            //return RedirectToLocal(ReturnUrl);
+//            return RedirectToLocal("/home#/login");
         }
 
 

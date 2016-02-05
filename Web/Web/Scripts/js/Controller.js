@@ -25,6 +25,10 @@ HomeApp.config([
               templateUrl: '/login/index',
               controller: 'LoginCtrl'
           })
+          .when('/logoout', {
+              templateUrl: '/login/logoout',
+              controller: 'LogoutCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });
@@ -80,7 +84,7 @@ HomeApp.controller('HomeCtrl', [
 ]);
 
 
-HomeApp.controller('ApplicationCtrl', function ($scope, $cookies, USER_ROLES, AuthService, $rootScope, myFactory, Session)
+HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, USER_ROLES, AuthService, $rootScope, myFactory, Session)
 {
     $scope.myFactory = myFactory;
     $scope.Session = Session;
@@ -112,11 +116,9 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                   if (res.status == 200) {
                       //Setting a cookie
                   var role = $cookies.get('cookie');
-                  Session.create(1, name, role, res.data);
-
+                  Session.create(1, name, role, res.data.login);
                }
-                  return res;
-                
+                  return res;              
             })
               
         },
@@ -205,6 +207,17 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
         });
     };
 })
+
+HomeApp.controller('LogoutCtrl', function ($scope, $http, Session, $location) {
+    Session.destroy();
+    $http.post('/Login/Logoout');
+    return  $location.path('#/');
+   // $cookies.put('cookie');
+
+})
+
+
+
           //function (login, answerForm)
       //{
       //    if (answerForm.$valid)
