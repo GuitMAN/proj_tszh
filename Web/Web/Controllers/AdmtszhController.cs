@@ -455,6 +455,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [Route("route/{data}")]
         public JsonResult TheAction(string data)
         {
 

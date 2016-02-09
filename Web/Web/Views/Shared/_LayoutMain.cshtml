@@ -54,7 +54,7 @@
                             <div class="form-group">
                                 <div ng-if="Session.currentUser">Welcome, {{ Session.currentUser }}
                                     <a class="navbar-brand" href="#/logoout">Выйти</a></div>
-                                
+                                <pre>{{Session.userRole}}</pre>
                                 <div ng-hide="Session.currentUser">
                                    
                                     <div ng-controller="LoginCtrl">
@@ -69,7 +69,7 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div>
+                            </pre>
                         </div>
                     </div>
                  </li><!-- .LoginCtrl -->

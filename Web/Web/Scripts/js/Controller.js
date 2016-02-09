@@ -84,30 +84,21 @@ HomeApp.controller('HomeCtrl', [
 ]);
 
 
-HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, USER_ROLES, AuthService, $rootScope, myFactory, Session)
+HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, USER_ROLES, AuthService, $rootScope, Session)
 {
-    $scope.myFactory = myFactory;
     $scope.Session = Session;
-    $scope.$on('myEvent', function (event, args) {
-        $scope.data = args;
-    });
     var curname = $cookies.get("username");
     var role = $cookies.get("Role");
     var id = $cookies.get("userId");
     if (curname) {
         Session.create(1, id, role, curname);
-        //$scope.userRoles = USER_ROLES;
+        $scope.userRoles = role;
         $scope.isAuthorized = AuthService.isAuthorized;
     }
-});
-
-HomeApp.factory('myFactory', function ($rootScope) {    
-    return {   
-        data: 'hello world'
+    else {
+        Session.destroy();
     }
 });
-
-
 
 HomeApp.factory('AuthService', function ($http, $cookies, Session) {
     return {
@@ -171,7 +162,7 @@ HomeApp.constant('AUTH_EVENTS', {
     notAuthorized: 'auth-not-authorized'
 })
 
-.constant('USER_ROLES', {
+HomeApp.constant('USER_ROLES', {
     all: '*',
     admin: 'Admin',
     editor: 'Moder',
@@ -179,21 +170,20 @@ HomeApp.constant('AUTH_EVENTS', {
 })
 
 
-HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService,myFactory, Session) {
+HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session) {
     $scope.credentials = {
         username: '',
         password: ''
     };
-    $scope.myFactory = myFactory;
     $scope.login = function (credentials) {
         AuthService.login(credentials)
             .then(function (data)
             {             
-                $rootScope.$broadcast('myEvent', "рутскоп");
                 if (data.status == 200) {
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 } else
                 {
+                //    $rootScope.$broadcast(AUTH_EVENTS.auth-login-failed)
                     Session.destroy()
                 }
             },
@@ -203,9 +193,12 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
     };
 })
 
-HomeApp.controller('LogoutCtrl', function ($scope, $http, Session, $location) {
-    Session.destroy();
-    $http.post('/Login/Logoout');
+HomeApp.controller('LogoutCtrl', function ($scope, $http, Session, $rootScope) {
+    $http.post('/Login/Logoout').then(function ()
+    {
+      //  $rootScope.$broadcast(AUTH_EVENTS.auth-logout-success);
+        Session.destroy(); 
+    });
     return  $location.path('#/');
    // $cookies.put('cookie');
 

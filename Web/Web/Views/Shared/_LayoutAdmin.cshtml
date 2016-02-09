@@ -6,16 +6,12 @@
     <title>Административный раздел</title>
     <meta charset="utf-8" />
     @Styles.Render("~/Styles/css")
-    @Styles.Render("~/Styles/error")
-
-
-   
+    @Styles.Render("~/Styles/error")  
 </head>
 <body>
     <div class="main">
         <header>
-        <div class="logo">
-                LOGO
+        <div class="logo">LOGO
         </div> 
         </header>
          <nav>
@@ -23,7 +19,6 @@
                 @Html.Partial("~/Views/Shared/_AdminMenu.cshtml")
             </div>
         </nav>
-
         <div class="content">
             @if (TempData["message"] != null)
             {
