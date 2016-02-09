@@ -9,6 +9,7 @@ using WebMatrix.WebData;
 using Web.Filter;
 using Web.Models;
 using Web.Models.Repository;
+using System.Net;
 
 namespace Web.Controllers
 {
@@ -48,16 +49,19 @@ namespace Web.Controllers
                 uk_profile uk = null;
                 try
                 {
-                    int id;
+                    Account_model result = new Account_model();
                     string requestDomain =Request.Headers["host"];
                     UserProfile user = repository.UserProfile.Where(p => p.id.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
+                        
                     //    if (requestDomain.Equals(uk.host))
                         {
-                            id = WebSecurity.CurrentUserId;
-                            return Json(user);
+                            result.id = WebSecurity.CurrentUserId;
+                            result.Login = WebSecurity.CurrentUserName;
+                            result.Role = Roles.GetRolesForUser();
+                            return Json(result);
                     //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
                     //    }
                     //    else
@@ -69,8 +73,10 @@ namespace Web.Controllers
                     else
                     {
                         //return new HttpStatusCodeResult(200, "Авторизация успешна для пользователя без статуса");
-                        id = WebSecurity.CurrentUserId;
-                        return Json("хуйня");
+                        result.id = WebSecurity.CurrentUserId;
+                        result.Login = WebSecurity.CurrentUserName;
+                        result.Role = Roles.GetRolesForUser();
+                        return Json(result);
                     }
 
                   //  TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);

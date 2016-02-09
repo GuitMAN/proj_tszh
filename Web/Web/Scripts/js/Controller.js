@@ -91,14 +91,17 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, USER_ROLES, Auth
     $scope.$on('myEvent', function (event, args) {
         $scope.data = args;
     });
-    $scope.userRoles = USER_ROLES;
-    $scope.isAuthorized = AuthService.isAuthorized;
-    $scope.cookie = $cookies.get('cookie');
-    console.log("cookie", $cookies.get('cookie'));
-    });
+    var curname = $cookies.get("username");
+    var role = $cookies.get("Role");
+    var id = $cookies.get("userId");
+    if (curname) {
+        Session.create(1, id, role, curname);
+        //$scope.userRoles = USER_ROLES;
+        $scope.isAuthorized = AuthService.isAuthorized;
+    }
+});
 
-HomeApp.factory('myFactory', function ($rootScope) {
-    
+HomeApp.factory('myFactory', function ($rootScope) {    
     return {   
         data: 'hello world'
     }
@@ -113,13 +116,12 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
             return $http.post('/Login?AspxAutoDetectCookieSupport=1', credentials)
               .then(function (res)
               {
-                  if (res.status == 200) {
-                      //Setting a cookie
-                  var role = $cookies.get('cookie');
-                  Session.create(1, name, role, res.data.login);
-               }
+                  if (res.status == 200) 
+                  {                 
+                      Session.create(1, res.data.id, res.data.Role, res.data.Login);
+                   }
                   return res;              
-            })
+               })
               
         },
         isAuthenticated: function () {
@@ -139,15 +141,18 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 HomeApp.service('Session', function ($cookies) {
     this.create = function (sessionId, userId, userRole, currentUser) {
         this.id = sessionId;
+        $cookies.put('userId', userId);
         this.userId = userId;
+        $cookies.put('username', currentUser);
         this.currentUser = currentUser;
         this.userRole = userRole;
+        $cookies.put('userRole', userRole)
         this.status = status;
     };
     this.destroy = function () {
-        $cookies.put('userid','');
+        $cookies.put('userId', '');
         $cookies.put('username','');
-        $cookies.put('userrole','');
+        $cookies.put('userRole', '');
         this.id = null;
         this.userId = null;
         this.userRole = null;
@@ -185,20 +190,10 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
             .then(function (data)
             {             
                 $rootScope.$broadcast('myEvent', "рутскоп");
-                Session.status = "сервис";
                 if (data.status == 200) {
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                    $scope.data = "Ok";
-                    $scope.myFactory.data = "Фабрика";
-                    $scope.status = data.status;
-                    Session.status = "сервис пиздат";
                 } else
                 {
-                    Session.status = "сервис хуева";
-                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                    $scope.status = data.status;
-                    $scope.myFactory.data = "Фабрика";
-                    $scope.data = data.statusText;
                     Session.destroy()
                 }
             },

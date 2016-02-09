@@ -143,7 +143,7 @@ namespace Web.Models
     {
         public int id { get; set; }
         public string Login { get; set; }
-        public int Role { get; set; }
+        public string[] Role { get; set; }
     }
 
     public class UserProfile_form
