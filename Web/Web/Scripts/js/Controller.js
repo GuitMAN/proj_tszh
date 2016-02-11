@@ -132,18 +132,19 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 HomeApp.service('Session', function ($cookies) {
     this.create = function (sessionId, userId, userRole, currentUser) {
         this.id = sessionId;
-        $cookies.put('userId', userId);
         this.userId = userId;
-        $cookies.put('username', currentUser);
         this.currentUser = currentUser;
         this.userRole = userRole;
-        $cookies.put('userRole', userRole)
         this.status = status;
+        $cookies.put('userId', userId);
+        $cookies.put('username', currentUser);
+        $cookies.put('userRole', userRole)
+
     };
     this.destroy = function () {
-        $cookies.put('userId', '');
-        $cookies.put('username','');
-        $cookies.put('userRole', '');
+        $cookies.remove('userId');
+        $cookies.remove('username');
+        $cookies.remove('userRole');
         this.id = null;
         this.userId = null;
         this.userRole = null;
@@ -193,11 +194,12 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
     };
 })
 
-HomeApp.controller('LogoutCtrl', function ($scope, $http, Session, $rootScope) {
+HomeApp.controller('LogoutCtrl', function ($http, Session, $location) {
     $http.post('/Login/Logoout').then(function ()
     {
       //  $rootScope.$broadcast(AUTH_EVENTS.auth-logout-success);
         Session.destroy(); 
+
     });
     return  $location.path('#/');
    // $cookies.put('cookie');
