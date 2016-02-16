@@ -49,7 +49,7 @@
                 <input class="form-control text-box single-line" type="text" id="username" ng-model="credentials.username">
                 <label class="control-label col-md-2" for="password">Password:</label>
                 <input class="form-control text-box single-line" type="password" id="password" ng-model="credentials.password">
-                <button type="submit">Login</button>
+                <button type="submit" ngClick="login(credentials)" value="Login" >
             </form>
         </div>
     </div>

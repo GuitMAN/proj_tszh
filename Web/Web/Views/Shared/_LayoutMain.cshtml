@@ -6,22 +6,26 @@
    
     <title>@ViewBag.Title</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
     <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
-    @*<link href="~/Styles/app.css" rel="stylesheet" />*@
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <link href="~/Styles/bootstrap-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap-dist/css/bootstrap-theme.css" rel="stylesheet" />
+    <style type="text/css" id="enject"></style>
 
 
   </head>
 
 <body>
+
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -67,7 +71,9 @@
                                             </div>
                                             <button type="submit" class="btn btn-xs btn-success">Войти</button>
                                         </form>
+                                        <div class="form-group"><a href="#/register" class="dropdown-toggle">Регистрация</a></div>
                                     </div>
+                                    
                                 </div>
                             </pre>
                         </div>
@@ -91,7 +97,7 @@
         Все права защищены. CloudsSolution © 2015.
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
+    <script src="~/Styles/bootstrap-dist/js/bootstrap.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 

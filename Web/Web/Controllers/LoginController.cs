@@ -114,9 +114,13 @@ namespace Web.Controllers
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     WebSecurity.RequireRoles();
                     WebSecurity.Login(model.UserName, model.Password);
-                    
+                    Account_model result = new Account_model();
+                    result.id = WebSecurity.CurrentUserId;
+                    result.Login = WebSecurity.CurrentUserName;
+                    result.Role = Roles.GetRolesForUser();
+                    return Json(result);
 
-                    return RedirectToAction("Index", "User");
+ //                   return RedirectToAction("Index", "User");
                 }
                 catch (MembershipCreateUserException e)
                 {

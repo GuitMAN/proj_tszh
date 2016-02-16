@@ -29,6 +29,10 @@ HomeApp.config([
               templateUrl: '/login/logoout',
               controller: 'LogoutCtrl'
           })
+          .when('/register', {
+              templateUrl: '/login/register',
+              controller: 'RegisterCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });
@@ -115,6 +119,18 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                })
               
         },
+        register: function (reguser)
+        {
+            $http.post('/Login/Register', reguser)
+                .then(function (data)
+            {
+                if (data.status == 200) {
+                    Session.create(1, data.data.id, data.data.Role, data.data.Login);
+                }
+                return data;
+            })
+        },
+
         isAuthenticated: function () {
             return Session.userId;
         },
@@ -174,22 +190,22 @@ HomeApp.constant('USER_ROLES', {
 HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session) {
     $scope.credentials = {
         username: '',
-        password: ''
+        password: '',
+        RememberMe: false
     };
     $scope.login = function (credentials) {
         AuthService.login(credentials)
             .then(function (data)
             {             
                 if (data.status == 200) {
+                    Session.create(1, res.data.id, res.data.Role, res.data.Login);
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                 } else
                 {
                 //    $rootScope.$broadcast(AUTH_EVENTS.auth-login-failed)
                     Session.destroy()
                 }
-            },
-            function (data)
-            {
+            
         });
     };
 })
@@ -202,28 +218,25 @@ HomeApp.controller('LogoutCtrl', function ($http, Session, $location) {
 
     });
     return  $location.path('#/');
-   // $cookies.put('cookie');
-
 })
 
+HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session) {
+    $scope.reguser = {
+        UserName: '',
+        Password: '',
+        ConfirmPassword: ''
+    };
+    $scope.register = function (reguser) {
+        AuthService.register(reguser)
+            .then(function (data) {
+                //if (data.status == 200) {
+                    
+                ////    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                //} else {
+                //    //    $rootScope.$broadcast(AUTH_EVENTS.auth-login-failed)
+                //    Session.destroy()
+                //}
+            });
+    };
 
-
-          //function (login, answerForm)
-      //{
-      //    if (answerForm.$valid)
-      //    {
-      //        $http.post("/Login?AspxAutoDetectCookieSupport=1", $scope.login).then(function (data)
-      //        {
-      //            $scope.status = data.status;
-      //            $scope.data = data.statusText;
-      //            if (data.status==200)
-      //                  $scope.autoApplications = "N";
-
-      //        },function (data) {
-      //            $scope.status = data.status;
-      //            $scope.data = data.statusText;
-      //        }) ;
-      //    }
-      //}
-//  }
-//]);
+})
