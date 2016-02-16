@@ -7,8 +7,6 @@
     <title>@ViewBag.Title</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8" />
-    <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -16,10 +14,9 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
-    <link href="~/Styles/bootstrap-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Styles/bootstrap-dist/css/bootstrap-theme.css" rel="stylesheet" />
-    <style type="text/css" id="enject"></style>
+
 
 
   </head>
@@ -43,7 +40,7 @@
                     <li class="dropdown">
                         <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/">Action</a></li>
+                            <li><a href="#/login">Action</a></li>
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
@@ -62,16 +59,17 @@
                                 <div ng-hide="Session.currentUser">
                                    
                                     <div ng-controller="LoginCtrl">
-                                        <form class="navbar-form navbar-right" name="loginForm" ng-submit="login(credentials)" novalidate>
+                                        <form class="navbar-form navbar-right" name="loginForm"   novalidate >
+                                            @Html.AntiForgeryToken()
                                             <div class="form-group">
                                                 <input type="text" placeholder="Login" class="form-control" id="username" ng-model="credentials.username">
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" placeholder="Password" class="form-control" id="password" ng-model="credentials.password">
                                             </div>
-                                            <button type="submit" class="btn btn-xs btn-success">Войти</button>
+                                            <button type="submit" class="btn btn-xs btn-success" ng-click="login(credentials)">Войти</button>
                                         </form>
-                                        <div class="form-group"><a href="#/register" class="dropdown-toggle">Регистрация</a></div>
+                                        <div class="form-group"><a href="#/register" class="dropdown-toggle" >Регистрация</a></div>
                                     </div>
                                     
                                 </div>

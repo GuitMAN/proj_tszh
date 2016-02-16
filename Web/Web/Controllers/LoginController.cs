@@ -13,7 +13,7 @@ using System.Net;
 
 namespace Web.Controllers
 {
-   
+
     [InitializeMembership]
     public class LoginController : Controller
     {
@@ -36,7 +36,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
+        [ValidateJsonAntiForgeryToken]
         public ActionResult Index(LoginModel model, string returnUrl)
         {
             //If User Autorized, but him redirected here, then error 401 
@@ -44,8 +44,13 @@ namespace Web.Controllers
             //    return httpStatusCodeResult(401);
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                    return RedirectToAction("Index", "Login");
+                System.Web.Security.FormsAuthentication.SetAuthCookie(model.UserName, false);
+
+                if ((!WebSecurity.IsAuthenticated) && (!WebSecurity.Initialized))
+                {
+                    WebSecurity.Logout();
+                    return new HttpStatusCodeResult(203, "Ошибка аутентификации");
+                }
                 uk_profile uk = null;
                 try
                 {
@@ -73,9 +78,10 @@ namespace Web.Controllers
                     else
                     {
                         //return new HttpStatusCodeResult(200, "Авторизация успешна для пользователя без статуса");
-                        result.id = WebSecurity.CurrentUserId;
-                        result.Login = WebSecurity.CurrentUserName;
-                        result.Role = Roles.GetRolesForUser();
+                        result.id = WebSecurity.GetUserId(model.UserName);
+                        result.Login = model.UserName;
+                        result.Role = Roles.GetRolesForUser(model.UserName);
+                        FormsAuthentication.RedirectFromLoginPage(model.UserName, false);
                         return Json(result);
                     }
 
@@ -124,7 +130,8 @@ namespace Web.Controllers
                 }
                 catch (MembershipCreateUserException e)
                 {
-                    ModelState.AddModelError("Ошибка при регистрации: ", ErrorCodeToString(e.StatusCode));                       
+                    ModelState.AddModelError("Ошибка при регистрации: ", ErrorCodeToString(e.StatusCode));
+                    return new HttpStatusCodeResult(203, "Ошибка при регистрации: " + ErrorCodeToString(e.StatusCode));  
                 }
             }
 

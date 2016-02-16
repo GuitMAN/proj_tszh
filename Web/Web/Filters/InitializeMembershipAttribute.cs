@@ -10,11 +10,15 @@ using System.Security.Principal;
 using System.Web.Routing;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Helpers;
+using System.Web;
+using System.Net;
 
 namespace Web.Filter
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class InitializeMembershipAttribute : ActionFilterAttribute, IAuthorizationFilter
+
+    public sealed class InitializeMembershipAttribute : ActionFilterAttribute//, IAuthorizationFilter
     {
         private static SimpleMembershipInitializer _initializer;
         private static object _initializerLock = new object();
@@ -30,10 +34,24 @@ namespace Web.Filter
 
 
 
-        public void OnAuthorization(AuthorizationContext filterContext)
-        {
+        //private void ValidateRequestHeader(HttpRequestBase request)
+        //{
+        //    string cookieToken = String.Empty;
+        //    string formToken = String.Empty;
+        //    string tokenValue = request.Headers["RequestVerificationToken"];
+        //    if (!String.IsNullOrEmpty(tokenValue))
+        //    {
+        //        string[] tokens = tokenValue.Split(':');
+        //        if (tokens.Length == 2)
+        //        {
+        //            cookieToken = tokens[0].Trim();
+        //            formToken = tokens[1].Trim();
+        //        }
+        //    }
+        //    AntiForgery.Validate(cookieToken, formToken);
+        //}
 
-        }
+
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext context)
         {
@@ -73,6 +91,44 @@ namespace Web.Filter
                   //  throw new InvalidOperationException("Не удалось инициализировать базу данных ASP.NET Simple Membership. Чтобы получить дополнительные сведения, перейдите по адресу: http://go.microsoft.com/fwlink/?LinkId=256588", ex);
                 }
             }
+        }
+
+
+    }
+
+    public class ValidateJsonAntiForgeryToken : AuthorizeAttribute
+    {
+        public JsonResult deniedResult = new JsonResult()
+        {
+            JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+            Data = new { StatusCode = HttpStatusCode.Forbidden, Error = "Access Denied" }
+        };
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            System.Diagnostics.Debug.WriteLine("ValidateJsonAntiForgeryToken");
+            var request = filterContext.HttpContext.Request;
+
+            if (request.HttpMethod == WebRequestMethods.Http.Post && request.IsAjaxRequest() && request.Headers["__RequestVerificationToken"] != null)
+            {
+                AntiForgery.Validate(CookieValue(request), request.Headers["__RequestVerificationToken"]);
+            }
+            else
+            {
+                filterContext.Result = deniedResult;
+            }
+        }
+
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            System.Diagnostics.Debug.WriteLine("ValidateJsonAntiForgeryToken HandleUnauthorizedRequest ");
+            filterContext.Result = deniedResult;
+        }
+
+        private string CookieValue(HttpRequestBase request)
+        {
+            var cookie = request.Cookies[AntiForgeryConfig.CookieName];
+            return cookie != null ? cookie.Value : null;
         }
     }
 

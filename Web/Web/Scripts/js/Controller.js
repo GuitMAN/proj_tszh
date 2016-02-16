@@ -104,17 +104,34 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, USER_ROLES, Auth
     }
 });
 
+
+
+
+
+
+function getHttpConfig() {
+    var token = angular.element("input[name='__RequestVerificationToken']").val();
+    var config = {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            '__RequestVerificationToken': token
+        }
+    };
+    return config;
+}
+
+
+
 HomeApp.factory('AuthService', function ($http, $cookies, Session) {
     return {
         login: function (credentials)
         {
-            return $http.post('/Login?AspxAutoDetectCookieSupport=1', credentials)
+
+            var config = getHttpConfig();
+            return $http.post('/Login', credentials, config)
               .then(function (res)
-              {
-                  if (res.status == 200) 
-                  {                 
-                      Session.create(1, res.data.id, res.data.Role, res.data.Login);
-                   }
+              {             
+                  Session.create(1, res.data.id, res.data.Role, res.data.Login);
                   return res;              
                })
               
@@ -122,10 +139,12 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         register: function (reguser)
         {
             $http.post('/Login/Register', reguser)
-                .then(function (data)
-            {
+                .then(function (data){
                 if (data.status == 200) {
                     Session.create(1, data.data.id, data.data.Role, data.data.Login);
+                }
+                if (data.status == 203) {
+                    Session.destroy();
                 }
                 return data;
             })
@@ -161,6 +180,7 @@ HomeApp.service('Session', function ($cookies) {
         $cookies.remove('userId');
         $cookies.remove('username');
         $cookies.remove('userRole');
+        $cookies.remove('__RequestVerificationToken')
         this.id = null;
         this.userId = null;
         this.userRole = null;
@@ -187,7 +207,7 @@ HomeApp.constant('USER_ROLES', {
 })
 
 
-HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session) {
+HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session, $location) {
     $scope.credentials = {
         username: '',
         password: '',
@@ -198,8 +218,8 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
             .then(function (data)
             {             
                 if (data.status == 200) {
-                    Session.create(1, res.data.id, res.data.Role, res.data.Login);
                     $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+
                 } else
                 {
                 //    $rootScope.$broadcast(AUTH_EVENTS.auth-login-failed)
@@ -208,6 +228,7 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
             
         });
     };
+   
 })
 
 HomeApp.controller('LogoutCtrl', function ($http, Session, $location) {
