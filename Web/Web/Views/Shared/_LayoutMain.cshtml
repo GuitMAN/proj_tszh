@@ -3,10 +3,8 @@
 <html lang="ru" ng-app="HomeApp">
 
 <head>
-
-    <title>@ViewBag.Title</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <title>Business clean web templates</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -14,95 +12,103 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="~/Styles/bootstrap-dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Styles/bootstrap-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
-
-
+    <link id="callCss" rel="stylesheet" href="~/Styles/themes/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link href="~/Styles/themes/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Styles/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
+    <link href="~/Styles/themes/css/base.css" rel="stylesheet" type="text/css">
+    <style type="text/css" id="enject"></style>
 </head>
 
-<body>
-
-    <nav class="navbar navbar-default">
-        <div class="container" ng-controller="LoginInfoCtrl">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#/">Project name</a>
-            </div><!-- /.nav-collapse -->
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @Html.Action("menu_top", "Nav")
-                    
-                    <li class="dropdown" ng-show="Session.currentUser">
-                        <a href="/#/" class="dropdown-toggle js-activated" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Меню пользователя<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#/">Счетчики</a></li>
-                            <li><a href="#/feedback">Обратная связь</a></li>
-                            <li><a href="#/profile">Профиль</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
+<body ng-controller="LoginInfoCtrl">
+    <section id="headerSection">
+        <div class="container" >
+            <div class="navbar">
+                <div class="container">
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h1><a class="brand" href="index.html"> Business <small>  Ltd.</small></a></h1>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav pull-right">
+                            <li class=""><a href="index.html">Home	</a></li>
+                            @Html.Action("menu_top", "Nav")
+                            <li class="dropdown" ng-show="Session.currentUser">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Меню пользователя<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="elements.html">Page Elements</a></li>
+                                    <li><a href="comingsoon.html">Coming soon page</a></li>
+                                    <li class=""><a href="blog.html">Blog</a></li>
+                                    <li class=""><a href="contact.html">Support</a></li>
+                                </ul>
+                            </li>                           
                         </ul>
-                    </li>            
-                    <li>
-                        <div class="form-group">
-                            <div ng-if="Session.currentUser">
-                                Welcome, {{ Session.currentUser }}
-                                <a class="navbar-brand" href="#/logoout">Выйти</a>
-                            </div>
-                            <div ng-hide="Session.currentUser">
-                                <div ng-controller="LoginCtrl">
-                                    <form class="navbar-form navbar-right" name="loginForm" novalidate>
-                                        @*@Html.AntiForgeryToken()*@
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Login" class="form-control" id="username" ng-model="credentials.username">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" placeholder="Password" class="form-control" id="password" ng-model="credentials.password">
-                                        </div>
-                                        <button type="submit" class="btn btn-xs btn-success" ng-click="login(credentials)">Войти</button>
-                                    </form>
-                                    <div class="form-group"><a href="#/register" class="dropdown-toggle">Регистрация</a></div>
-                                </div>
-                            </div>
-                        </div>
-                     </li>
-                 </ul>
-             </div><!--/.navbar-collapse -->
-        </div><!-- /.container  .LoginCtrl -->
-    </nav><!-- /.navbar -->
-
-    <div class="jumbotron">
-        <div class="container">
-            @if (TempData["message"] != null)
-            {
-                <div class="alert alert-success">@TempData["message"]</div>
-            }
-            @RenderBody()
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
+    <!--Header Ends================================================ -->
+
+
+    <!--Header Ends================================================ -->
+    <section id="bannerSection" style="background:url(../../Styles/themes/images/banner/contact.png) no-repeat center center #000;">
+        <div class="container">
+            <h1 id="pageTitle">
+                Contact <small> :We love to hear from you</small>
+                <span class="pull-right toolTipgroup">
+                    <a href="#" data-placement="top" data-original-title="Find us on via facebook"><img style="width:45px" src="~/Styles/themes/images/facebook.png" alt="facebook" title="facebook"></a>
+                    <a href="#" data-placement="top" data-original-title="Find us on via twitter"><img style="width:45px" src="~/Styles/themes/images/twitter.png" alt="twitter" title="twitter"></a>
+                    <a href="#" data-placement="top" data-original-title="Find us on via youtube"><img style="width:45px" src="~/Styles/themes/images/youtube.png" alt="youtube" title="youtube"></a>
+                </span>
+            </h1>
+        </div>
+    </section>
+    <section id="bodySection">
+        <div class="container">
+            <div ng-if="Session.currentUser">
+                Welcome, {{ Session.currentUser }}
+                <a class="navbar-brand" href="#/logoout">Выйти</a>
+            </div>
+            <div ng-hide="Session.currentUser">
+                <div ng-controller="LoginCtrl" class="row-fluid">
+                    <div class="span6">
+                        <form class="well form-inline">
+                            @*@Html.AntiForgeryToken()*@
+                            <input type="text" class="input-small" placeholder="Login" ng-model="credentials.username">
+                            <input type="password" class="input-small" placeholder="Password" ng-model="credentials.password">
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="credentials.RememberMe">Запомнить</label>
+                            <button type="submit" class="btn" ng-click="login(credentials)">Войти</button>
+                        </form>
+                        <div class="span6"><a href="#/register" class="dropdown-toggle">Регистрация</a></div>
+                    </div>
+                </div>
+            </div>
+            <hr class="soften">
+            <div class="jumbotron">
+                <div class="container">
+                    @if (TempData["message"] != null)
+            {
+                        <div class="alert alert-success">@TempData["message"]</div>
+                    }
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </section>
     <footer>
         Все права защищены. CloudsSolution © 2015.
     </footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="~/Styles/bootstrap-dist/js/bootstrap.js"></script>    
-    <script src="~/Styles/bootstrap-dist/js/bootstrap-hover-dropdown.js"></script>
-    <script>
-    // very simple to use!
-    $(document).ready(function() {
-      $('.js-activated').dropdownHover().dropdown();
-    });
-    </script>
-    
-    
     @RenderSection("Scripts", required: false)
-
+    <script src="~/Styles/themes/js/jquery-1.8.3.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    @*<script src="~/Styles/bootstrap-dist/js/bootstrap.js"></script>*@
+    <script src="~/Styles/themes/js/bootstrap-tooltip.js"></script>
+    <script src="~/Styles/themes/js/bootstrap-popover.js"></script>
+    <script src="~/Styles/themes/js/business_ltd_1.0.js"></script>
 
 </body>
 
