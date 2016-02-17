@@ -1096,6 +1096,8 @@
     <Content Include="Styles\bootstrap-dist\css\bootstrap.css" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap.min.css" />
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Styles\bootstrap-dist\js\bootstrap-hover-dropdown.js" />
+    <Content Include="Styles\bootstrap-dist\js\bootstrap-hover-dropdown.min.js" />
     <Content Include="Styles\bootstrap-dist\js\bootstrap.js" />
     <Content Include="Styles\bootstrap-dist\js\bootstrap.min.js" />
     <Content Include="Styles\bootstrap-dist\js\npm.js" />

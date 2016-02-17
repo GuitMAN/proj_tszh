@@ -3,7 +3,7 @@
 <html lang="ru" ng-app="HomeApp">
 
 <head>
-   
+
     <title>@ViewBag.Title</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8" />
@@ -14,17 +14,16 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Styles/bootstrap-dist/css/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
 
 
-
-  </head>
+</head>
 
 <body>
 
     <nav class="navbar navbar-default">
-        <div class="container">
+        <div class="container" ng-controller="LoginInfoCtrl">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -37,10 +36,11 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @Html.Action("menu_top", "Nav")
-                    <li class="dropdown">
-                        <a href="#/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    
+                    <li class="dropdown" ng-show="Session.currentUser">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/login">Action</a></li>
+                            <li><a href="#">Action</a></li>
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
                             <li role="separator" class="divider"></li>
@@ -48,38 +48,33 @@
                             <li><a href="#">Separated link</a></li>
                             <li><a href="#">One more separated link</a></li>
                         </ul>
-                    </li>
-
+                    </li>            
                     <li>
-                        <div ng-controller="LoginInfoCtrl">
-                            <div class="form-group">
-                                <div ng-if="Session.currentUser">Welcome, {{ Session.currentUser }}
-                                    <a class="navbar-brand" href="#/logoout">Выйти</a></div>
-                                <pre>{{Session.userRole}}</pre>
-                                <div ng-hide="Session.currentUser">
-                                   
-                                    <div ng-controller="LoginCtrl">
-                                        <form class="navbar-form navbar-right" name="loginForm"   novalidate >
-                                            @Html.AntiForgeryToken()
-                                            <div class="form-group">
-                                                <input type="text" placeholder="Login" class="form-control" id="username" ng-model="credentials.username">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="password" placeholder="Password" class="form-control" id="password" ng-model="credentials.password">
-                                            </div>
-                                            <button type="submit" class="btn btn-xs btn-success" ng-click="login(credentials)">Войти</button>
-                                        </form>
-                                        <div class="form-group"><a href="#/register" class="dropdown-toggle" >Регистрация</a></div>
-                                    </div>
-                                    
+                        <div class="form-group">
+                            <div ng-if="Session.currentUser">
+                                Welcome, {{ Session.currentUser }}
+                                <a class="navbar-brand" href="#/logoout">Выйти</a>
+                            </div>
+                            <div ng-hide="Session.currentUser">
+                                <div ng-controller="LoginCtrl">
+                                    <form class="navbar-form navbar-right" name="loginForm" novalidate>
+                                        @*@Html.AntiForgeryToken()*@
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Login" class="form-control" id="username" ng-model="credentials.username">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" placeholder="Password" class="form-control" id="password" ng-model="credentials.password">
+                                        </div>
+                                        <button type="submit" class="btn btn-xs btn-success" ng-click="login(credentials)">Войти</button>
+                                    </form>
+                                    <div class="form-group"><a href="#/register" class="dropdown-toggle">Регистрация</a></div>
                                 </div>
-                            </pre>
+                            </div>
                         </div>
-                    </div>
-                 </li><!-- .LoginCtrl -->
-              </ul>
-           </div><!--/.navbar-collapse -->
-        </div><!-- /.container -->
+                     </li>
+                 </ul>
+             </div><!--/.navbar-collapse -->
+        </div><!-- /.container  .LoginCtrl -->
     </nav><!-- /.navbar -->
 
     <div class="jumbotron">
@@ -94,10 +89,12 @@
     <footer>
         Все права защищены. CloudsSolution © 2015.
     </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="~/Styles/bootstrap-dist/js/bootstrap.min.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="~/Styles/bootstrap-dist/js/bootstrap.js"></script>    
+    <script src="~/Styles/bootstrap-dist/js/bootstrap-hover-dropdown.js"></script>
     @RenderSection("Scripts", required: false)
+
 
 </body>
 

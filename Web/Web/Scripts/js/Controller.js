@@ -4,6 +4,9 @@
 /* Controllers */
 var HomeApp = angular.module('HomeApp', ['ngRoute', 'ngResource', 'ngCookies']);
 
+//angular.bootstrap(document, ['HomeApp']);
+
+
 /* Config */
 HomeApp.config([
   '$routeProvider', '$locationProvider',
@@ -62,6 +65,7 @@ HomeApp.filter('checkmark', function () {
     }
 });
 
+/* Filter */
 HomeApp.filter('aspDate', function () {
     'use strict';
     return function (input) {
@@ -88,20 +92,20 @@ HomeApp.controller('HomeCtrl', [
 ]);
 
 
-HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, USER_ROLES, AuthService, $rootScope, Session)
+
+
+
+
+HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, AuthService, $rootScope, Session)
 {
     $scope.Session = Session;
     var curname = $cookies.get("username");
-    var role = $cookies.get("Role");
+    var role = $cookies.get("userRole");
     var id = $cookies.get("userId");
-    if (curname) {
-        Session.create(1, id, role, curname);
-        $scope.userRoles = role;
-        $scope.isAuthorized = AuthService.isAuthorized;
-    }
-    else {
-        Session.destroy();
-    }
+    Session.create(1, id, role, curname);
+   // $scope.userRoles = role;
+    $scope.isAuthorized = AuthService.isAuthorized;
+   
 });
 
 
@@ -127,8 +131,8 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         login: function (credentials)
         {
 
-            var config = getHttpConfig();
-            return $http.post('/Login', credentials, config)
+ //           var config = getHttpConfig();
+            return $http.post('/Login', credentials)//, config)
               .then(function (res)
               {             
                   Session.create(1, res.data.id, res.data.Role, res.data.Login);
@@ -139,11 +143,11 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         register: function (reguser)
         {
             $http.post('/Login/Register', reguser)
-                .then(function (data){
+                .then(function (res) {
                 if (data.status == 200) {
-                    Session.create(1, data.data.id, data.data.Role, data.data.Login);
+                    Session.create(1, res.data.id, res.data.Role, res.data.Login);
                 }
-                if (data.status == 203) {
+                if (res.status == 203) {
                     Session.destroy();
                 }
                 return data;
@@ -165,25 +169,24 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 
 
 HomeApp.service('Session', function ($cookies) {
-    this.create = function (sessionId, userId, userRole, currentUser) {
+    this.create = function (sessionId, userId, userRoles, currentUser) {
         this.id = sessionId;
         this.userId = userId;
         this.currentUser = currentUser;
-        this.userRole = userRole;
+        this.userRoles= userRoles;
         this.status = status;
         $cookies.put('userId', userId);
         $cookies.put('username', currentUser);
-        $cookies.put('userRole', userRole)
+        $cookies.put('userRole', userRoles)
 
     };
     this.destroy = function () {
         $cookies.remove('userId');
         $cookies.remove('username');
         $cookies.remove('userRole');
-        $cookies.remove('__RequestVerificationToken')
         this.id = null;
         this.userId = null;
-        this.userRole = null;
+        this.userRoles = null;
         this.status = null;
         this.currentUser = null;
     };
@@ -234,30 +237,29 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
 HomeApp.controller('LogoutCtrl', function ($http, Session, $location) {
     $http.post('/Login/Logoout').then(function ()
     {
-      //  $rootScope.$broadcast(AUTH_EVENTS.auth-logout-success);
         Session.destroy(); 
-
     });
     return  $location.path('#/');
 })
 
-HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session) {
+HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, AuthService, Session) {
     $scope.reguser = {
         UserName: '',
         Password: '',
         ConfirmPassword: ''
     };
+    $scope.Session = Session;
+    if (AuthService.isAuthenticated())
+    {
+        return $location.path('#/');
+    }
     $scope.register = function (reguser) {
         AuthService.register(reguser)
             .then(function (data) {
-                //if (data.status == 200) {
-                    
-                ////    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                //} else {
-                //    //    $rootScope.$broadcast(AUTH_EVENTS.auth-login-failed)
-                //    Session.destroy()
-                //}
+               
             });
+        return $location.path('#/');
     };
+
 
 })

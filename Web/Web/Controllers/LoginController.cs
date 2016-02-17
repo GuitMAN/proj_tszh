@@ -35,57 +35,50 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateJsonAntiForgeryToken]
+ //       [AllowAnonymous]
+ //       [ValidateJsonAntiForgeryToken]
         public ActionResult Index(LoginModel model, string returnUrl)
         {
-            //If User Autorized, but him redirected here, then error 401 
-            //if (WebSecurity.IsAuthenticated && WebSecurity.Initialized)
-            //    return httpStatusCodeResult(401);
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                System.Web.Security.FormsAuthentication.SetAuthCookie(model.UserName, false);
-
-                if ((!WebSecurity.IsAuthenticated) && (!WebSecurity.Initialized))
-                {
-                    WebSecurity.Logout();
-                    return new HttpStatusCodeResult(203, "Ошибка аутентификации");
-                }
+                FormsAuthentication.SetAuthCookie(model.UserName, false);
                 uk_profile uk = null;
                 try
                 {
                     Account_model result = new Account_model();
+                    result.id = WebSecurity.GetUserId(model.UserName);
+                    result.Login = model.UserName;
+                    result.Role = Roles.GetRolesForUser(model.UserName);
                     string requestDomain =Request.Headers["host"];
-                    UserProfile user = repository.UserProfile.Where(p => p.id.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                    UserProfile user = repository.UserProfile.Where(p => p.id.Equals(result.id)).SingleOrDefault();
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
                         
-                    //    if (requestDomain.Equals(uk.host))
+                        if (requestDomain.Equals(uk.host))
                         {
-                            result.id = WebSecurity.CurrentUserId;
-                            result.Login = WebSecurity.CurrentUserName;
-                            result.Role = Roles.GetRolesForUser();
+                            //User have direct company
                             return Json(result);
                     //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
-                    //    }
-                    //    else
-                    //    {
-                    //      WebSecurity.Logout();
-                    //      return new HttpStatusCodeResult(203, "login или пароль");
+                        }
+                        else
+                        {
+                            //User have no current direct company
+                            TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                            
+                            return Json(result);
+                            //WebSecurity.Logout();
+                          //return new HttpStatusCodeResult(203, "login или пароль");
                         }
                     }
                     else
                     {
-                        //return new HttpStatusCodeResult(200, "Авторизация успешна для пользователя без статуса");
-                        result.id = WebSecurity.GetUserId(model.UserName);
-                        result.Login = model.UserName;
-                        result.Role = Roles.GetRolesForUser(model.UserName);
-                        FormsAuthentication.RedirectFromLoginPage(model.UserName, false);
+                        //User nobody direct company
+                        
                         return Json(result);
                     }
 
-                  //  TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+
                    
                 }
                 catch (Exception ex)
@@ -109,7 +102,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+//        [AllowAnonymous]
 //        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
