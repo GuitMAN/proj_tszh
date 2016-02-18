@@ -6,20 +6,18 @@
     <meta name="viewport" content="width=device-width" />
     <meta charset="utf-8" />
     <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Styles/bootstrap-dist/css/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Styles/app.css" rel="stylesheet" />
     <link href="~/Styles/error.css" rel="stylesheet" />
 
-    <script src="~/Scripts/angular-1.5.0-rc.1/angular.js"></script>
-    <script src="~/Scripts/angular-1.5.0-rc.1/angular-route.js"></script>
-    <script src="~/Scripts/angular-1.5.0-rc.1/angular-resource.js"></script>
-    <script src="~/Scripts/angular-1.5.0-rc.1/i18n/angular-locale_ru-ru.js"></script>
 
-    <script src="~/Scripts/js/admdirect.js"></script>
+
+
 </head>
 
-<body>
+<body  >
     <nav class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
+        <div ng-controller="AppController" class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
@@ -35,6 +33,31 @@
                     <li><a href="#/ViewCounters/">Отобразить счетчики пользователей</a></li>
                 </ul>
             </div><!-- /.nav-collapse -->
+
+            <form class="form" name="form" novalidate>
+                <div class="btn-group" dropdown>
+                    <button type="button"
+                            class="btn btn-primary dropdown-toggle"
+                            dropdown-toggle >
+                        Button dropdown <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Action</a>
+                        </li>
+                        <li>
+                            <a href="#">Another action</a>
+                        </li>
+                        <li>
+                            <a href="#">Something else here</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">Separated link</a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
         </div><!-- /.container -->
     </nav><!-- /.navbar -->
 
@@ -52,7 +75,21 @@
     <footer>
         Все права защищены. CloudsSolution © 2015.
     </footer>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular.min.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-route.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-resource.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-cookies.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-touch.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-sanitize.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/i18n/angular-locale_ru-ru.js"></script>
 
+    <script src="~/Scripts/ui-bootstrap-tpls-1.1.2.min.js"></script>
+    @*<script src="~/Scripts/bootstrap-master/index.js"></script>*@
+    @*<script src="~/Scripts/js/controller.js"></script>*@
+    @*<script src="~/Scripts/bootstrap-master/src/dropdown/dropdown.js"></script>
+        <script src="~/Scripts/bootstrap-master/src/dropdown/index.js"></script>*@
+    <script src="~/Scripts/js/admdirect.js"></script>
 
 </body>
 

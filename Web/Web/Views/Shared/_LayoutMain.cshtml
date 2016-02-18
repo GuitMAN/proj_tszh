@@ -3,6 +3,7 @@
 <html lang="ru" ng-app="HomeApp">
 
 <head>
+    @*<base href="/home">*@
     <meta charset="utf-8">
     <title>Business clean web templates</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,7 @@
     <link href="~/Styles/themes/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/base.css" rel="stylesheet" type="text/css">
-    <style type="text/css" id="enject"></style>
+
 </head>
 
 <body ng-controller="LoginInfoCtrl">
@@ -29,10 +30,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <h1><a class="brand" href="index.html"> Business <small>  Ltd.</small></a></h1>
+                    <h1><a class="brand" href="/"> Business <small>  Ltd.</small></a></h1>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
-                            <li class=""><a href="index.html">Home	</a></li>
+                            <li class=""><a href="/">Home	</a></li>
                             @Html.Action("menu_top", "Nav")
                             <li class="dropdown" ng-show="Session.currentUser">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Меню пользователя<b class="caret"></b></a>
@@ -103,11 +104,27 @@
     </footer>
 
     @RenderSection("Scripts", required: false)
+
+  
+
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular.min.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-route.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-resource.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-cookies.js"></script>
+    @*<script src="~/Scripts/angular-1.5.0-rc.1/angular-touch.js"></script>
+    <script src="~/Scripts/angular-1.5.0-rc.1/angular-sanitize.js"></script>*@
+    <script src="~/Scripts/angular-1.5.0-rc.1/i18n/angular-locale_ru-ru.js"></script>
+
+    @*<script src="~/Scripts/bootstrap-master/src/position/position.js"></script>
+    <script src="~/Scripts/bootstrap-master/src/dropdown/dropdown.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-1.1.2.min.js"></script>*@
+
+    <script src="~/Scripts/js/controller.js"></script>
+    @*<script src="~/Scripts/bootstrap-master/index.js"></script>*@
+    
     <script src="~/Styles/themes/js/jquery-1.8.3.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    @*<script src="~/Styles/bootstrap-dist/js/bootstrap.js"></script>*@
-    <script src="~/Styles/themes/js/bootstrap-tooltip.js"></script>
-    <script src="~/Styles/themes/js/bootstrap-popover.js"></script>
+    <script src="~/Styles/themes/js/bootstrap.min.js"></script>
     <script src="~/Styles/themes/js/business_ltd_1.0.js"></script>
 
 </body>

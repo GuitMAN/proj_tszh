@@ -22,7 +22,8 @@ ArrMonth = [
 'use strict';
 
 /* Controllers */
-var admtszhApp = angular.module('AdminApp', ['ngRoute', 'ngResource', 'ngLocale']);
+var admtszhApp = angular.module('AdminApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngResource', 'ngLocale'])
+
 
 /* Config */
 admtszhApp.config([
@@ -47,8 +48,11 @@ admtszhApp.config([
   }
 ]);
 
-/* Factory */
 
+
+
+
+/* Factory */
 admtszhApp.service('Counters', [
   '$resource', function ($resource) 
   {
@@ -102,6 +106,11 @@ phonecatApp.controller('PhoneListCtrl', [
   }
 ]);
 */
+admtszhApp.controller('AppController',
+    function ($scope) {
+
+    }
+);
 
 
 

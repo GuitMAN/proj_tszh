@@ -2,7 +2,10 @@
 'use strict';
 
 /* Controllers */
-var HomeApp = angular.module('HomeApp', ['ngRoute', 'ngResource', 'ngCookies']);
+
+
+
+var HomeApp = angular.module('HomeApp', ['ngAnimate', 'ngRoute', 'ngResource', 'ngCookies']);
 
 //angular.bootstrap(document, ['HomeApp']);
 
@@ -11,10 +14,7 @@ var HomeApp = angular.module('HomeApp', ['ngRoute', 'ngResource', 'ngCookies']);
 HomeApp.config([
   '$routeProvider', '$locationProvider',
   function ($routeProvide, $locationProvider) {
-      //$locationProvider.html5Mode({
-      //    enabled: true,
-      //    requestMode: false
-      //});
+     // $locationProvider.html5Mode(true);
       $routeProvide
           .when('/', {
               templateUrl: '/home/article',
