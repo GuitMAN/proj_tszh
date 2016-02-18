@@ -30,17 +30,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <h1><a class="brand" href="/"> Business <small>  Ltd.</small></a></h1>
+                    <h1><a class="brand" href="#/"> Business <small>  Ltd.</small></a></h1>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class=""><a href="/">Home	</a></li>
                             @Html.Action("menu_top", "Nav")
                             <li class="dropdown" ng-show="Session.currentUser">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Меню пользователя<b class="caret"></b></a>
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">Меню пользователя<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="elements.html">Page Elements</a></li>
-                                    <li><a href="comingsoon.html">Coming soon page</a></li>
-                                    <li class=""><a href="blog.html">Blog</a></li>
+                                    <li><a href="#/meters">Счетчики</a></li>
+                                    <li><a href="#/feedback">Обратная связь</a></li>
+                                    <li class=""><a href="#/profile">Профиль</a></li>
                                     <li class=""><a href="contact.html">Support</a></li>
                                 </ul>
                             </li>                           
@@ -52,8 +52,6 @@
     </section>
     <!--Header Ends================================================ -->
 
-
-    <!--Header Ends================================================ -->
     <section id="bannerSection"  style="background:url(../../Styles/themes/images/banner/contact.png) no-repeat center center #000;">
         <div class="container">
             <h1 id="pageTitle">
@@ -68,7 +66,7 @@
     </section>
     <section id="bodySection">
         <div class="container">
-            <div ng-if="Session.currentUser">
+            <div ng-if="Session.currentUser" class="row-fluid">
                 Welcome, {{ Session.currentUser }}
                 <a class="navbar-brand" href="#/logoout">Выйти</a>
             </div>
@@ -83,7 +81,7 @@
                                 <input type="checkbox" ng-model="credentials.RememberMe">Запомнить</label>
                             <button type="submit" class="btn" ng-click="login(credentials)">Войти</button>
                         </form>
-                        <div class="span6"><a href="#/register" class="dropdown-toggle">Регистрация</a></div>
+                        <div class="row-fluid"><a href="#/register" class="dropdown-toggle">Регистрация</a></div>
                     </div>
                 </div>
             </div>

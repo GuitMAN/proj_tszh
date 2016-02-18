@@ -36,6 +36,10 @@ HomeApp.config([
               templateUrl: '/login/register',
               controller: 'RegisterCtrl'
           })
+          .when('/feedback', {
+              templateUrl: '/user/feedback',
+              controller: 'FeedbackCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });
@@ -261,5 +265,17 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
         return $location.path('#/');
     };
 
-
 })
+
+
+//User`s controllers & services
+HomeApp.controller('FeedbackCtrl', function ($http) {
+    $http.post('/User/Feedback').then(function () {
+
+    });
+})
+
+
+
+
+
