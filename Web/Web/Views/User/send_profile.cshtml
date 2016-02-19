@@ -1,18 +1,16 @@
 ﻿@model Web.Models.UserProfile_nouk_form
 
-@{
+@*@{
     ViewBag.Title = "send_profile";
     Layout = "~/Views/Shared/_LayoutUk.cshtml";
-}
-
-<h2>send_profile</h2>
+}*@
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>UserProfile_nouk_form</h4>
+        <h3>UserProfile_nouk_form</h3>
         <hr />
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.UserId)

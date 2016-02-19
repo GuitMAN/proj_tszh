@@ -1,52 +1,44 @@
 ﻿@model Web.Models.RegisterModel
-@*@{
-        ViewBag.Title = "Register";
-        Layout = "~/Views/Shared/_LayoutUk.cshtml";
-    }*@
 
-    <div ng-controller="RegisterCtrl">
-        <div ng-hide="Session.currentUser">
-    <form name="RegisterForm" class="ng-pristine ng-valid ng-scope" @*ng-submit="register(reguser)*@ ">
-        @*<input name="__RequestVerificationToken" type="hidden" value="2Soo6pL_KUbegNY0uJ10LApFPXMyrQhcNvgLEpemyYIwKam_HYBJ_bDbRhbydceENB0cIgmCqyrgnQPztHOsIycS7P4PXqUSP6W6XJ6a4jU1">*@
-        <div class="form-horizontal">
-            <fieldset>
-                <legend>Форма регистрации {{Session.currentUser}}</legend>
 
-                <div class="form-group">
-                    <label class="control-label col-md-2" for="UserName">логин</label>
-                    <div class="col-md-10">
-                        <input class="form-control text-box single-line" id="UserName" name="UserName" type="text" ng-model="reguser.UserName">
+<div ng-controller="RegisterCtrl"><h3>Регистрация</h3>
+    <div ng-hide="Session.currentUser">
+        <form name="RegisterForm" class="ng-pristine ng-valid ng-scope" @*ng-submit="register(reguser)*@ ">
+            @*<input name="__RequestVerificationToken" type="hidden" value="2Soo6pL_KUbegNY0uJ10LApFPXMyrQhcNvgLEpemyYIwKam_HYBJ_bDbRhbydceENB0cIgmCqyrgnQPztHOsIycS7P4PXqUSP6W6XJ6a4jU1">*@
+            <div class="form-horizontal">
+                <fieldset>
+                    <legend>Форма регистрации {{Session.currentUser}}</legend>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="UserName">логин</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="UserName" name="UserName" type="text" ng-model="reguser.UserName">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="control-label col-md-2" for="Password">Пароль</label>
-                    <div class="col-md-10">
-                        <input class="form-control text-box single-line password" id="Password" name="Password" type="password" ng-model="reguser.Password">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Password">Пароль</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line password" id="Password" name="Password" type="password" ng-model="reguser.Password">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label class="control-label col-md-2" for="ConfirmPassword">Подтвердите пароль</label>
-                    <div class="col-md-10">
-                        <input class="form-control text-box single-line password" id="ConfirmPassword" name="ConfirmPassword" type="password" ng-model="reguser.ConfirmPassword">
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="ConfirmPassword">Подтвердите пароль</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line password" id="ConfirmPassword" name="ConfirmPassword" type="password" ng-model="reguser.ConfirmPassword">
 
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Регистрация" class="btn btn-default" ng-Click="register(reguser)">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Регистрация" class="btn btn-default" ng-Click="register(reguser)">
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-        </div>
-    </form>
+                </fieldset>
+            </div>
+        </form>
+    </div>
 </div>
-</div>
-
-
-
-
-
 

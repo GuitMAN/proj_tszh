@@ -40,6 +40,10 @@ HomeApp.config([
               templateUrl: '/user/feedback',
               controller: 'FeedbackCtrl'
           })
+          .when('/profile', {
+              templateUrl: '/user/profile',
+//              controller: 'FeedbackCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });

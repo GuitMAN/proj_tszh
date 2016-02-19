@@ -62,7 +62,7 @@ namespace Web.Controllers
             string requestDomain = Request.Headers["host"];
             try
             {
-                user = repository.UserProfile.Where(p => p.login.Equals(WebSecurity.CurrentUserName)).SingleOrDefault();
+                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
                 ViewData["uk_name"] = uk.Name;
                 ViewData["user_adr"] = get_adr(user.Adress);
@@ -169,7 +169,7 @@ namespace Web.Controllers
             uk_profile uk = null;
             try
             {
-                user = repository.UserProfile.Where(p => p.login.Equals(WebSecurity.CurrentUserName)).SingleOrDefault();
+                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 if (user==null)
                     return RedirectToAction("No_uk");
                 if (user.id_uk == 0)

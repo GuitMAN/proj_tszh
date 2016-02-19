@@ -1,18 +1,18 @@
 ﻿@model Web.Models.feedback
 
-<div ng-controller="FeedbackCtrl" class="row-fluid"> 
+<div ng-controller="FeedbackCtrl" class="row">
     <div ng-hide="status" class="span6">
         <form>
             @*@Html.AntiForgeryToken()*@
-                @*@Html.ValidationSummary(false)*@
-                @*@Html.Hidden(Model.id)*@
-                @*@Html.Hidden(Model.id_uk)
+            @*@Html.ValidationSummary(false)*@
+            @*@Html.Hidden(Model.id)*@
+            @*@Html.Hidden(Model.id_uk)
                 @Html.Hidden(Model.id_user)*@
             <input type="hidden" ng-model="feedmodel.id_uk" ng-init="feedmodel.id_uk = @Model.id_uk">
             @*<input type="hidden" ng-model="feedmodel.id_user" ng-init="feedmodel.id_user = @Model.id_user">*@
-
+            <h3>Форма обращения (заявок) в УК (ТСЖ)</h3>
             <fieldset>
-                <legend>Форма обращения (заявок) в УК (ТСЖ)</legend>
+                <legend></legend>
                 <div class="form-group">
                     @Html.LabelFor(model => model.id_user, new { @class = "control-label col-md-2" })
 
@@ -41,13 +41,12 @@
             </fieldset>
 
         </form>
+        <div ng-show="status">
+            {{status}}
+        </div>
+            <pre>отладочная информация: {{response}}</pre>
+        @*@Html.ActionLink("Вернуться к профилю", "profile")*@
     </div>
-    <div ng-show="status" class="span6">
-        {{status}}
-        </div><pre>отладочная информация: {{response}}</pre>
-<div>
-    @*@Html.ActionLink("Вернуться к профилю", "profile")*@
-</div>
 </div>
 
 
