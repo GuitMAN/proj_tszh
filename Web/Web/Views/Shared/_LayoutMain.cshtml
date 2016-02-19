@@ -13,11 +13,10 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link id="callCss" rel="stylesheet" href="~/Styles/themes/css/bootstrap.min.css" type="text/css" media="screen" />
+    <link href="~/Styles/themes/css/bootstrap.min.css" type="text/css" media="screen" id="callCss" rel="stylesheet" />
     <link href="~/Styles/themes/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/base.css" rel="stylesheet" type="text/css">
-
 </head>
 
 <body ng-controller="LoginInfoCtrl">
@@ -64,6 +63,7 @@
             </h1>
         </div>
     </section>
+    <!--Banner Ends================================================ -->
     <section id="bodySection" style="left: 0px">
         <div class="container">
             <div ng-if="Session.currentUser" class="row-fluid">
@@ -108,6 +108,7 @@
             </div>
         </div>
     </section>
+    <!--Body Ends================================================ -->
     <footer>
         Все права защищены. CloudsSolution © 2015.
     </footer>

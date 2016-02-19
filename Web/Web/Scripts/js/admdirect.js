@@ -2,6 +2,13 @@
 //Const
 
 
+
+
+'use strict';
+
+/* Controllers */
+var admtszhApp = angular.module('AdminApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngResource', 'ngLocale']);
+
 ArrMonth = [
   { id: '1', name: 'Январь' },
   { id: '2', name: 'Февраль' },
@@ -16,13 +23,6 @@ ArrMonth = [
   { id: '11', name: 'Ноябрь' },
   { id: '12', name: 'Декабрь' }
 ];
-
-
-
-'use strict';
-
-/* Controllers */
-var admtszhApp = angular.module('AdminApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngResource', 'ngLocale'])
 
 
 /* Config */
@@ -49,6 +49,9 @@ admtszhApp.config([
 ]);
 
 
+admtszhApp.controller('AppController', function () {
+
+});
 
 
 
@@ -106,11 +109,6 @@ phonecatApp.controller('PhoneListCtrl', [
   }
 ]);
 */
-admtszhApp.controller('AppController',
-    function ($scope) {
-
-    }
-);
 
 
 
