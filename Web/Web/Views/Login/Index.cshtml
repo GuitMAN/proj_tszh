@@ -8,43 +8,8 @@
 <h2>Index</h2>
     <div ng-controller="LoginCtrl">
         <div class="form-group">
-            @*<form name="loginForm"  novalidate>
-
-                    @Html.AntiForgeryToken()
-                    <h4>LoginModel</h4>
-                    <hr />
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="UserName">Логин</label>
-                        <div class="col-md-10">
-                            <input class="form-control text-box single-line" ng-model="credentials.username" required placeholder="введите логин" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="Password">Пароль</label>
-                        <div class="col-md-10">
-                            <input class="form-control text-box single-line password" ng-model="credentials.password" required placeholder="Password" type="password" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="RememberMe">Сохранить?</label>
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                <input class="check-box" id="RememberMe" ng-model="login.RememberMe" type="checkbox" value="true" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" ngClick="login(credentials)">Login</button>
-                        </div>
-                    </div>
-                </form>*@
-
-            <form name="loginForm" ng-submit="login(credentials)" novalidate>
-                @Html.AntiForgeryToken()
+                <form name="loginForm" ng-submit="login(credentials)" novalidate>
+                @*@Html.AntiForgeryToken()*@
                 <label class="control-label col-md-2" for="username">Username:</label>
                 <input class="form-control text-box single-line" type="text" id="username" ng-model="credentials.username">
                 <label class="control-label col-md-2" for="password">Password:</label>

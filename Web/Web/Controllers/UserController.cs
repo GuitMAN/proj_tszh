@@ -232,11 +232,15 @@ namespace Web.Controllers
             mess.datetime = DateTime.UtcNow;
             if (string.IsNullOrEmpty(mess.message))
             {
+                string[] res = { "message", "Пустое сообщение" };
                 ModelState.AddModelError("message", "Пустое сообщение");
+                return Json(res);
             }
             else if (mess.message.Length > 2000)
             {
+                string[] res =  { "message", "Недопустимая длина строки"};           
                 ModelState.AddModelError("message", "Недопустимая длина строки");
+                return Json(res);
             }
             
             if (ModelState.IsValid)
@@ -249,9 +253,9 @@ namespace Web.Controllers
                     SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, mess.title, mess.message);
                 repository.SaveFeedBack(mess);
                 TempData["message"] = string.Format("Ваша заявка отправлена", mess.title);
-                return RedirectToAction("profile");
+                return Json(TempData["message"]);
             }
-            return View(mess);
+            return Json("хуй");
         }
 
         [Authorize]

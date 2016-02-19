@@ -83,7 +83,7 @@ HomeApp.filter('aspDate', function () {
 });
 
 
-/* Phone Detail Controller */
+/* Main page */
 HomeApp.controller('HomeCtrl', [
   '$scope', '$http', '$location', '$routeParams', 'Article',
   function ($scope, $http, $location, $routeParams, Article) {
@@ -98,8 +98,7 @@ HomeApp.controller('HomeCtrl', [
 
 
 
-
-
+/*Section of authentication*/
 HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, AuthService, $rootScope, Session)
 {
     $scope.Session = Session;
@@ -107,7 +106,7 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, Aut
     var role = $cookies.get("userRole");
     var id = $cookies.get("userId");
     Session.create(1, id, role, curname);
-   // $scope.userRoles = role;
+    $scope.userRoles = role;
     $scope.isAuthorized = AuthService.isAuthorized;
    
 });
@@ -116,7 +115,7 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, Aut
 
 
 
-
+/* for token verification  */
 function getHttpConfig() {
     var token = angular.element("input[name='__RequestVerificationToken']").val();
     var config = {
@@ -128,13 +127,11 @@ function getHttpConfig() {
     return config;
 }
 
-
-
+/*Login factory*/
 HomeApp.factory('AuthService', function ($http, $cookies, Session) {
     return {
         login: function (credentials)
         {
-
  //           var config = getHttpConfig();
             return $http.post('/Login', credentials)//, config)
               .then(function (res)
@@ -148,7 +145,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         {
             $http.post('/Login/Register', reguser)
                 .then(function (res) {
-                if (data.status == 200) {
+                if (res.status == 200) {
                     Session.create(1, res.data.id, res.data.Role, res.data.Login);
                 }
                 if (res.status == 203) {
@@ -157,7 +154,17 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                 return data;
             })
         },
-
+        logout: function () {
+           return $http.post('/Login/logoout')//, config)
+              .then(function (res) {
+                  if (res.status == 200)
+                  Session.destroy();
+                 return res;
+              })
+        },
+        manage: function () {
+            return;
+        },
         isAuthenticated: function () {
             return Session.userId;
         },
@@ -171,7 +178,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
     }
 });
 
-
+/*service of global login data */
 HomeApp.service('Session', function ($cookies) {
     this.create = function (sessionId, userId, userRoles, currentUser) {
         this.id = sessionId;
@@ -197,6 +204,8 @@ HomeApp.service('Session', function ($cookies) {
     return this;
 })
 
+
+/*fucking constant. I think remove that in future */
 HomeApp.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
     loginFailed: 'auth-login-failed',
@@ -206,6 +215,7 @@ HomeApp.constant('AUTH_EVENTS', {
     notAuthorized: 'auth-not-authorized'
 })
 
+
 HomeApp.constant('USER_ROLES', {
     all: '*',
     admin: 'Admin',
@@ -213,7 +223,7 @@ HomeApp.constant('USER_ROLES', {
     guest: 'User'
 })
 
-
+/* controller for login form*/
 HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session, $location) {
     $scope.credentials = {
         username: '',
@@ -238,14 +248,16 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
    
 })
 
-HomeApp.controller('LogoutCtrl', function ($http, Session, $location) {
-    $http.post('/Login/Logoout').then(function ()
-    {
-        Session.destroy(); 
-    });
+
+/* controller for logout*/
+HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location) {
+
+    AuthService.logout();
     return  $location.path('#/');
 })
 
+
+/* For register form*/
 HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, AuthService, Session) {
     $scope.reguser = {
         UserName: '',
@@ -268,14 +280,44 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
 })
 
 
-//User`s controllers & services
-HomeApp.controller('FeedbackCtrl', function ($http) {
-    $http.post('/User/Feedback').then(function () {
 
-    });
+/* User`s controllers & services */
+HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Session) {
+
+    $scope.feedmodel = {
+        id: 0,
+        id_uk: 0,
+        id_user: Session.userId,
+        title: '',
+        message : ''       
+    };
+
+    $scope.status = '';
+    $scope.submit = function (feedmodel) {
+        UserServices.feedback(feedmodel).then(function (data) {
+            $scope.response = data.data;
+            console.log("data:", data);
+            $scope.status = 'Сообщение успешно отправлено';
+        });
+    }
+
+    //$http.post('/User/Feedback').then(function () {
+
+    //});
 })
 
+/* Factory of user`s controller */
+HomeApp.factory('UserServices', function ($http) {
+    return {
+        feedback: function (feedmodel) {
+            return $http.post('/User/Feedback', feedmodel)
+              .then(function (response) {
 
+                  return response;
+              })
+        }
+    }
+});
 
 
 
