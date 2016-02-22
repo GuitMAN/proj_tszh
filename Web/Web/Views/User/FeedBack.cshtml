@@ -7,46 +7,49 @@
             @*@Html.ValidationSummary(false)*@
             @*@Html.Hidden(Model.id)*@
             @*@Html.Hidden(Model.id_uk)
-                @Html.Hidden(Model.id_user)*@ 
+            @Html.Hidden(Model.id_user)*@
             <input type="hidden" ng-model="feedmodel.id_uk" ng-init="feedmodel.id_uk = @Model.id_uk">
             @*<input type="hidden" ng-model="feedmodel.id_user" ng-init="feedmodel.id_user = @Model.id_user">*@
             <h3>Форма обращения (заявок) в УК (ТСЖ)</h3>
             <fieldset>
-                <legend></legend>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.id_user, new { @class = "control-label col-md-2" })
+                <legend>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.id_user, new { @class = "control-label col-md-2" })
+                        @Html.Action("getUser", "Login")
+                    </div>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="title">Тема письма</label>
+                            <div class="col-md-10">
+                                <input class="text-box single-line" id="title" name="title" type="text" ng-model="feedmodel.title">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="message">Сообщение</label>
+                            <div class="col-md-10">
+                                <textarea cols="30" id="message" name="message" rows="5" ng-model="feedmodel.message"></textarea>
+                            </div>
+                        </div>
+                        <span ng-show="response[1]" class="label label-important">
+                            {{response[1]}}
+                        </span>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button type="submit" class="btn" ng-click="submit(feedmodel)">Отправить</button>
+                            </div>
+                        </div>
 
-                    @Html.Action("getUser", "Login")
-                </div>
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="title">Тема письма</label>
-                        <div class="col-md-10">
-                            <input class="text-box single-line" id="title" name="title" type="text" ng-model="feedmodel.title">
+                    </div>
 
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="message">Сообщение</label>
-                        <div class="col-md-10">
-                            <textarea cols="30" id="message" name="message" rows="5" ng-model="feedmodel.message"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn" ng-click="submit(feedmodel)">Отправить</button>
-                        </div>
-                    </div>
-                </div>
+                </legend>
             </fieldset>
-
         </form>
-        <div ng-show="status">
-            {{status}}
-        </div>
-            <pre>отладочная информация: {{response}}</pre>
+     </div>
+    <div class="span6">
+        <span class="label label-success" ng-show="status" class="span6">{{response[1]}}</span>
+
+
         @*@Html.ActionLink("Вернуться к профилю", "profile")*@
     </div>
-</div>
 
 

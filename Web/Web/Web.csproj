@@ -1568,7 +1568,6 @@
     <Content Include="Views\User\SetHotWater.cshtml" />
     <Content Include="Views\Nav\menu_top.cshtml" />
     <Content Include="Styles\assets\js\README.md" />
-    <Content Include="Styles\bootstrap\img\Thumbs.db" />
     <Content Include="Styles\themes\font\fontawesome-webfont.eot" />
     <Content Include="Styles\themes\font\fontawesome-webfont.ttf" />
     <Content Include="Styles\themes\font\fontawesome-webfont.woff" />

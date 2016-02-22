@@ -296,18 +296,16 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
         message : ''       
     };
 
-    $scope.status = '';
+    $scope.status = false;
     $scope.submit = function (feedmodel) {
         UserServices.feedback(feedmodel).then(function (data) {
             $scope.response = data.data;
             console.log("data:", data);
-            $scope.status = 'Сообщение успешно отправлено';
+            if (data.data[0] == 'Ok') {
+                $scope.status = true;
+            }
         });
     }
-
-    //$http.post('/User/Feedback').then(function () {
-
-    //});
 })
 
 /* Factory of user`s controller */

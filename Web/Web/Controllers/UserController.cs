@@ -226,23 +226,30 @@ namespace Web.Controllers
             {
                 Log.Write(ex);
                 TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
-                return Redirect("/Login/LogoOut");
+                string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
+                return Json(res);
             }
             //------------------------------------
             mess.datetime = DateTime.UtcNow;
-            if (string.IsNullOrEmpty(mess.message))
+            if (string.IsNullOrEmpty(mess.title))
             {
-                string[] res = { "message", "Пустое сообщение" };
+                string[] res = { "Error", "Вы не заполнили тему сообщения" };
+                ModelState.AddModelError("message", "Пустое сообщение");
+                return Json(res);
+            }
+            else if (string.IsNullOrEmpty(mess.message))
+            {
+                string[] res = { "Error", "Пустое сообщение" };
                 ModelState.AddModelError("message", "Пустое сообщение");
                 return Json(res);
             }
             else if (mess.message.Length > 2000)
             {
-                string[] res =  { "message", "Недопустимая длина строки"};           
-                ModelState.AddModelError("message", "Недопустимая длина строки");
+                string[] res =  { "Error", "Недопустимая длина строки"};           
+                ModelState.AddModelError("Error", "Недопустимая длина строки");
                 return Json(res);
             }
-            
+
             if (ModelState.IsValid)
             {
                 mess.id_uk = uk.id;
@@ -253,9 +260,10 @@ namespace Web.Controllers
                     SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, mess.title, mess.message);
                 repository.SaveFeedBack(mess);
                 TempData["message"] = string.Format("Ваша заявка отправлена", mess.title);
-                return Json(TempData["message"]);
+                string[] res = { "Ok", "Ваша заявка отправлена: ", mess.title };
+                return Json(res);
             }
-            return Json("хуй");
+            return Json(new string[] { "Error", "Ошибка"});
         }
 
         [Authorize]
