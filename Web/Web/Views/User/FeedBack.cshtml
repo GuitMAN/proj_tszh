@@ -13,19 +13,19 @@
             <h3>Форма обращения (заявок) в УК (ТСЖ)</h3>
             <fieldset>
                 <legend>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         @Html.LabelFor(model => model.id_user, new { @class = "control-label col-md-2" })
                         @Html.Action("getUser", "Login")
-                    </div>
+                    </div>*@
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="control-label col-md-2" for="title">Тема письма</label>
+                            <label class="control-label col-md-2" for="title">Название: </label>
                             <div class="col-md-10">
                                 <input class="text-box single-line" id="title" name="title" type="text" ng-model="feedmodel.title">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2" for="message">Сообщение</label>
+                            <label class="control-label col-md-2" for="message">Текст сообщения: </label>
                             <div class="col-md-10">
                                 <textarea cols="30" id="message" name="message" rows="5" ng-model="feedmodel.message"></textarea>
                             </div>
@@ -47,8 +47,6 @@
      </div>
     <div class="span6">
         <span class="label label-success" ng-show="status" class="span6">{{response[1]}}</span>
-
-
         @*@Html.ActionLink("Вернуться к профилю", "profile")*@
     </div>
 

@@ -168,6 +168,7 @@ namespace Web.Controllers
 
 
         //изменение пароля
+        [HttpGet]
         public ActionResult Manage(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -181,7 +182,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+//        [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
             bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
@@ -204,8 +205,7 @@ namespace Web.Controllers
                     {
                         string token = WebSecurity.GeneratePasswordResetToken(User.Identity.Name);
                         changePasswordSucceeded = WebSecurity.ResetPassword(token, model.NewPassword);
-
-  //                      changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+  //                    changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
                     }
                     catch (Exception)
                     {
@@ -214,11 +214,13 @@ namespace Web.Controllers
 
                     if (changePasswordSucceeded)
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+//                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                        return Json(new string[] { "Ok", "Пароль успешно изменен" });
                     }
                     else
                     {
                         ModelState.AddModelError("", "Неправильный текущий пароль или недопустимый новый пароль.");
+                        return Json(new string[] { "Error", "Неправильный текущий пароль или недопустимый новый пароль." });
                     }
                 }
             }
@@ -237,17 +239,18 @@ namespace Web.Controllers
                     try
                     {
                         WebSecurity.CreateAccount(User.Identity.Name, model.NewPassword);
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+    //                    return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                        return Json(new string[] { "Ok", "Пароль успешно изменен" });
                     }
                     catch (Exception)
                     {
                         ModelState.AddModelError("", String.Format("Не удалось создать локальную учетную запись. Возможно, учетная запись \"{0}\" уже существует.", User.Identity.Name));
+                        return Json(new string[] { "Error", String.Format("Не удалось создать локальную учетную запись. Возможно, учетная запись \"{0}\" уже существует.", User.Identity.Name) });
                     }
                 }
             }
-
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
-            return View(model);
+            return Json(new string[] { "Error", "Пароль изменить не удалось." });
         }
 
         public string Error_401()

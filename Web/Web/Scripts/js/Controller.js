@@ -36,6 +36,10 @@ HomeApp.config([
               templateUrl: '/login/register',
               controller: 'RegisterCtrl'
           })
+          .when('/manage', {
+              templateUrl: '/login/manage',
+              controller: 'FeedbackCtrl'
+          })
           .when('/feedback', {
               templateUrl: '/user/feedback',
               controller: 'FeedbackCtrl'
@@ -166,8 +170,11 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                  return res;
               })
         },
-        manage: function () {
-            return;
+        manage: function (model) {
+            return $http.post('/Login/manage', model)
+                  .then(function (response) {                                           
+                      return response;
+                  })
         },
         isAuthenticated: function () {
             return Session.userId;
@@ -282,7 +289,25 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
     };
 
 })
+/* controller for logout*/
+HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location) {
+    $scope.model = {
+        NewPassword: '',
+        ConfirmPassword: ''
+    };
 
+    $scope.status = false;
+    $scope.manage = function (model) {
+        AuthService.manage(model).then(function (response) {
+            $scope.response = response.data;
+            console.log("data:", response);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+            }
+        })
+        //return $location.path('#/');
+    };
+})
 
 
 /* User`s controllers & services */
