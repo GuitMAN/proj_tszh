@@ -344,6 +344,7 @@ namespace Web.Controllers
 
 
         [Authorize(Roles = "User")]
+        [HttpGet]
         public ActionResult editprof()
         {
             //---------------------------
@@ -382,8 +383,9 @@ namespace Web.Controllers
 
                 repository.SaveUser(model);
                 TempData["message"] = string.Format("Ваш профиль \"{0}\" был изменен", model.login);
-            }
-            return View(model);
+                return Json(new string[] { "Ok", string.Format("Ваш профиль \"{0}\" был изменен", model.login) });
+            };
+            return Json(new string[] { "Error", "Ошибка при изменении профиля"});
         }
         
         //Методы с газовым счетчиком

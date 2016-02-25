@@ -1,95 +1,90 @@
 ﻿@model Web.Models.UserProfile
 
 @*@{
-    ViewBag.Title = "editprof";
-    Layout = "~/Views/Shared/_LayoutUk.cshtml";
-}*@
+        ViewBag.Title = "editprof";
+        Layout = "~/Views/Shared/_LayoutUk.cshtml";
+    }*@
 
-<h2>editprof</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>UserProfile</h4>
-        <hr />
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
-        @Html.HiddenFor(model => model.id_uk)
-        @Html.HiddenFor(model => model.login)
-        @Html.HiddenFor(model => model.Apartment)
-        @Html.HiddenFor(model => model.Adress)
+<div ng-controller="EditProfCtrl">
+    <h3>Редактирование профиля</h3>
 
-        <fieldset>
-            <legend>Форма редактирования профиля</legend>
-            <div class="form-group">
-                @Html.LabelFor(model => model.SurName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.SurName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SurName, "", new { @class = "text-danger" })
+    @*
+        @Html.AntiForgeryToken()*@
+
+    <form>
+        <div ng-hide="status" class="form-horizontal">
+            @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })*@
+
+            <input type="hidden" ng-model="profmodel.id" ng-init="profmodel.id = @Model.id">
+            <input type="hidden" ng-model="profmodel.id_uk" ng-init="profmodel.id_uk = @Model.id_uk">
+            <input type="hidden" ng-model="profmodel.UserId" ng-init="profmodel.UserId = @Model.UserId">
+            <input type="hidden" ng-model="profmodel.Apartment" ng-init="profmodel.Apartment = @Model.Apartment">
+            <input type="hidden" ng-model="profmodel.Adress" ng-init="profmodel.Adress = @Model.Adress">
+            <span ng-show="response[1]" class="label label-important">
+                {{response[1]}}
+            </span>
+            <fieldset>
+                <legend></legend>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SurName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="SurName" name="SurName" type="text" ng-model="profmodel.SurName" ng-init="profmodel.SurName = '@Model.SurName'" value="@Model.SurName">
+                        @*@Html.EditorFor(model => model.SurName, new { htmlAttributes = new { @class = "form-control" } })*@
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="Name" name="Name" type="text" ng-model="profmodel.Name" ng-init="profmodel.Name = '@Model.Name'" value="@Model.Name">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Patronymic, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Patronymic, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Patronymic, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Patronymic, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="Name" name="Name" type="text" ng-model="profmodel.Patronymic" ng-init="profmodel.Patronymic = '@Model.Patronymic'" value="@Model.Patronymic">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Personal_Account, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Personal_Account, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Personal_Account, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Personal_Account, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="Name" name="Name" type="text" ng-model="profmodel.Personal_Account" ng-init="profmodel.Personal_Account = '@Model.Personal_Account'" value="@Model.Personal_Account">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="Name" name="Name" type="text" ng-model="profmodel.Email" ng-init="profmodel.Email = '@Model.Email'" value="@Model.Email">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="Name" name="Name" type="text" ng-model="profmodel.phone" ng-init="profmodel.phone = '@Model.phone'" value="@Model.phone">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.mobile, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.mobile, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mobile, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.mobile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" id="Name" name="Name" type="text" ng-model="profmodel.mobile" ng-init="profmodel.mobile = '@Model.mobile'" value="@Model.mobile">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Сохранить" class="btn btn-default" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Сохранить" class="btn btn-default" ng-click="submit(profmodel)">
+                    </div>
                 </div>
-            </div>
-        </fieldset>
-    </div>
-}
-
-
-
-<div>     
-    @Html.ActionLink("Вернуться в профиль", "profile")
+            </fieldset>
+        </div>
+    </form>
+    <span ng-show="response[1]" class="badge badge-success">
+        {{response[1]}}
+    </span>
 </div>

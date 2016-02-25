@@ -3,6 +3,9 @@
 <h2>Index</h2>
     <div ng-controller="LoginCtrl">
         <div class="form-group">
+            <span ng-show="response" class="label label-important">
+                <pre>/{{response}}</pre>
+            </span>
                 <form name="loginForm" ng-submit="login(credentials)" novalidate>
                 @*@Html.AntiForgeryToken()*@
                 <label class="control-label col-md-2" for="username">Username:</label>

@@ -76,22 +76,18 @@ namespace Web.Controllers
                         //User nobody direct company
                         
                         return Json(result);
-                    }
-
-
-                   
+                    }                  
                 }
                 catch (Exception ex)
                 {
                     string requestDomain = Request.Headers["host"];
                     ModelState.AddModelError("", "Логин следует вводить с учетом регистра");
-                    TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                    
                 }        
-                WebSecurity.Logout();           
+                WebSecurity.Logout();
+                return Json(new string[] { "Error", "Логин следует вводить с учетом регистра" });       
             }
             ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");        
-            return new HttpStatusCodeResult(203, "Имя пользователя или пароль указаны неверно."); 
+            return Json(new string[] { "Error", "Имя пользователя или пароль указаны неверно." }); 
         }
 
         [HttpGet]

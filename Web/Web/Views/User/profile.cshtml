@@ -7,8 +7,9 @@
 }*@
 
 <h3>Просмотр профиля</h3>
-@Html.ActionLink("Редактировать профиль","editprof","User")
+<br><a href="#/editprof">Редактировать профиль</a>
 <br><a href="#/manage">Изменить пароль</a>
+    @*@Html.ActionLink("Редактировать профиль","editprof","User")*@
 @*@Html.ActionLink("Изменить пароль", "Manage", "Login")*@
 <br> Ваша УК(ТСЖ): @ViewData["uk_name"]
 <br>Ф.И.О. :  @Model.SurName

@@ -48,6 +48,10 @@ HomeApp.config([
               templateUrl: '/user/profile',
 //              controller: 'FeedbackCtrl'
           })
+          .when('/editprof', {
+              templateUrl: '/user/editprof',
+              controller: 'EditProfCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });
@@ -153,10 +157,9 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         {
             $http.post('/Login/Register', reguser)
                 .then(function (res) {
-                if (res.status == 200) {
+                if (res.data[0] == 'Ok') {
                     Session.create(1, res.data.id, res.data.Role, res.data.Login);
-                }
-                if (res.status == 203) {
+                } else {
                     Session.destroy();
                 }
                 return data;
@@ -241,18 +244,16 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
         password: '',
         RememberMe: false
     };
+    $scope.response = '';
     $scope.login = function (credentials) {
         AuthService.login(credentials)
-            .then(function (data)
+            .then(function (response)
             {             
-                if (data.status == 200) {
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                if (response.data[0] == 'Error') {
+                    //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $scope.response = response.data;
 
-                } else
-                {
-                //    $rootScope.$broadcast(AUTH_EVENTS.auth-login-failed)
-                    Session.destroy()
-                }
+                } 
             
         });
     };
@@ -333,16 +334,54 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
     }
 })
 
+/* User`s controllers & services */
+HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Session) {
+
+    $scope.profmodel = {
+        id: '',
+        id_uk: '',
+        UserId: '',
+        Adress : '',
+        Apartment: '',
+        SurName: '',
+        Name: '',
+        Patronymic: '',
+        Personal_Account: '',
+        Email: '',
+        phone: '',
+        mobile:''
+    };
+
+    $scope.status = false;
+    $scope.submit = function (profmodel) {
+        UserServices.editprof(profmodel).then(function (response) {
+            $scope.response = response.data;
+            console.log("data:", response);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+            }
+        });
+        return $location.path('#/');
+    }
+})
+
+
 /* Factory of user`s controller */
 HomeApp.factory('UserServices', function ($http) {
     return {
         feedback: function (feedmodel) {
             return $http.post('/User/Feedback', feedmodel)
               .then(function (response) {
-
+                  return response;
+              })
+        },
+        editprof: function (profmodel) {
+            return $http.post('/User/editprof', profmodel)
+              .then(function (response) {
                   return response;
               })
         }
+
     }
 });
 

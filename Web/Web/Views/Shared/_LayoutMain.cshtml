@@ -73,6 +73,9 @@
             <div ng-hide="Session.currentUser">
                 <div ng-controller="LoginCtrl" class="row-fluid">
                     <div class="span6">
+                        <span ng-show="response[0]" class="label label-important">
+                           {{response[1]}}
+                        </span>
                         <form class="well form-inline">
                             @*@Html.AntiForgeryToken()*@
                             <input type="text" class="input-small" placeholder="Login" ng-model="credentials.username">
