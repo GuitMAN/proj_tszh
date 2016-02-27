@@ -24,18 +24,19 @@
         <div class="container">
             <div class="navbar">
                 <div class="container">
-                    <button uib-dropdown-toggle id="single-button"  type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" on-toggle="toggled(open)">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <h1><a class="brand" href="#/43434"> Business <small>  Ltd.</small></a></h1>
-                    <div class="nav-collapse collapse" >
-                       <ul class="nav pull-right" >
-                           <li><a href="#/djfhjdhk">Home</a></li>
-                            @Html.Action("menu_top", "Nav")
+                    <div class="navbar-header" >
+                        <button id="btn-append-to" type="button" class="btn btn-navbar" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <h1><a class="brand" href="#/"> Business <small>  Ltd.</small></a></h1>
+                        <div class="collapse nav-collapse" ng-class="!navCollapsed && 'in'">
+                            <ul class="nav pull-right" >
+                                <li><a href="#/">Home</a></li>
+                                @Html.Action("menu_top", "Nav")
 
-                           
+
                                 <!-- Simple dropdown -->
                                 <li uib-dropdown on-toggle="toggled(open)" ng-show="Session.currentUser">
                                     <a href="#/" id="simple-dropdown" uib-dropdown-toggle>
@@ -48,8 +49,8 @@
                                         <li class=""><a href="#/">Support</a></li>
                                     </ul>
                                 </li>
-                                    @*<a href="" class="dropdown-toggle" data-toggle="dropdown">Меню пользователя</a>*@
-                                    @*<ul uib-dropdown-menu aria-labelledby="simple-dropdown">
+                                @*<a href="" class="dropdown-toggle" data-toggle="dropdown">Меню пользователя</a>*@
+                                @*<ul uib-dropdown-menu aria-labelledby="simple-dropdown">
                                         <li><a href="#/meters">Счетчики</a></li>
                                         <li><a href="#/feedback">Обратная связь</a></li>
                                         <li class=""><a href="#/profile">Профиль</a></li>
@@ -57,7 +58,8 @@
                                     </ul>*@
 
 
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -88,7 +90,7 @@
                 <div ng-controller="LoginCtrl" class="row-fluid">
                     <div class="span6">
                         <span ng-show="response[0]" class="label label-important">
-                           {{response[1]}}
+                            {{response[1]}}
                         </span>
                         <form class="well form-inline">
                             @*@Html.AntiForgeryToken()*@
@@ -107,9 +109,9 @@
             <div class="container">
                 <div class="row">
                     @*@if (TempData["message"] != null)
-                    {
-                        <div class="alert alert-success">@TempData["message"]</div>
-                    }*@
+                        {
+                            <div class="alert alert-success">@TempData["message"]</div>
+                        }*@
                     <div class="span3">
                         <div class="well" style="padding: 8px 0;">
                             <ul class="nav nav-list">
@@ -138,8 +140,8 @@
     @RenderSection("Scripts", required: false)
     <script src="~/Scripts/angular-1.5.0-rc.1/ui-bootstrap-tpls-1.1.2.min.js"></script>
     @*<script src="~/Styles/themes/js/jquery-1.8.3.min.js"></script>
-    <script src="~/Styles/themes/js/bootstrap.min.js"></script>
-    <script src="~/Styles/themes/js/business_ltd_1.0.js"></script>*@
+        <script src="~/Styles/themes/js/bootstrap.min.js"></script>
+        <script src="~/Styles/themes/js/business_ltd_1.0.js"></script>*@
 
 </body>
 

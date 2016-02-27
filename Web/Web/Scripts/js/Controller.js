@@ -134,10 +134,21 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, Aut
     $scope.toggled = function (open) {
         $log.log('Dropdown is now: ', open);
     };
+    $scope.toggleDropdown = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.status.isopen = !$scope.status.isopen;
+    };
+
+
+  $scope.collapseMenu = function () {
+    if ($(window).width() <= 768) {
+        console.log('hiding');
+        $scope.navCollapsed = true;
+    }
+}
    
 });
-
-
 
 
 
