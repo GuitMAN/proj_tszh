@@ -49,7 +49,27 @@ admtszhApp.config([
 ]);
 
 
-admtszhApp.controller('AppController', function () {
+admtszhApp.controller('AppController', function ($scope, $log, $window, $uibPosition) {
+    $scope.items = [
+      'The first choice!',
+      'And another choice for you.',
+      'but wait! A third!'
+    ];
+
+    $scope.status = {
+        isopen: false
+    };
+
+    $scope.toggled = function (open) {
+        $log.log('Dropdown is now: ', open);
+    };
+
+    $scope.elemVals = {};
+    var divEl = $window.document.querySelector('#Singlebutton');
+//    var offsetParent = $uibPosition.offsetParent(divEl);
+    $scope.elemVals.position = $uibPosition.position(divEl);
+
+    $scope.elemVals.position.left = 400;
 
 });
 

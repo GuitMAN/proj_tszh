@@ -23,7 +23,7 @@ namespace Web.Controllers
             repository = repo;
         }
 
-        public UserController()
+         public UserController()
         {
             repository = new Repo();
         }

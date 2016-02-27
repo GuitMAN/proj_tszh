@@ -7,15 +7,15 @@
 }*@
 
 <h3>Просмотр профиля</h3>
-<br><a href="#/editprof">Редактировать профиль</a>
-<br><a href="#/manage">Изменить пароль</a>
+<br><a href="#/editprof"><i class="icon-cog"></i> Редактировать профиль</a>
+    <br><a href="#/manage"><i class="icon-pencil"></i> Изменить пароль</a>
     @*@Html.ActionLink("Редактировать профиль","editprof","User")*@
-@*@Html.ActionLink("Изменить пароль", "Manage", "Login")*@
-<br> Ваша УК(ТСЖ): @ViewData["uk_name"]
-<br>Ф.И.О. :  @Model.SurName
-@Model.Name @Model.Patronymic
-<br> Ваш лицевой счет: @Model.Personal_Account
-<br> Ваш адрес: @ViewData["user_adr"], @Model.Apartment
-<br> Ваш E-mail: @Model.Email
-<br> Дата регистрации: @WebSecurity.GetCreateDate(User.Identity.Name).ToLocalTime()
+    @*@Html.ActionLink("Изменить пароль", "Manage", "Login")*@
+    <br> Ваша УК(ТСЖ): @ViewData["uk_name"]
+    <br>Ф.И.О. :  @Model.SurName
+    @Model.Name @Model.Patronymic
+    <br> Ваш лицевой счет: @Model.Personal_Account
+    <br> Ваш адрес: @ViewData["user_adr"], @Model.Apartment
+    <br> Ваш E-mail: @Model.Email
+    <br> Дата регистрации: @WebSecurity.GetCreateDate(User.Identity.Name).ToLocalTime()
 

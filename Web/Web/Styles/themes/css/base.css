@@ -9,13 +9,13 @@ Need any help for business ltd template? : Contact
 =============================
  */
 /* Needed for animations -----------*/
-body{position:relative; top:3000px;}
+body{position:relative; top:0px;}
 .wrapper{position:relative}
 .carousel-caption {display:block; top:-1000px; left:4%; padding:1%;bottom:auto;max-width:45%;border-radius:8px;text-align:left}
 #bannerSection{overflow:hidden;}
 #bannerSection h1{position:relative; right:-2400px}
-#headerSection .navbar .pull-right {top: 1000px;}
-#bodySection{position:relative; left:-3000px}
+#headerSection .navbar .pull-right {top: 0px;}
+#bodySection{position:relative; left:0px}
 #middleSection{position:relative; top:-800px}
 /* ------------------- */
 a, a:link, a:active, a:hover, img{outline:none;}

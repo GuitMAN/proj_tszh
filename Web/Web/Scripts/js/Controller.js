@@ -5,7 +5,7 @@
 
 
 
-var HomeApp = angular.module('HomeApp', ['ngAnimate', 'ngRoute', 'ngResource', 'ngCookies']);
+var HomeApp = angular.module('HomeApp', ['ui.bootstrap','ngAnimate', 'ngRoute', 'ngResource', 'ngCookies']);
 
 //angular.bootstrap(document, ['HomeApp']);
 
@@ -111,7 +111,7 @@ HomeApp.controller('HomeCtrl', [
 
 
 /*Section of authentication*/
-HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, AuthService, $rootScope, Session)
+HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, AuthService, $rootScope, Session, $log)
 {
     $scope.Session = Session;
     var curname = $cookies.get("username");
@@ -120,6 +120,20 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, Aut
     Session.create(1, id, role, curname);
     $scope.userRoles = role;
     $scope.isAuthorized = AuthService.isAuthorized;
+
+    $scope.items = [
+  'The first choice!',
+  'And another choice for you.',
+  'but wait! A third!'
+    ];
+
+    $scope.status = {
+        isopen: false
+    };
+
+    $scope.toggled = function (open) {
+        $log.log('Dropdown is now: ', open);
+    };
    
 });
 
