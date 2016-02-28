@@ -1571,6 +1571,7 @@
     <Content Include="Styles\themes\font\fontawesome-webfont.eot" />
     <Content Include="Styles\themes\font\fontawesome-webfont.ttf" />
     <Content Include="Styles\themes\font\fontawesome-webfont.woff" />
+    <Content Include="Views\User\ViewCounters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -308,7 +308,7 @@ namespace Web.Controllers
                     bool status = true;
                     try
                     {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1));
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1));
                         foreach (Counter counter in counters)
                         {
 
@@ -319,7 +319,7 @@ namespace Web.Controllers
                             {
                                 count_place cp = new count_place();
                                 cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1)).FirstOrDefault().Name;
                                 status = status && it.status;
                                 temp.gasi.Add(cp);
                             }
@@ -332,7 +332,7 @@ namespace Web.Controllers
                     }
                     try
                     {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2));
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(2));
                         foreach (Counter counter in counters)
                         {
 
@@ -343,7 +343,7 @@ namespace Web.Controllers
                             {
                                 count_place cp = new count_place();
                                 cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().place;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(2)).FirstOrDefault().Name;
                                 status = status && it.status;
                                 temp.energoi.Add(cp);
                             }
@@ -356,7 +356,7 @@ namespace Web.Controllers
                     }
                     try
                     {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3));
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(3));
                         foreach (Counter counter in counters)
                         {
 
@@ -367,7 +367,7 @@ namespace Web.Controllers
                             {
                                 count_place cp = new count_place();
                                 cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1)).FirstOrDefault().Name;
                                 status = status && it.status;
                                 temp.cwi.Add(cp);
                             }
@@ -380,7 +380,7 @@ namespace Web.Controllers
                     }
                     try
                     {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4));
+                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(4));
                         foreach (Counter counter in counters)
                         {
 
@@ -391,7 +391,7 @@ namespace Web.Controllers
                             {
                                 count_place cp = new count_place();
                                 cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().place;
+                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1)).FirstOrDefault().Name;
                                 status = status && it.status;
                                 temp.hwi.Add(cp);
                             }

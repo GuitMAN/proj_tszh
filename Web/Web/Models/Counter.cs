@@ -11,18 +11,20 @@ namespace Web.Models
         [Key]
         public int id { get; set; }
         [Display(Name = "Тип счетчика: газ, вода, электр.")]
-        public int type { get; set; }
+        public int Type { get; set; }
         [Display(Name = "Серийный номер")]
-        public string serial { get; set; }
+        public string Serial { get; set; }
         public int UserId { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Дата проверки")]
         [DisplayFormat(DataFormatString = "{0:d/m/yy}")]
         public DateTime? DateOfReview { get; set; }
-        [Display(Name = "Место установки")]
-        public string place { get; set; }
-        [Display(Name = "Статус")]
-        public bool status { get; set; }
+        [Display(Name = "Название счетчика")]
+        public string Name { get; set; }
+        [Display(Name = "Статус")] //Принят или не принят счетчик
+        public bool Status { get; set; }
+        [Display(Name = "Единица измерения")]
+        public string Measure { get; set; } 
     }
 
     [Table("Counter_data")]

@@ -18,7 +18,7 @@ namespace UnitTest
             Mock<Repo> mock = new Mock<Repo>();
             mock.Setup(m => m.Counter).Returns(new List<Counter>
             {
-                new Counter { id = 1, place = "Место1",  serial = "45645654" },
+                new Counter { id = 1, Name = "Место1",  Serial = "45645654" },
             });
             UserController controller = new UserController(mock.Object);
 

@@ -20,18 +20,18 @@
 </head>
 
 <body ng-controller="LoginInfoCtrl">
-    <section id="headerSection">
-        <div class="container">
-            <div class="navbar">
+    <section id="navbar">
+        <div class="navbar">
+            <div class="navbar-inner">
                 <div class="container">
                     <div class="navbar-header" >
-                        <button id="btn-append-to" type="button" class="btn btn-navbar" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                        <button  type="button" class="btn btn-navbar" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
                         <h1><a class="brand" href="#/"> Business <small>  Ltd.</small></a></h1>
-                        <div class="collapse nav-collapse" ng-class="!navCollapsed && 'in'">
+                        <div class="nav-collapse collapse"  ng-class="{'.nav-collapse':!navCollapsed}">
                             <ul class="nav pull-right" >
                                 <li><a href="#/">Home</a></li>
                                 @Html.Action("menu_top", "Nav")

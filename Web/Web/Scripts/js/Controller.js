@@ -7,8 +7,32 @@
 
 var HomeApp = angular.module('HomeApp', ['ui.bootstrap','ngAnimate', 'ngRoute', 'ngResource', 'ngCookies']);
 
-//angular.bootstrap(document, ['HomeApp']);
+ArrMonth = [
+  { id: '1', name: 'Январь' },
+  { id: '2', name: 'Февраль' },
+  { id: '3', name: 'Март' },
+  { id: '4', name: 'Апрель' },
+  { id: '5', name: 'Май' },
+  { id: '6', name: 'Июнь' },
+  { id: '7', name: 'Июль' },
+  { id: '8', name: 'Август' },
+  { id: '8', name: 'Сентябрь' },
+  { id: '10', name: 'Октябрь' },
+  { id: '11', name: 'Ноябрь' },
+  { id: '12', name: 'Декабрь' }
+];
 
+HomeApp.filter('JsonDate', function () {
+    'use strict';
+    return function (input) {
+        if (input) {
+            return parseInt(input.substr(6));
+        }
+        else {
+            return;
+        }
+    };
+});
 
 /* Config */
 HomeApp.config([
@@ -51,6 +75,10 @@ HomeApp.config([
           .when('/editprof', {
               templateUrl: '/user/editprof',
               controller: 'EditProfCtrl'
+          })
+          .when('/meters', {
+              templateUrl: '/user/viewcounters',
+              controller: 'MetersCtrl'
           })
           .otherwise({
               redirectTo: '/'
@@ -141,12 +169,15 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, Aut
     };
 
 
-  $scope.collapseMenu = function () {
-    if ($(window).width() <= 768) {
-        console.log('hiding');
-        $scope.navCollapsed = true;
+    $scope.menu = function () {
+        if (document.body.clientWidth < 768)
+        {
+            $scope.navCollapsed = !$scope.navCollapsed;
+            console.log($scope.navCollapsed);
+            $scope.collapse = $scope.navCollapsed;
+        }
     }
-}
+
    
 });
 
@@ -388,7 +419,21 @@ HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Sessio
         });
         return $location.path('#/');
     }
-})
+});
+
+
+HomeApp.controller('MetersCtrl', function ($http, $scope, UserServices, Session) {
+
+     UserServices.viewmeters().then(function (response) {
+
+         $scope.meters = response.data;
+        });
+    
+
+
+});
+
+
 
 
 /* Factory of user`s controller */
@@ -398,15 +443,20 @@ HomeApp.factory('UserServices', function ($http) {
             return $http.post('/User/Feedback', feedmodel)
               .then(function (response) {
                   return response;
-              })
+            })
         },
         editprof: function (profmodel) {
             return $http.post('/User/editprof', profmodel)
               .then(function (response) {
                   return response;
-              })
+            })
+        },
+        viewmeters: function(){
+            return $http.post('/User/viewcounters')
+                .then(function (response) {
+                          return response;
+            })
         }
-
     }
 });
 

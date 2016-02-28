@@ -346,11 +346,12 @@ namespace Web.Models.Repository
             else
             {
                 db.DateOfReview = cou.DateOfReview;
-                db.place = cou.place;
-                db.serial = cou.serial;
-                db.status = cou.status;
-                db.type = cou.type;
+                db.Name = cou.Name;
+                db.Serial = cou.Serial;
+                db.Status = cou.Status;
+                db.Type = cou.Type;
                 db.UserId = cou.UserId;
+                db.Measure = db.Measure;
             }
             context.SaveChanges();
         }
