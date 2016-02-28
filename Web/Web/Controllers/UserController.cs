@@ -424,13 +424,13 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        public ActionResult ViewCounters()
+        public ActionResult ViewMeters()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ViewCounters(int id = 0)
+        public ActionResult ViewMeters(int id = 0)
         {
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
@@ -445,80 +445,142 @@ namespace Web.Controllers
             {
                 counter = repository.Counter.Where(i => i.UserId.Equals(id));
             }
-
             return Json(counter);
         }
 
-
-        public ActionResult EditGas(int id = 0)
+        //Добавление счетчика
+        [HttpGet]
+        public ActionResult AddMeter()
         {
-            //---------------------------
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
-            Counter counter;
-            if (id == 0)
-            {
-                counter = new Counter();
-                counter.Type = 1;
-                counter.UserId = WebSecurity.CurrentUserId;
-            }
-            else
-            {
-                counter = repository.Counter.Where(i => i.id.Equals(id)).SingleOrDefault();
-            }
 
-            return View(counter);
-        }
-
-        [HttpPost]
-        public ActionResult EditGas(Counter model)
-        {
-            //---------------------------
-            //Test Autorize
+            //Counter_model model model;
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
-            if (ModelState.IsValid)
-            {
-                repository.SaveCounter(model);
-                TempData["message"] = string.Format("Газовый счетчик успешно добавлен(обновлен)");
-            }
-
+            Counter_model_add model = new Counter_model_add();
+           
             return View(model);
         }
 
-        public ActionResult SetGas()
-        {
-            Counter_data model;
-            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.Type.Equals(1)).SingleOrDefault();
-            model = new Counter_data();
-            model.id = counter.id;
-            return View(model);
-        }
-
-
         [HttpPost]
-        public ActionResult SetGas(Counter_data model)
+        public ActionResult AddMeter(Counter_model_add model_add)
         {
-            //---------------------------
             //Test Autorize
             if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
 
-            model.write = DateTime.UtcNow;
+            Counter meter = new Counter();
+            meter.UserId = WebSecurity.CurrentUserId;
+            if (model_add.Name==null) { Json("Введите название"); }
+            meter.Name = model_add.Name;
+            if (model_add.Serial == null) { Json("Введите серийный номер"); }
+            meter.Serial = model_add.Serial;
+            //if (model_add.Name == null) { Json("Введите название счетчика") }
+            meter.Status = false;
+            if (model_add.Type == 0) { Json("Выберите тип"); }
+            meter.Type = model_add.Type;
+            if (model_add.Measure == null) { Json("Введите название счетчика"); }
+            meter.Measure = model_add.Measure;
+            if (model_add.DateOfReview == null) { Json("Выберите дату проверки счетчика"); }
+            meter.DateOfReview = model_add.DateOfReview;
+
 
             if (ModelState.IsValid)
-            {    
-                repository.SaveCounder_data(model);
-                TempData["message"] = string.Format("Показания газового счетчика успешно отправлены");
-            }
-            else
             {
-                ModelState.AddModelError("", String.Format("Введите корректное показание счетчика"));
+                repository.SaveCounter(meter);
+                //TempData["message"] = string.Format("Газовый счетчик успешно добавлен(обновлен)");
             }
 
-            return RedirectToAction("Gas");
+            //int li = repository.context.Database.SqlQuery<int>("LAST_INSERT_ID()").FirstOrDefault();
+
+            Counter_data model_data = new Counter_data();
+
+            if (meter.id != 0)
+            {
+                model_data.data = model_add.firstdata;
+                model_data.write = DateTime.UtcNow;
+                model_data.status = false;
+                model_data.id = meter.id;
+                repository.SaveCounder_data(model_data);
+                return Json("Ok");
+            }
+            return Json("Error");           
         }
+
+
+
+
+        //public ActionResult EditGas(int id = 0)
+        //{
+        //    //---------------------------
+        //    //Test Autorize
+        //    if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+        //        return RedirectToAction("Index", "Login");
+        //    Counter counter;
+        //    if (id == 0)
+        //    {
+        //        counter = new Counter();
+        //        counter.Type = 1;
+        //        counter.UserId = WebSecurity.CurrentUserId;
+        //    }
+        //    else
+        //    {
+        //        counter = repository.Counter.Where(i => i.id.Equals(id)).SingleOrDefault();
+        //    }
+
+        //    return View(counter);
+        //}
+
+        //[HttpPost]
+        //public ActionResult EditGas(Counter model)
+        //{
+        //    //---------------------------
+        //    //Test Autorize
+        //    if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+        //        return RedirectToAction("Index", "Login");
+        //    if (ModelState.IsValid)
+        //    {
+        //        repository.SaveCounter(model);
+        //        TempData["message"] = string.Format("Газовый счетчик успешно добавлен(обновлен)");
+        //    }
+
+        //    return View(model);
+        //}
+
+        //public ActionResult SetGas()
+        //{
+        //    Counter_data model;
+        //    Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.Type.Equals(1)).SingleOrDefault();
+        //    model = new Counter_data();
+        //    model.id = counter.id;
+        //    return View(model);
+        //}
+
+
+        //[HttpPost]
+        //public ActionResult SetGas(Counter_data model)
+        //{
+        //    //---------------------------
+        //    //Test Autorize
+        //    if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+        //        return RedirectToAction("Index", "Login");
+
+        //    model.write = DateTime.UtcNow;
+
+        //    if (ModelState.IsValid)
+        //    {    
+        //        repository.SaveCounder_data(model);
+        //        TempData["message"] = string.Format("Показания газового счетчика успешно отправлены");
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", String.Format("Введите корректное показание счетчика"));
+        //    }
+
+        //    return RedirectToAction("Gas");
+        //}
 
         ////Методы с электрическим счетчиком
         ////type = 2;

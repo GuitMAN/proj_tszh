@@ -1,0 +1,75 @@
+﻿@model Web.Models.Counter_model_add
+
+
+<div ng-controller="AddMeterCtrl">
+    <h3>Добавление счетчика </h3>
+    <ul class="breadcrumb">
+        <li><a href="#/meters">Данные по счетчикам</a> <span class="divider">/</span></li>
+        <li><a href="#/datameters">Показания счетчиков</a> <span class="divider">/</span></li>
+        <li><a href="#">Library</a></li>
+    </ul>
+
+    <form>
+        @*@Html.AntiForgeryToken()*@
+
+        <div class="form-horizontal">
+            <hr />
+            <span ng-show="response" class="label label-important">
+                {{response}}
+            </span>
+            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            <div class="form-group">
+                Выберите тип счетчика:
+                <select required ng-model="meter.Type" >
+                    @*<option disabled>Выберите тип счетчика</option>*@
+                    <option value="1">Газ</option>
+                    <option value="2">Электроэнергия</option>
+                    <option value="3">Холодная вода</option>
+                    <option value="4">Горячая вода</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Serial, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="meter.Serial">
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateOfReview, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="meter.DateOfReview">
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="meter.Name">
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Measure, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="meter.Measure">
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.firstdata, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="meter.firstdata">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Добавить" class="btn btn-default" ng-click="submit(meter)">
+                </div>
+            </div>
+        </div>
+    </form>  
+    <pre> {{response}}</pre>
+</div>

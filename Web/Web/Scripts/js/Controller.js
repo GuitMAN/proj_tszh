@@ -77,8 +77,12 @@ HomeApp.config([
               controller: 'EditProfCtrl'
           })
           .when('/meters', {
-              templateUrl: '/user/viewcounters',
+              templateUrl: '/user/ViewMeters',
               controller: 'MetersCtrl'
+          })
+          .when('/addmeter',{
+              templateUrl: '/user/addmeter',
+             controller: 'MetersCtrl'
           })
           .otherwise({
               redirectTo: '/'
@@ -380,10 +384,10 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
 
     $scope.status = false;
     $scope.submit = function (feedmodel) {
-        UserServices.feedback(feedmodel).then(function (data) {
-            $scope.response = data.data;
+        UserServices.feedback(feedmodel).then(function (response) {
+            $scope.response = response.data;
             console.log("data:", data);
-            if (data.data[0] == 'Ok') {
+            if (response.data[0] == 'Ok') {
                 $scope.status = true;
             }
         });
@@ -421,18 +425,35 @@ HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Sessio
     }
 });
 
-
+//View all meters of user
 HomeApp.controller('MetersCtrl', function ($http, $scope, UserServices, Session) {
-
-     UserServices.viewmeters().then(function (response) {
-
-         $scope.meters = response.data;
-        });
     
-
-
+    UserServices.viewmeters().then(function (response) {
+        $scope.meters = response.data;
+    });
 });
 
+//Add meter from user
+HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
+
+    $scope.meter = {
+        UserId: Session.userId,
+        Name:'',
+        Serial:'',
+        Status:false,
+        Type:'',
+        Measure:'',
+        DateOfReview:'',
+        firstdata:''
+    }
+
+    $scope.submit = function (meter) {
+        UserServices.addmeter(meter).then(function (response) {
+
+            $scope.response = response.data;
+        });
+    }
+});
 
 
 
@@ -452,10 +473,16 @@ HomeApp.factory('UserServices', function ($http) {
             })
         },
         viewmeters: function(){
-            return $http.post('/User/viewcounters')
+            return $http.post('/User/ViewMeters')
                 .then(function (response) {
                           return response;
             })
+        },
+        addmeter: function (meter) {
+            return $http.post('/User/AddMeter', meter)
+                .then(function (response) {
+                    return response;
+                })
         }
     }
 });

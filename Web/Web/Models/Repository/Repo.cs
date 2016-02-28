@@ -14,7 +14,7 @@ namespace Web.Models.Repository
 
     public class Repo
     {
-        private EFDbContext context = new EFDbContext();
+        public EFDbContext context = new EFDbContext();
 
 
         public void SQLstringConnect(string sqlcommand, out DataSet ds)

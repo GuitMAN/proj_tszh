@@ -21,7 +21,7 @@ namespace Web.Models
         public DateTime? DateOfReview { get; set; }
         [Display(Name = "Название счетчика")]
         public string Name { get; set; }
-        [Display(Name = "Статус")] //Принят или не принят счетчик
+        [Display(Name = "Статус")]
         public bool Status { get; set; }
         [Display(Name = "Единица измерения")]
         public string Measure { get; set; } 
@@ -44,9 +44,31 @@ namespace Web.Models
     }
 
 
+    public class Counter_model_add
+    {
+        [Display(Name = "Тип счетчика: газ, вода, электр.")]
+        public int Type { get; set; }
+        [Display(Name = "Серийный номер")]
+        public string Serial { get; set; }
+        public int UserId { get; set; }
+        [DataType(DataType.Date)]
+        [Display(Name = "Дата проверки")]
+        [DisplayFormat(DataFormatString = "{0:d/m/yy}")]
+        public DateTime? DateOfReview { get; set; }
+        [Display(Name = "Название счетчика")]
+        public string Name { get; set; }
+        [Display(Name = "Статус")]
+        public bool Status { get; set; }
+        [Display(Name = "Единица измерения")]
+        public string Measure { get; set; }
+        [Display(Name = "Начальное показание счетчика")]
+        public decimal firstdata { get; set; }
+
+    }
 
 
-    public class count_place
+
+        public class count_place
     {
         public decimal data { get; set; }
         public string place { get; set; }
