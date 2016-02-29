@@ -629,7 +629,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   return {
     replace: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/datepicker.html';
+        return attrs.templateUrl || '../Scripts/bootstrap-master/uib/template/datepicker/datepicker.html';
     },
     scope: {
       datepickerMode: '=?',
@@ -653,7 +653,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   return {
     replace: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/day.html';
+        return attrs.templateUrl || '../Scripts/bootstrap-master/uib/template/datepicker/day.html';
     },
     require: ['^uibDatepicker', 'uibDaypicker'],
     controller: 'UibDaypickerController',
@@ -670,7 +670,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   return {
     replace: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/month.html';
+        return attrs.templateUrl || '../Scripts/bootstrap-master/uib/template/datepicker/month.html';
     },
     require: ['^uibDatepicker', 'uibMonthpicker'],
     controller: 'UibMonthpickerController',
@@ -687,7 +687,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   return {
     replace: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/year.html';
+        return attrs.templateUrl || '../Scripts/bootstrap-master/uib/template/datepicker/year.html';
     },
     require: ['^uibDatepicker', 'uibYearpicker'],
     controller: 'UibYearpickerController',
@@ -711,8 +711,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   closeText: 'Done',
   currentText: 'Today',
   datepickerPopup: 'yyyy-MM-dd',
-  datepickerPopupTemplateUrl: 'uib/template/datepicker/popup.html',
-  datepickerTemplateUrl: 'uib/template/datepicker/datepicker.html',
+  datepickerPopupTemplateUrl: '../Scripts/bootstrap-master/uib/template/datepicker/popup.html',
+  datepickerTemplateUrl: '../Scripts/bootstrap-master/uib/template/datepicker/datepicker.html',
   html5Types: {
     date: 'yyyy-MM-dd',
     'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',

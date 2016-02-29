@@ -11,6 +11,7 @@
     <meta name="author" content="">
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
+    <link href="~/Styles/themes/css/font-awesome-ie7.css" rel="stylesheet" />
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script src="~/Scripts/angular-1.5.0-rc.1/angular.js"></script>
@@ -21,10 +22,10 @@
     <script src="~/Scripts/angular-1.5.0-rc.1/angular-resource.js"></script>
     <script src="~/Scripts/js/Controller.js"></script>
 
-    <link href="~/Styles/bootstrap-dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/Styles/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
-    @*<link href="~/Styles/themes/css/bootstrap.min.css" type="text/css" media="screen" id="callCss" rel="stylesheet" />
-    <link href="~/Styles/themes/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">*@
+    @*<link href="~/Styles/themes/css/bootstrap.min.css" type="text/css" media="screen" id="callCss" rel="stylesheet" />*@
+    <link href="~/Styles/bootstrap-dist/css/bootstrap.css" media="screen" id="callCss" rel="stylesheet" />
+    @*<link href="~/Styles/bootstrap-dist/css/bootstrap-theme.css" rel="stylesheet" />*@
+    <link href="~/Styles/themes/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/base.css" rel="stylesheet" type="text/css">
 </head>
@@ -41,7 +42,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <h1><a class="brand" href="#/"> Business <small>  Ltd.</small></a></h1>
-                        <div class="nav-collapse collapse"  ng-class="{'.nav-collapse':!navCollapsed}">
+                        <div class="navbar-collapse collapse"  ng-class="{'in':!navCollapsed}">
                             <ul class="nav pull-right" >
                                 <li><a href="#/">Home</a></li>
                                 @Html.Action("menu_top", "Nav")
@@ -118,10 +119,7 @@
             <hr class="soften">
             <div class="container">
                 <div class="row">
-                    @*@if (TempData["message"] != null)
-                        {
-                            <div class="alert alert-success">@TempData["message"]</div>
-                        }*@
+
                     <div class="span3">
                         <div class="well" style="padding: 8px 0;">
                             <ul class="nav nav-list">

@@ -448,12 +448,12 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
     };
     ///////////////
     $scope.today = function () {
-        $scope.dt = new Date();
+        $scope.DateOfReview = new Date();
     };
     $scope.today();
 
     $scope.clear = function () {
-        $scope.dt = null;
+        $scope.DateOfReview = null;
     };
 
     $scope.inlineOptions = {
@@ -493,7 +493,7 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
     };
 
     $scope.setDate = function (year, month, day) {
-        $scope.dt = new Date(year, month, day);
+        $scope.dtDateOfReview = new Date(year, month, day);
     };
 
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];

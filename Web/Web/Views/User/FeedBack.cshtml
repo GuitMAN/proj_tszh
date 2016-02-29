@@ -3,21 +3,10 @@
 <div ng-controller="FeedbackCtrl" class="row">
     <div ng-hide="status" class="span6">
         <form>
-            @*@Html.AntiForgeryToken()*@
-            @*@Html.ValidationSummary(false)*@
-            @*@Html.Hidden(Model.id)*@
-            @*@Html.Hidden(Model.id_uk)
-            @Html.Hidden(Model.id_user)*@
             <input type="hidden" ng-model="feedmodel.id_uk" ng-init="feedmodel.id_uk = @Model.id_uk">
-            @*<input type="hidden" ng-model="feedmodel.id_user" ng-init="feedmodel.id_user = @Model.id_user">*@
-            <h3>Форма обращения (заявок) в УК (ТСЖ)</h3>
+             <h3>Форма обращения (заявок) в УК (ТСЖ)</h3>
             <fieldset>
-                <legend>
-                    @*<div class="form-group">
-                        @Html.LabelFor(model => model.id_user, new { @class = "control-label col-md-2" })
-                        @Html.Action("getUser", "Login")
-                    </div>*@
-                    <div class="form-horizontal">
+                         <div class="form-horizontal">
                         <div class="form-group">
                             <label class="control-label col-md-2" for="title">Название: </label>
                             <div class="col-md-10">
@@ -41,7 +30,6 @@
 
                     </div>
 
-                </legend>
             </fieldset>
         </form>
      </div>
@@ -49,5 +37,4 @@
         <span class="label label-success" ng-show="status" class="span6">{{response[1]}}</span>
         @*@Html.ActionLink("Вернуться к профилю", "profile")*@
     </div>
-
-
+ </div>
