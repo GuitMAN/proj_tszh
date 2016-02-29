@@ -89,6 +89,12 @@ namespace Web.Models
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult Contact()
+        {
+            return View();
+        }
+
+
         #region Вспомогательные методы
         public string get_adr(int id_adr=0)
         {
