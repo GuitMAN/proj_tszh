@@ -2036,7 +2036,7 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 
 .collapse {
     position: relative;
-    height: 0;
+    height: auto;
     overflow: hidden;
     -webkit-transition: height .35s ease;
     -moz-transition: height .35s ease;
@@ -2045,7 +2045,7 @@ table td[class*="span"], table th[class*="span"], .row-fluid table td[class*="sp
 }
 
     .collapse.in {
-        height: auto;
+        height: 0;
     }
 
 .close {
@@ -3139,7 +3139,7 @@ button.btn, input[type="submit"].btn {
 }
 
 .nav-collapse.collapse {
-    height: auto;
+    /*height: 0;*/
     overflow: visible;
 }
 

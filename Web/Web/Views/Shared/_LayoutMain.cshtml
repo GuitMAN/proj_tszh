@@ -43,7 +43,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <h1><a class="brand" href="#/"> Business <small>  Ltd. {{navHeight}}</small></a></h1>
-                        <div ng-class="{true:'nav-collapse collapse', false:'nav-collapse in collapse'}[navCollapsed]" style="height:auto;" ng-style="{{navHeight}}">
+                        <div ng-class="{true:'nav-collapse collapse', false:'nav-collapse in collapse'}[navCollapsed]" ng-style="{{navHeight}}">
                             <ul class="nav pull-right" style="top: 0px;">
                                 <li><a href="#/">Home</a></li>
                                 @Html.Action("menu_top", "Nav")
