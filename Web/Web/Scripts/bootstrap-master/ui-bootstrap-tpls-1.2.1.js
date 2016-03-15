@@ -2660,7 +2660,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     }
 
     // popup element used to display calendar
-    popupEl = angular.element('<div uib-datepicker-popup-wrap><div uib-datepicker></div></div>');
+    popupEl = angular.element('<div uib-datepicker-popup-wrap style="display:inline-block"><div uib-datepicker></div></div>');
     $scope.ngModelOptions = angular.copy(ngModelOptions);
     $scope.ngModelOptions.timezone = null;
     if ($scope.ngModelOptions.updateOnDefault === true) {

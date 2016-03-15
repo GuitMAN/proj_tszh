@@ -177,8 +177,14 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, Aut
         if (document.body.clientWidth < 768)
         {
             $scope.navCollapsed = !$scope.navCollapsed;
-            console.log($scope.navCollapsed);
+           // console.log($scope.navCollapsed);
             $scope.collapse = $scope.navCollapsed;
+            if ($scope.navCollapsed) {
+                $scope.navHeight = { height: '0' };
+            } else {
+                $scope.navHeight = { height: 'auto' };
+            }
+            //console.log("navHeght: ", $scope.navHeight);
         }
     }
 
@@ -463,6 +469,7 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
     };
 
     $scope.dateOptions = {
+        datepickerPopup: 'dd-MMMM-yyyy',
         dateDisabled: disabled,
         formatYear: 'yy',
         maxDate: new Date(2020, 5, 22),

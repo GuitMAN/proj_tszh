@@ -31,23 +31,23 @@
 
 /*  Font Awesome styles
     ------------------------------------------------------- */
-[class^="icon-"]:before, [class*=" icon-"]:before {
+[class^="icon-"]:before, [class*=" icon-"]:before, [class^="glyphicon-"], [class*="glyphicon-"] {
   font-family: FontAwesome;
   font-weight: normal;
   font-style: normal;
   display: inline-block;
   text-decoration: inherit;
 }
-a [class^="icon-"], a [class*=" icon-"] {
+a [class^="icon-"], a [class*=" icon-"], a [class^="glyphicon-"], a [class*="glyphicon-"] {
   display: inline-block;
   text-decoration: inherit;
 }
 /* makes the font 33% larger relative to the icon container */
-.icon-large:before {
+.icon-large:before, glyphicon-large:before{
   vertical-align: top;
   font-size: 1.3333333333333333em;
 }
-.btn [class^="icon-"], .btn [class*=" icon-"] {
+.btn [class^="icon-"], .btn [class*=" icon-"], .btn [class^="glyphicon-"], .btn [class*="glyphicon-"] {
   /* keeps button heights with and without icons the same */
 
   line-height: .9em;
@@ -159,8 +159,8 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .icon-fast-forward:before         { content: "\f050"; }
 .icon-step-forward:before         { content: "\f051"; }
 .icon-eject:before                { content: "\f052"; }
-.icon-chevron-left:before         { content: "\f053"; }
-.icon-chevron-right:before        { content: "\f054"; }
+.icon-chevron-left:before , .glyphicon-chevron-left:before        { content: "\f053"; }
+.icon-chevron-right:before, .glyphicon-chevron-right:before        { content: "\f054"; }
 .icon-plus-sign:before            { content: "\f055"; }
 .icon-minus-sign:before           { content: "\f056"; }
 .icon-remove-sign:before          { content: "\f057"; }
@@ -282,7 +282,7 @@ li[class^="icon-"].icon-large:before, li[class*=" icon-"].icon-large:before {
 .icon-caret-down:before           { content: "\f0d7"; }
 .icon-caret-up:before             { content: "\f0d8"; }
 .icon-caret-left:before           { content: "\f0d9"; }
-.icon-caret-right:before          { content: "\f0da"; }
+.icon-caret-right:before, .glyphicon-caret-right:before          { content: "\f0da"; }
 .icon-columns:before              { content: "\f0db"; }
 .icon-sort:before                 { content: "\f0dc"; }
 .icon-sort-down:before            { content: "\f0dd"; }

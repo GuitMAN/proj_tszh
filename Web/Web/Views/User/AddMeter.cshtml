@@ -8,88 +8,74 @@
         <li><a href="#">Library</a></li>
     </ul>
 
-    <form>
+    <form class="form-inline">
         @*@Html.AntiForgeryToken()*@
+        <fieldset>
+            <div class="form-horizontal">
+                <hr />
+                <span ng-show="response" class="label label-important">
+                    {{response}}
+                </span>
+                @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+                <div class="control-group">
+                    <label class="control-label" for="select01">Выберите тип счетчика: </label>
+                    <div class="controls">
+                        <select required ng-model="meter.Type" id="select01" class="span3">
+                            @*<option disabled>Выберите тип счетчика</option>*@
+                            <option value="1">Газ</option>
+                            <option value="2">Электроэнергия</option>
+                            <option value="3">Холодная вода</option>
+                            <option value="4">Горячая вода</option>
+                        </select>
+                    </div>
+                </div>
 
-        <div class="form-horizontal">
-            <hr />
-            <span ng-show="response" class="label label-important">
-                {{response}}
-            </span>
-            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-            <div class="form-group">
-                Выберите тип счетчика:
-                <select required ng-model="meter.Type">
-                    @*<option disabled>Выберите тип счетчика</option>*@
-                    <option value="1">Газ</option>
-                    <option value="2">Электроэнергия</option>
-                    <option value="3">Холодная вода</option>
-                    <option value="4">Горячая вода</option>
-                </select>
-            </div>
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Serial, htmlAttributes: new { @class = "control-label" })
+                    <div class="controls">
+                        <input class="input-xlarge" type="text" ng-model="meter.Serial">
+                    </div>
+                </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Serial, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" type="text" ng-model="meter.Serial">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DateOfReview, htmlAttributes: new { @class = "control-label" })
+                    <div class="controls">
+                        <div class="input-append">
+                            <input type="text" class="input-small" uib-datepicker-popup ng-model="meter.DateOfReview" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" style="display:inline-block" />
+                            <button type="button" class="btn" ng-click="open2()"><i class="icon icon-calendar"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                    <div class="controls">
+                        <input class="input-xlarge" type="text" ng-model="meter.Name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Measure, htmlAttributes: new { @class = "control-label" })
+                    <div class="controls">
+                        <input class="input-xlarge" type="text" ng-model="meter.Measure">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.firstdata, htmlAttributes: new { @class = "control-label" })
+                    <div class="controls">
+                        <input class="input-xlarge" type="text" ng-model="meter.firstdata">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(meter)">
                 </div>
             </div>
-            <style>
-                .full button span {
-                    background-color: limegreen;
-                    border-radius: 32px;
-                    color: black;
-                }
-
-                .partially button span {
-                    background-color: orange;
-                    border-radius: 32px;
-                    color: black;
-                }
-            </style>
-            <div class="row">
-                @Html.LabelFor(model => model.DateOfReview, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-6">
-                    <p class="input-group">
-                        <input type="text" class="form-control" uib-datepicker-popup ng-model="meter.DateOfReview" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="open2()"><i class="icon icon-calendar"></i></button>
-                        </span>
-                    </p>
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" type="text" ng-model="meter.Name">
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Measure, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" type="text" ng-model="meter.Measure">
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.firstdata, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" type="text" ng-model="meter.firstdata">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Добавить" class="btn btn-default" ng-click="submit(meter)">
-                </div>
-            </div>
-        </div>
+        </fieldset>
     </form>
 
-    
+
     <pre> {{response}}</pre>
 
-    
+
 </div>

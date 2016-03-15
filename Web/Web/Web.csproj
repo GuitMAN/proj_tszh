@@ -1377,6 +1377,7 @@
     <Content Include="Styles\themes\cerulean\bootstrap.min.css" />
     <Content Include="Styles\themes\css\base.css" />
     <Content Include="Styles\themes\css\bootstrap-responsive.min.css" />
+    <Content Include="Styles\themes\css\bootstrap.css" />
     <Content Include="Styles\themes\css\bootstrap.min.css" />
     <Content Include="Styles\themes\css\font-awesome-ie7.css" />
     <Content Include="Styles\themes\css\font-awesome.css" />

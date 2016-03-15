@@ -9,11 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-    <link href="~/Styles/themes/css/font-awesome-ie7.css" rel="stylesheet" />
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+
     <script src="~/Scripts/angular-1.5.0-rc.1/angular.js"></script>
     <script src="~/Scripts/angular-1.5.0-rc.1/angular-animate.js"></script>
     <script src="~/Scripts/bootstrap-master/ui-bootstrap-tpls-1.2.1.js"></script>
@@ -22,12 +18,17 @@
     <script src="~/Scripts/angular-1.5.0-rc.1/angular-resource.js"></script>
     <script src="~/Scripts/js/Controller.js"></script>
 
-    @*<link href="~/Styles/themes/css/bootstrap.min.css" type="text/css" media="screen" id="callCss" rel="stylesheet" />*@
-    <link href="~/Styles/bootstrap-dist/css/bootstrap.css" media="screen" id="callCss" rel="stylesheet" />
-    @*<link href="~/Styles/bootstrap-dist/css/bootstrap-theme.css" rel="stylesheet" />*@
+    <link href="~/Styles/themes/css/bootstrap.min.css" type="text/css" media="screen" id="callCss" rel="stylesheet" />
     <link href="~/Styles/themes/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/font-awesome.css" rel="stylesheet" type="text/css">
     <link href="~/Styles/themes/css/base.css" rel="stylesheet" type="text/css">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <link href="~/Styles/themes/css/font-awesome-ie7.css" rel="stylesheet" />
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
 </head>
 
 <body ng-controller="LoginInfoCtrl">
@@ -36,14 +37,14 @@
             <div class="navbar-inner">
                 <div class="container">
                     <div class="navbar-header" >
-                        <button  type="button" class="btn btn-navbar" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                        <button  type="button" class="btn btn-navbar" ng-init="navCollapsed = false" ng-click="navCollapsed = !navCollapsed" ng-class="{'collapsed':!navCollapsed}">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <h1><a class="brand" href="#/"> Business <small>  Ltd.</small></a></h1>
-                        <div class="navbar-collapse collapse"  ng-class="{'in':!navCollapsed}">
-                            <ul class="nav pull-right" >
+                        <h1><a class="brand" href="#/"> Business <small>  Ltd. {{navHeight}}</small></a></h1>
+                        <div ng-class="{true:'nav-collapse collapse', false:'nav-collapse in collapse'}[navCollapsed]" style="height:auto;" ng-style="{{navHeight}}">
+                            <ul class="nav pull-right" style="top: 0px;">
                                 <li><a href="#/">Home</a></li>
                                 @Html.Action("menu_top", "Nav")
 
@@ -146,12 +147,6 @@
     </footer>
 
     @RenderSection("Scripts", required: false)
-
-
-
-    @*<script src="~/Styles/themes/js/jquery-1.8.3.min.js"></script>
-        <script src="~/Styles/themes/js/bootstrap.min.js"></script>
-        <script src="~/Styles/themes/js/business_ltd_1.0.js"></script>*@
 
 </body>
 
