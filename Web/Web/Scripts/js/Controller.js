@@ -470,10 +470,10 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
 
     $scope.dateOptions = {
         datepickerPopup: 'dd-MMMM-yyyy',
-        dateDisabled: disabled,
+        //dateDisabled: disabled,
         formatYear: 'yy',
-        maxDate: new Date(2020, 5, 22),
-        minDate: new Date(),
+        maxDate: new Date(),
+        minDate: new Date(1990,01,01),
         startingDay: 1
     };
 
