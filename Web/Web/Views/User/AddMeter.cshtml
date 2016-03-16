@@ -36,6 +36,31 @@
                     </div>
                 </div>
 
+                <style type="text/css">
+                    .uib-datepicker .uib-title {
+                        width: 100%;
+                    }
+
+                    .uib-day button, .uib-month button, .uib-year button {
+                        min-width: 100%;
+                    }
+
+                    .uib-datepicker-popup.dropdown-menu {
+                        display: block;
+                        float: none;
+                        margin: 10px;
+                        transform: scale(.85);
+
+                    }
+
+                    .uib-button-bar {
+                        padding: 10px 9px 20px;
+                    }
+
+                    .uib-left, .uib-right {
+                        width: 100%;
+                    }
+                </style>
                 <div class="control-group">
                     @Html.LabelFor(model => model.DateOfReview, htmlAttributes: new { @class = "control-label" })
                     <div class="controls">
@@ -59,7 +84,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="control-group">
                     @Html.LabelFor(model => model.firstdata, htmlAttributes: new { @class = "control-label" })
                     <div class="controls">
                         <input class="input-xlarge" type="text" ng-model="meter.firstdata">

@@ -2580,15 +2580,15 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 .constant('uibDatepickerPopupConfig', {
   altInputFormats: [],
   appendToBody: false,
-  clearText: 'Clear',
+  clearText: 'Стереть',
   closeOnDateSelection: true,
-  closeText: 'Done',
-  currentText: 'Today',
-  datepickerPopup: 'yyyy-MM-dd',
+  closeText: 'Закрыть',
+  currentText: 'Сегодня',
+  datepickerPopup: 'dd.MM.yyyy',
   datepickerPopupTemplateUrl: 'uib/template/datepicker/popup.html',
   datepickerTemplateUrl: 'uib/template/datepicker/datepicker.html',
   html5Types: {
-    date: 'yyyy-MM-dd',
+      date: 'dd.MM.yyyy',
     'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
     'month': 'yyyy-MM'
   },

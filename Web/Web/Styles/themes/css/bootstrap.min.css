@@ -3146,7 +3146,7 @@ button.btn, input[type="submit"].btn {
 .navbar .brand {
     display: block;
     float: left;
-    padding: 10px 20px 10px;
+    padding: 10px 20px 0px;
     margin-left: -20px;
     font-size: 20px;
     font-weight: 200;
