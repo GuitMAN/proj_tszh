@@ -503,9 +503,9 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
         $scope.dtDateOfReview = new Date(year, month, day);
     };
 
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-    $scope.altInputFormats = ['M!/d!/yyyy'];
+    //$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    //$scope.format = $scope.formats[0];
+    //$scope.altInputFormats = ['M!/d!/yyyy'];
 
     $scope.popup1 = {
         opened: false
