@@ -258,7 +258,7 @@ namespace Web.Controllers
             try
             {
                 uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
-                users = repository.UserProfile.Where(p => p.id_uk.Equals(3));//uk.id));
+                users = repository.UserProfile.Where(p => p.id_uk.Equals(uk.id));
             }
             catch
             { }

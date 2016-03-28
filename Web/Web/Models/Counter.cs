@@ -24,7 +24,7 @@ namespace Web.Models
         [Display(Name = "Статус")]
         public bool Status { get; set; }
         [Display(Name = "Единица измерения")]
-        public string Measure { get; set; } 
+        public string Measure { get; set; }
     }
 
     [Table("Counter_data")]
@@ -68,7 +68,7 @@ namespace Web.Models
 
 
 
-        public class count_place
+    public class count_place
     {
         public decimal data { get; set; }
         public string place { get; set; }
@@ -77,15 +77,15 @@ namespace Web.Models
     public class Counter_model
     { // Project of model
       //| Фамилия Имя Отчество | [ Газ ] | [Электро] | [ХВ] | [ГВ] | Улица | Дом | Квартира | месяц
-        public IEnumerable<int> id; //список инедтификаторов счетчиков с данными
+      //public IEnumerable<int> id; //список инедтификаторов счетчиков с данными
         public string Name; //FIO users
-        [Display(Name = "Показания счетчика газа")]
+        [Display(Name = "Показания счетчиков газа")]
         public List<count_place> gasi { get; set; }
-        [Display(Name = "Показания счетчика электроэнергии")]
+        [Display(Name = "Показания счетчиков электроэнергии")]
         public List<count_place> energoi { get; set; }
         [Display(Name = "Показания счетчиков холодной воды")]
-        public List<count_place> cwi { get; set; } 
-        [Display(Name = "Показания счетчика горячей воды")]
+        public List<count_place> cwi { get; set; }
+        [Display(Name = "Показания счетчиков горячей воды")]
         public List<count_place> hwi { get; set; }
         [Display(Name = "Улица")]
         public string street { get; set; }
@@ -102,8 +102,28 @@ namespace Web.Models
         public IEnumerable<Counter_data> ListData;
     }
 
-    public class ListCounters
+    //public class ListCounters
+    //{
+    //    public List<Counter_data> Counters { get; set; }
+    //}
+
+    public class meter_model
     {
-        public List<Counter_data> Counters { get; set; }
-    };
+        public Counter counter { get; set; }
+        public IEnumerable<Counter_data> ListData;
+    }
+
+
+    public class Counter_user_viewdata
+    { // Project of model
+        [Display(Name = "Показания счетчиков газа")]
+        public List<meter_model> gasi { get; set; }
+        [Display(Name = "Показания счетчиков электроэнергии")]
+        public List<meter_model> energoi { get; set; }
+        [Display(Name = "Показания счетчиков холодной воды")]
+        public List<meter_model> cwi { get; set; }
+        [Display(Name = "Показания счетчиков горячей воды")]
+        public List<meter_model> hwi { get; set; }
+
+    }
 }

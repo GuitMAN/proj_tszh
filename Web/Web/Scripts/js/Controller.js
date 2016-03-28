@@ -70,7 +70,7 @@ HomeApp.config([
           })
           .when('/profile', {
               templateUrl: '/user/profile',
-//              controller: 'FeedbackCtrl'
+              controller: 'FeedbackCtrl'
           })
           .when('/editprof', {
               templateUrl: '/user/editprof',
@@ -83,6 +83,10 @@ HomeApp.config([
           .when('/addmeter',{
               templateUrl: '/user/addmeter',
              controller: 'MetersCtrl'
+          })
+          .when('/addvaluemeter', {
+              templateUrl: '/user/AddCounterMonthValue',
+              controller: 'ValueMeterCtrl'
           })
           .otherwise({
               redirectTo: '/'
@@ -560,7 +564,13 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
     }
 });
 
+//View all meters of user
+HomeApp.controller('ValueMeterCtrl', function ($http, $scope, UserServices, Session) {
 
+    UserServices.addvaluemeter().then(function (response) {
+        $scope.data = response.data;
+    });
+});
 
 /* Factory of user`s controller */
 HomeApp.factory('UserServices', function ($http) {
@@ -584,6 +594,12 @@ HomeApp.factory('UserServices', function ($http) {
             })
         },
         addmeter: function (meter) {
+            return $http.post('/User/AddMeter', meter)
+                .then(function (response) {
+                    return response;
+                })
+        },
+        addvaluemeter: function (meter) {
             return $http.post('/User/AddMeter', meter)
                 .then(function (response) {
                     return response;

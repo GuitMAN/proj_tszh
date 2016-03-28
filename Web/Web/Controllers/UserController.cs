@@ -78,6 +78,7 @@ namespace Web.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public ActionResult send_profile()
         {
             //---------------------------
@@ -509,7 +510,147 @@ namespace Web.Controllers
             return Json("Error");           
         }
 
+        [HttpGet]
+        public ActionResult ViewDataMeters(int month = 11, int year = 2015)
+        {
 
+            UserProfile user = null;
+            uk_profile uk = null;
+            try
+            {
+                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                if (user == null)
+                    return RedirectToAction("No_uk");
+                if (user.id_uk == 0)
+                    return RedirectToAction("No_uk");
+                string requestDomain = Request.Headers["host"];
+                uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
+                if (!requestDomain.Equals(uk.host))
+                {
+                    //                   return Redirect("http://" + uk.host);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+                TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
+                string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
+                return Json(res);
+            }
+            //------------------------------------
+            //To do add array of user's counters 
+
+            List<Counter_user_viewdata> model = new List<Counter_user_viewdata>();
+            IEnumerable<Counter> ListCounter = null;
+            IEnumerable<Counter_data> ListData = null;
+
+            using (var context = new EFDbContext())
+            {
+                ListCounter = context.Database.SqlQuery<Counter>("SELECT * FROM [dbo].[Counter] WHERE UserId IN  ( " + WebSecurity.CurrentUserId.ToString() + " )").ToArray();
+
+                if (ListCounter.Count() != 0)
+                {
+                    string res = "";
+                    foreach (var item in ListCounter)
+                    {
+                        if (!res.Equals("")) { res = res + ","; }
+                        res = res + item.id.ToString();
+                    }
+                    ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( " + res + " )").ToArray();
+                }
+                else
+                {
+                    ListData = new List<Counter_data>().ToArray();
+                }
+            }
+            uk_adress adr;
+            {
+                Counter_user_viewdata temp = new Counter_user_viewdata();
+
+                if (year == 0) year = DateTime.Now.Year;
+                if (month == 0) month = DateTime.Now.Month;
+                DateTime d_start = new DateTime(year, 1, 1);
+                DateTime d_end = d_start.AddMonths(12);
+                bool status = true;
+                try
+                {
+                    IEnumerable<Counter> counters = ListCounter.Where(t => t.Type.Equals(1));
+                    temp.gasi = new List<meter_model>();
+                    foreach (Counter counter in counters)
+                    {
+                        meter_model cp = new meter_model();
+                        cp.counter = counter;
+                        cp.ListData = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                        temp.gasi.Add(cp);
+                    }
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    IEnumerable<Counter> counters = ListCounter.Where(t => t.Type.Equals(2));
+                    temp.energoi = new List<meter_model>();
+                    foreach (Counter counter in counters)
+                    {
+                        meter_model cp = new meter_model();
+                        cp.counter = counter;
+                        cp.ListData = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                        temp.energoi.Add(cp);
+                    }
+                    // temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    IEnumerable<Counter> counters = ListCounter.Where(t => t.Type.Equals(3));
+                    temp.cwi = new List<meter_model>();
+                    foreach (Counter counter in counters)
+                    {
+                        meter_model cp = new meter_model();
+                        cp.counter = counter;
+                        cp.ListData = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                        temp.cwi.Add(cp);
+                    }
+                }
+                catch
+                {
+                }
+                try
+                {
+                    IEnumerable<Counter> counters = ListCounter.Where(t => t.Type.Equals(4));
+                    temp.hwi = new List<meter_model>();
+                    foreach (Counter counter in counters)
+                    {
+                        meter_model cp = new meter_model();
+                        cp.counter = counter;
+                        cp.ListData = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+                        temp.hwi.Add(cp);
+                    }
+
+                }
+                catch
+                {
+                }
+                model.Add(temp);                         
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult AddCounterMonthValue(int type = 0)
+        {
+            if (type == 0) { return View("Error"); }
+            Counter_data model;
+            Counter counter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.Type.Equals(type)).SingleOrDefault();
+            model = new Counter_data();
+            model.id = counter.id;
+            return View(model);
+        }
 
 
         //public ActionResult EditGas(int id = 0)

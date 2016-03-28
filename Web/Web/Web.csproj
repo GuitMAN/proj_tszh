@@ -1576,6 +1576,7 @@
     <Content Include="Styles\themes\font\fontawesome-webfont.woff" />
     <Content Include="Views\User\ViewMeters.cshtml" />
     <Content Include="Views\User\AddMeter.cshtml" />
+    <Content Include="Views\User\AddCounterMonthValue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
