@@ -1577,6 +1577,7 @@
     <Content Include="Views\User\ViewMeters.cshtml" />
     <Content Include="Views\User\AddMeter.cshtml" />
     <Content Include="Views\User\AddCounterMonthValue.cshtml" />
+    <Content Include="Views\User\ViewDataMeters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

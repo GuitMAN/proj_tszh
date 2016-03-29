@@ -510,7 +510,14 @@ namespace Web.Controllers
             return Json("Error");           
         }
 
+
         [HttpGet]
+        public ActionResult ViewDataMeters()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public ActionResult ViewDataMeters(int month = 11, int year = 2015)
         {
 

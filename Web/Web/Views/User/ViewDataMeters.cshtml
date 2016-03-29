@@ -1,0 +1,41 @@
+﻿
+
+<div ng-controller="ViewDataMetersCtrl">
+    <h3>Счетчики </h3>
+    <ul class="breadcrumb">
+        <li class="active">Данные по счетчикам <span class="divider">/</span></li>
+        <li><a href="#/datameters">Показания счетчиков</a> <span class="divider">/</span></li>
+    </ul>
+    <table class="table">
+        <tr>
+            <th>
+                Общее название
+            </th>
+            <th>
+                Серийный номер
+            </th>
+            <th>
+                Дата проверки
+            </th>
+
+            <th>
+                Статус
+            </th>
+            <th>
+                Ед. измерения
+            </th>
+        </tr>
+        <tr ng-repeat="item in datameters">
+            <td>{{ item.Name }}</td>
+            <td>{{ item.Serial }}</td>
+            <td>{{ item.DateOfReview | JsonDate | date : 'dd-MM-y' }}</td>
+            <td>{{ item.Status }}</td>
+            <td>{{ item.Measure }}</td>
+        </tr>
+    </table>
+    <hr>
+    <a href="#/addmeter">Добавить счетчик</a>
+<pre>{{datameters | json}}</pre>
+</div>
+
+
