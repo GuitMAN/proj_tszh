@@ -3,36 +3,106 @@
 <div ng-controller="ViewDataMetersCtrl">
     <h3>Счетчики </h3>
     <ul class="breadcrumb">
-        <li class="active">Данные по счетчикам <span class="divider">/</span></li>
-        <li><a href="#/datameters">Показания счетчиков</a> <span class="divider">/</span></li>
+        <li> <a href="#/viewmeters">Данные по счетчикам</a> <span class="divider">/</span></li>
+        <li class="active">Показания счетчиков <span class="divider">/</span></liclass="active">
     </ul>
-    <table class="table">
-        <tr>
-            <th>
-                Общее название
-            </th>
-            <th>
-                Серийный номер
-            </th>
-            <th>
-                Дата проверки
-            </th>
+    <div ng-repeat="item in datameters">
 
-            <th>
-                Статус
-            </th>
-            <th>
-                Ед. измерения
-            </th>
-        </tr>
-        <tr ng-repeat="item in datameters">
-            <td>{{ item.Name }}</td>
-            <td>{{ item.Serial }}</td>
-            <td>{{ item.DateOfReview | JsonDate | date : 'dd-MM-y' }}</td>
-            <td>{{ item.Status }}</td>
-            <td>{{ item.Measure }}</td>
-        </tr>
-    </table>
+        <table class="table" ng-repeat="ig in item.gasi">
+            <tr>
+                <th>
+                    Газ<br>Серийный №{{ig.counter.Serial}}
+                </th>
+                <th>
+                    Показания
+                </th>
+                <th>
+                    Дата показаний
+                </th>
+
+                <th>
+                    Статус
+                </th>
+            </tr>
+            <tr ng-repeat="data in ig.ListData">
+                <td > {{data.id}} </td>
+                <td> {{data.data}} </td>
+                <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
+                <td> {{data.status}} </td>
+            </tr>
+        </table>
+        <table class="table" ng-repeat="ig in item.energoi">
+            <tr >
+                <th>
+                    Электроэнергия<br>Серийный №{{ig.counter.Serial}}
+                </th>
+                <th>
+                    Показания
+                </th>
+                <th>
+                    Дата показаний
+                </th>
+
+                <th>
+                    Статус
+                </th>
+            </tr>
+            <tr ng-repeat="data in ig.ListData">
+                <td>
+                    {{data.id}}
+                </td>
+                <td> {{data.data}}</td>
+                <td> {{data.write | JsonDate | date : 'MMM - y'}}</td>
+                <td> {{data.status}}</td>
+            </tr>
+        </table>
+        <table class="table" ng-repeat="ig in item.cwi">
+            <tr>
+                <th>
+                    Холодная вода<br>Серийный №{{ig.counter.Serial}}
+                </th>
+                <th>
+                    Показания
+                </th>
+                <th>
+                    Дата показаний
+                </th>
+
+                <th>
+                    Статус
+                </th>
+            </tr>
+            <tr ng-repeat="data in ig.ListData">
+                <td> {{data.id}} </td>
+                <td> {{data.data}} </td>
+                <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
+                <td> {{data.status}} </td>
+            </tr>
+        </table>
+        <table class="table" ng-repeat="ig in item.cwi">
+            <tr>
+                <th>
+                    Горячая вода<br>Серийный №{{ig.counter.Serial}}
+                </th>
+                <th>
+                    Показания
+                </th>
+                <th>
+                    Дата показаний
+                </th>
+
+                <th>
+                    Статус
+                </th>
+            </tr>
+            <tr ng-repeat="data in ig.ListData">
+                <td> {{data.id}} </td>
+                <td> {{data.data}} </td>
+                <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
+                <td> {{data.status}} </td>
+            </tr>
+        </table>
+    </div>
     <hr>
     <a href="#/addmeter">Добавить счетчик</a>
 <pre>{{datameters | json}}</pre>
