@@ -7,7 +7,6 @@
         <li class="active">Показания счетчиков <span class="divider">/</span></liclass="active">
     </ul>
     <div ng-repeat="item in datameters">
-
         <table class="table" ng-repeat="ig in item.gasi">
             <tr>
                 <th>
@@ -24,10 +23,9 @@
                 </th>
             </tr>
             <tr ng-repeat="data in ig.ListData">
-                <td > {{data.id}} </td>
+                <td></td>
                 <td> {{data.data}} </td>
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
-                <td> {{data.status}} </td>
             </tr>
         </table>
         <table class="table" ng-repeat="ig in item.energoi">
@@ -46,9 +44,7 @@
                 </th>
             </tr>
             <tr ng-repeat="data in ig.ListData">
-                <td>
-                    {{data.id}}
-                </td>
+                <td>    </td>
                 <td> {{data.data}}</td>
                 <td> {{data.write | JsonDate | date : 'MMM - y'}}</td>
                 <td> {{data.status}}</td>
@@ -70,13 +66,13 @@
                 </th>
             </tr>
             <tr ng-repeat="data in ig.ListData">
-                <td> {{data.id}} </td>
+                <td>  </td>
                 <td> {{data.data}} </td>
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
                 <td> {{data.status}} </td>
             </tr>
         </table>
-        <table class="table" ng-repeat="ig in item.cwi">
+        <table class="table" ng-repeat="ig in item.hwi">
             <tr>
                 <th>
                     Горячая вода<br>Серийный №{{ig.counter.Serial}}
@@ -92,7 +88,7 @@
                 </th>
             </tr>
             <tr ng-repeat="data in ig.ListData">
-                <td> {{data.id}} </td>
+                <td> </td>
                 <td> {{data.data}} </td>
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
                 <td> {{data.status}} </td>
