@@ -27,9 +27,16 @@
                 <td> {{data.data}} </td>
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
             </tr>
+
+            <tfoot>
+            <td>Внести показания</td>
+            <td><input class="input-medium" type="text" ng-model="data.today"></td>
+            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
+            </tfoot>
+
         </table>
         <table class="table" ng-repeat="ig in item.energoi">
-            <tr >
+            <tr>
                 <th>
                     Электроэнергия<br>Серийный №{{ig.counter.Serial}}
                 </th>
@@ -49,6 +56,11 @@
                 <td> {{data.write | JsonDate | date : 'MMM - y'}}</td>
                 <td> {{data.status}}</td>
             </tr>
+            <tfoot>
+            <td>Внести показания</td>
+            <td><input class="input-medium" type="text" ng-model="data.today"></td>
+            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
+            </tfoot>
         </table>
 
         <table class="table" ng-repeat="ig in item.cwi">
@@ -72,6 +84,11 @@
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
                 <td> {{data.status}} </td>
             </tr>
+            <tfoot>
+            <td>Внести показания</td>
+            <td><input class="input-medium" type="text" ng-model="data.today"></td>
+            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
+            </tr>
         </table>
         <table class="table" ng-repeat="ig in item.hwi">
             <tr>
@@ -94,10 +111,15 @@
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
                 <td> {{data.status}} </td>
             </tr>
+            <tr>
+            <td>Внести показания</td>
+            <td><input class="input-medium" type="text" ng-model="data.today"></td>
+            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
+            </tr>
         </table>
     </div>
     <hr>
-    <a href="#/addmeter">Добавить счетчик</a>
+
     <pre>{{datameters | json}}</pre>
 </div>
 
