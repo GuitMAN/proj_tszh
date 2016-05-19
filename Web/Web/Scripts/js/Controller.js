@@ -88,10 +88,6 @@ HomeApp.config([
               templateUrl: '/user/ViewDataMeters',
               controller: 'ViewDataMetersCtrl'
           })
-          .when('/addvaluemeter', {
-              templateUrl: '/user/AddCounterMonthValue',
-              controller: 'ValueMeterCtrl'
-          })
           .otherwise({
               redirectTo: '/'
           });
@@ -570,10 +566,27 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
 
 //View all meters of user
 HomeApp.controller('ViewDataMetersCtrl', function ($http, $scope, UserServices, Session) {
-
+    $scope.data_ =
+    {
+        "id": '',
+        "write": '',
+        "data": '',
+        "status": ''
+    };
+    $scope.submit = function (data_) {
+        UserServices.addvaluemeter(data_).then(function (response) {
+            $scope.response = response.data;
+            console.log("data:", response);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+                $scope.datameters = $http.post('/User/ViewDataMeters');
+            }
+        });
+    };
     UserServices.viewdatameters().then(function (response) {
         $scope.datameters = response.data;
     });
+
 });
 
 /* Factory of user`s controller */
@@ -609,8 +622,8 @@ HomeApp.factory('UserServices', function ($http) {
                     return response;
                 })
         },
-        addvaluemeter: function (meter) {
-            return $http.post('/User/AddMeter', meter)
+        addvaluemeter: function (valuemeter) {
+            return $http.post('/User/AddValueMeter', valuemeter)
                 .then(function (response) {
                     return response;
                 })

@@ -3,7 +3,7 @@
 <div ng-controller="ViewDataMetersCtrl">
     <h3>Счетчики </h3>
     <ul class="breadcrumb">
-        <li> <a href="#/viewmeters">Данные по счетчикам</a> <span class="divider">/</span></li>
+        <li> <a href="#/meters">Данные по счетчикам</a> <span class="divider">/</span></li>
         <li class="active">Показания счетчиков <span class="divider">/</span></liclass="active">
     </ul>
     <div ng-repeat="item in datameters">
@@ -28,11 +28,11 @@
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
             </tr>
 
-            <tfoot>
-            <td>Внести показания</td>
-            <td><input class="input-medium" type="text" ng-model="data.today"></td>
-            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
-            </tfoot>
+            <tr>
+            <td>Внести показания <div hidden>{{data_.id = ig.counter.id}}</div></td>
+            <td><input class="input-medium" type="text" ng-model="data.data" ><div hidden>{{data_.data = data.data}}</div></td>
+            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
+            </tr>
 
         </table>
         <table class="table" ng-repeat="ig in item.energoi">
@@ -56,11 +56,12 @@
                 <td> {{data.write | JsonDate | date : 'MMM - y'}}</td>
                 <td> {{data.status}}</td>
             </tr>
-            <tfoot>
+            <tr>
             <td>Внести показания</td>
-            <td><input class="input-medium" type="text" ng-model="data.today"></td>
-            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
-            </tfoot>
+            <td><input class="input-medium" type="text" ng-model="data.data"><input type="hidden" ng-model="data.id"></td>
+                
+            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
+            </tr>
         </table>
 
         <table class="table" ng-repeat="ig in item.cwi">
@@ -84,10 +85,10 @@
                 <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
                 <td> {{data.status}} </td>
             </tr>
-            <tfoot>
-            <td>Внести показания</td>
-            <td><input class="input-medium" type="text" ng-model="data.today"></td>
-            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
+            <tr>
+                <td>Внести показания</td>
+                <td><input class="input-medium" type="text" ng-model="data.data"></td>
+                <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
             </tr>
         </table>
         <table class="table" ng-repeat="ig in item.hwi">
@@ -112,9 +113,9 @@
                 <td> {{data.status}} </td>
             </tr>
             <tr>
-            <td>Внести показания</td>
-            <td><input class="input-medium" type="text" ng-model="data.today"></td>
-            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data)"></td>
+                <td>Внести показания</td>
+                <td><input class="input-medium" type="text" ng-model="data.data"></td>
+                <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
             </tr>
         </table>
     </div>

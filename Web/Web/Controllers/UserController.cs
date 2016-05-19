@@ -511,6 +511,29 @@ namespace Web.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult AddValueMeter(Counter_data model_data)
+        {
+            //Test Autorize
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+                return RedirectToAction("Index", "Login");
+
+            //int li = repository.context.Database.SqlQuery<int>("LAST_INSERT_ID()").FirstOrDefault();
+
+            if (model_data.id != 0)
+            {
+              //  model_data.data = model_add.firstdata;
+                model_data.write = DateTime.UtcNow;
+                model_data.status = false;
+              //  model_data.id = meter.id;
+                repository.SaveCounder_data(model_data);
+                return Json("Ok");
+            }
+            return Json("Error");
+        }
+
+
+
         [HttpGet]
         public ActionResult ViewDataMeters()
         {
@@ -518,7 +541,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult ViewDataMeters(int month = 11, int year = 2015)
+        public ActionResult ViewDataMeters(int month = 0, int year = 0)
         {
 
             UserProfile user = null;
@@ -577,7 +600,7 @@ namespace Web.Controllers
                 if (year == 0) year = DateTime.Now.Year;
                 if (month == 0) month = DateTime.Now.Month;
                 DateTime d_start = new DateTime(year, 1, 1);
-                DateTime d_end = d_start.AddMonths(12);
+                DateTime d_end = d_start.AddMonths(12).AddDays(-1);
                 bool status = true;
                 try
                 {
