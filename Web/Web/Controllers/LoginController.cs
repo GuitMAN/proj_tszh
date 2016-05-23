@@ -81,7 +81,7 @@ namespace Web.Controllers
                 catch (Exception ex)
                 {
                     string requestDomain = Request.Headers["host"];
-                    ModelState.AddModelError("", "Логин следует вводить с учетом регистра");
+                    ModelState.AddModelError("", "Внутренняя ошибка при авторизации");
                 }        
                 WebSecurity.Logout();
                 return Json(new string[] { "Error", "Логин следует вводить с учетом регистра" });       

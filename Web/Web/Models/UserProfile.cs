@@ -27,7 +27,8 @@ namespace Web.Models
         } 
 
         [Key]
-  //      public int id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        //      public int id { get; set; }
         public int UserId { get; set; }
         [Display(Name = "Управляющая компания")]
         public int id_uk { get; set; }

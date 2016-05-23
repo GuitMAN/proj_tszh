@@ -22,7 +22,7 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
 })
 
 /* User`s controllers & services */
-HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Session) {
+HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Session, $location) {
 
     $scope.profmodel = {
         id_uk: '',
@@ -52,7 +52,7 @@ HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Sessio
 });
 
 /* User`s controllers & services */
-HomeApp.controller('CreateProfCtrl', function ($http, $scope, UserServices, Session) {
+HomeApp.controller('CreateProfCtrl', function ($http, $scope, UserServices, Session, $location) {
 
     $scope.profmodel = {
         id_uk: '',
@@ -75,9 +75,10 @@ HomeApp.controller('CreateProfCtrl', function ($http, $scope, UserServices, Sess
             console.log("data:", response);
             if (response.data[0] == 'Ok') {
                 $scope.status = true;
+                return $location.path('#/');
             }
         });
-        return $location.path('#/');
+        
     }
 });
 

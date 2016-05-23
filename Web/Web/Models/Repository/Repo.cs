@@ -211,39 +211,36 @@ namespace Web.Models.Repository
 
         public void SaveUser(UserProfile user)
         {
-            if (user.UserId == 0)
+            UserProfile db = context.UserProfiles.Find(user.UserId);
+            if (db != null)
             {
-                 UserProfile db = context.UserProfiles.Add(user);
-                 db.UserId = user.UserId;
-                 db.login = user.login;
 
+            }
+            else
+            {
+                db = context.UserProfiles.Add(user);
+                db.UserId = user.UserId;
+                
            }
-           else
-           {
-               UserProfile db = context.UserProfiles.Find(user.UserId);
-               if (db != null)
-               {
-                  // db.UserId = WebSecurity.CurrentUserId;
-                   db.id_uk = user.id_uk;
-                   db.login = user.login;
-                   db.mobile = user.mobile;
-                   db.Name = user.Name;
-                   db.Patronymic = user.Patronymic;
-                   db.Personal_Account = user.Personal_Account;
-                   db.phone = user.phone;
-                   db.SurName = user.SurName;
-                   db.Adress = user.Adress;
-                   db.Apartment = user.Apartment;
-                   db.Email = user.Email;
-
-               }
-           }
-           context.SaveChanges();
+            db.login = user.login;
+            // db.UserId = WebSecurity.CurrentUserId;
+            db.id_uk = user.id_uk;
+            db.login = user.login;
+            db.mobile = user.mobile;
+            db.Name = user.Name;
+            db.Patronymic = user.Patronymic;
+            db.Personal_Account = user.Personal_Account;
+            db.phone = user.phone;
+            db.SurName = user.SurName;
+            db.Adress = user.Adress;
+            db.Apartment = user.Apartment;
+            db.Email = user.Email;
+            context.SaveChanges();
         }
 
-        public UserProfile DeleteUser(int id)
+        public UserProfile DeleteUser(int UserId)
         {
-            UserProfile db = context.UserProfiles.Find(id);
+            UserProfile db = context.UserProfiles.Find(UserId);
             if (db != null)
             {
                 context.UserProfiles.Remove(db);
