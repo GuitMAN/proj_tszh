@@ -91,15 +91,15 @@ namespace Web.Controllers
             {
                 user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 model.UserId = user.UserId;
-                model.UserId = user.UserId;
-                model.SurName = user.SurName;
-                model.Name = user.Name;
-                model.Patronymic = user.Patronymic;
-                model.Personal_Account = user.Personal_Account;
-                model.Adress = get_adr(user.Adress);
-                model.Apartment = user.Apartment;
-                model.Email = user.Email;
-                model.phone = user.phone;
+                    model.SurName = user.SurName;
+                    model.Name = user.Name;
+                    model.Patronymic = user.Patronymic;
+                    model.Personal_Account = user.Personal_Account;
+                    model.Adress = get_adr(user.Adress);
+                    model.Apartment = user.Apartment;
+                    model.Email = user.Email;
+                    model.phone = user.phone;
+
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@ namespace Web.Controllers
 
             string title;
             string message;
-
+            model.UserId = WebSecurity.CurrentUserId;
             if (ModelState.IsValid)
             {
                 user.id_uk = uk.id;
@@ -148,12 +148,21 @@ namespace Web.Controllers
                 mess.id_user = user.UserId;
                 mess.title = title;
                 mess.message = message;
-                FeedBack_from_nouk(mess);
-                SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, title, message);
+                try
+                {
+                    FeedBack_from_nouk(mess);
+                    SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, title, message);
+                }
+                catch
+                {
+
+                }
                 repository.SaveUser(user);
+                string[] res = { "Ok", "Ваша заявка отправлена: ", message };
+                return Json(res);
             }
 
-            return View(model);
+            return Json(new string[] { "Error", "Заполните все поля" });
         }
 
 

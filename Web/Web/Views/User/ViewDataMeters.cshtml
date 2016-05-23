@@ -4,37 +4,36 @@
     <h3>Счетчики </h3>
     <ul class="breadcrumb">
         <li> <a href="#/meters">Данные по счетчикам</a> <span class="divider">/</span></li>
-        <li class="active">Показания счетчиков <span class="divider">/</span></liclass="active">
+        <li class="active">Показания счетчиков <span class="divider">/</span></li>
     </ul>
     <div ng-repeat="item in datameters">
-        <table class="table" ng-repeat="ig in item.gasi">
-            <tr>
-                <th>
-                    Газ<br>Серийный №{{ig.counter.Serial}}
-                </th>
-                <th>
-                    Показания
-                </th>
-                <th>
-                    Дата показаний
-                </th>
-                <th>
-                    Статус
-                </th>
-            </tr>
-            <tr ng-repeat="data in ig.ListData">
-                <td></td>
-                <td> {{data.data}} </td>
-                <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
-            </tr>
+           <table class="table" ng-repeat="ig in item.gasi">
+                <tr>
+                    <th>
+                        Газ<br>Серийный №{{ig.counter.Serial}}
+                    </th>
+                    <th>
+                        Показания
+                    </th>
+                    <th>
+                        Дата показаний
+                    </th>
+                    <th>
+                        Статус
+                    </th>
+                </tr>
+                <tr ng-repeat="data in ig.ListData">
+                    <td></td>
+                    <td> {{data.data}} </td>
+                    <td> {{data.write | JsonDate | date : 'MMM - y'}} </td>
+                </tr>
+                <tr>
+                    <td>Внести показания <div hidden>{{gas.id = ig.counter.id}}</div></td>
+                    <td><input class="input-medium" type="text" ng-model="gas.data"></td>
+                    <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(gas)"></td>
+                </tr>
 
-            <tr>
-            <td>Внести показания <div hidden>{{data_.id = ig.counter.id}}</div></td>
-            <td><input class="input-medium" type="text" ng-model="data.data" ><div hidden>{{data_.data = data.data}}</div></td>
-            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
-            </tr>
-
-        </table>
+            </table>
         <table class="table" ng-repeat="ig in item.energoi">
             <tr>
                 <th>
@@ -57,10 +56,10 @@
                 <td> {{data.status}}</td>
             </tr>
             <tr>
-            <td>Внести показания</td>
-            <td><input class="input-medium" type="text" ng-model="data.data"><input type="hidden" ng-model="data.id"></td>
-                
-            <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
+                <td>Внести показания <div hidden>{{energo.id = ig.counter.id}}</div></td>
+                <td><input class="input-medium" type="text" ng-model="energo.data"></td>
+
+                <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(energo)"></td>
             </tr>
         </table>
 
@@ -86,9 +85,9 @@
                 <td> {{data.status}} </td>
             </tr>
             <tr>
-                <td>Внести показания</td>
-                <td><input class="input-medium" type="text" ng-model="data.data"></td>
-                <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
+                <td>Внести показания <div hidden>{{cw.id = ig.counter.id}}</div></td>
+                <td><input class="input-medium" type="text" ng-model="cw.data"></td>
+                <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(cw)"></td>
             </tr>
         </table>
         <table class="table" ng-repeat="ig in item.hwi">
@@ -113,9 +112,9 @@
                 <td> {{data.status}} </td>
             </tr>
             <tr>
-                <td>Внести показания</td>
-                <td><input class="input-medium" type="text" ng-model="data.data"></td>
-                <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(data_)"></td>
+                <td>Внести показания <div hidden>{{hw.id = ig.counter.id}}</div></td>
+                <td><input class="input-medium" type="text" ng-model="hw.data"></td>
+                <td><input type="submit" value="Добавить" class="btn btn-primary" ng-click="submit(hw)"></td>
             </tr>
         </table>
     </div>

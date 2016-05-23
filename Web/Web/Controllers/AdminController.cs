@@ -178,7 +178,7 @@ namespace Web.Controllers
 
         public ActionResult DetailUser(int id = 0)
         {
-            UserProfile profile = repository.UserProfile.Where(i => i.id == id).SingleOrDefault();
+            UserProfile profile = repository.UserProfile.Where(i => i.UserId == id).SingleOrDefault();
             return View(profile);
         }
 

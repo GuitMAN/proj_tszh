@@ -211,7 +211,7 @@ namespace Web.Models.Repository
 
         public void SaveUser(UserProfile user)
         {
-            if (user.id == 0)
+            if (user.UserId == 0)
             {
                  UserProfile db = context.UserProfiles.Add(user);
                  db.UserId = user.UserId;
@@ -220,10 +220,10 @@ namespace Web.Models.Repository
            }
            else
            {
-               UserProfile db = context.UserProfiles.Find(user.id);
+               UserProfile db = context.UserProfiles.Find(user.UserId);
                if (db != null)
                {
-                   db.UserId = WebSecurity.CurrentUserId;
+                  // db.UserId = WebSecurity.CurrentUserId;
                    db.id_uk = user.id_uk;
                    db.login = user.login;
                    db.mobile = user.mobile;
@@ -375,7 +375,7 @@ namespace Web.Models.Repository
             }
             else
             {
-                context.SQLStringConnect("UPDATE [dbo].[Counter_data] SET write = '" + cou.write + "' , data = '" + cou.data + "' , status = '" + cou.status + "' WHERE write >= '" + year + "." + month + ".01'");
+                context.SQLStringConnect("UPDATE [dbo].[Counter_data] SET write = '" + cou.write + "' , data = '" + cou.data + "' , status = '" + cou.status + "' WHERE id=" + cou.id + " AND write >= '" + year + "." + month + ".01'");
             }
         }
 

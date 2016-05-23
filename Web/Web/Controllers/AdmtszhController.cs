@@ -190,7 +190,7 @@ namespace Web.Controllers
         public ActionResult EditUser(int id = 0)
         {
            
-            UserProfile profile = repository.UserProfile.Where(i => i.id == id).SingleOrDefault();
+            UserProfile profile = repository.UserProfile.Where(i => i.UserId == id).SingleOrDefault();
             string[] ir = Roles.GetUsersInRole(profile.login);
             foreach (string r in ir)
             {
@@ -428,7 +428,7 @@ namespace Web.Controllers
             try
             {
                 uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
-                user = repository.UserProfile.Where(p => p.id.Equals(id)).FirstOrDefault();
+                user = repository.UserProfile.Where(p => p.UserId.Equals(id)).FirstOrDefault();
             }
             catch
             { }

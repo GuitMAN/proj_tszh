@@ -50,7 +50,7 @@ namespace Web.Controllers
                     result.Login = model.UserName;
                     result.Role = Roles.GetRolesForUser(model.UserName);
                     string requestDomain =Request.Headers["host"];
-                    UserProfile user = repository.UserProfile.Where(p => p.id.Equals(result.id)).SingleOrDefault();
+                    UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
@@ -140,7 +140,7 @@ namespace Web.Controllers
         public string getUser()
         {
             int us_id = WebSecurity.CurrentUserId;
-            string user = repository.UserProfile.Where(p => p.id.Equals(us_id)).SingleOrDefault().login;
+            string user = repository.UserProfile.Where(p => p.UserId.Equals(us_id)).SingleOrDefault().login;
             
             return user;
         }

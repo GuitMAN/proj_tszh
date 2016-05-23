@@ -1233,6 +1233,8 @@
     <Content Include="Scripts\js\admdirect.js" />
     <Content Include="Scripts\js\Controller.js" />
     <Content Include="Scripts\angular-1.5.0-rc.1\ui-bootstrap-tpls-1.2.1.min.js" />
+    <Content Include="Scripts\js\login.js" />
+    <Content Include="Scripts\js\UserService.js" />
     <Content Include="Styles\app.css" />
     <Content Include="Styles\assets\css\bootstrap-responsive.css" />
     <Content Include="Styles\assets\css\bootstrap.css" />

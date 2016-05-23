@@ -11,7 +11,7 @@ namespace Web.Models
         public UserProfile(){}
         public UserProfile(UserProfile_form prof)
         {
-            id = prof.id;
+       //     id = prof.id;
             UserId = prof.UserId;
             id_uk = prof.id_uk;
             login = prof.login;        
@@ -27,7 +27,7 @@ namespace Web.Models
         } 
 
         [Key]
-        public int id { get; set; }
+  //      public int id { get; set; }
         public int UserId { get; set; }
         [Display(Name = "Управляющая компания")]
         public int id_uk { get; set; }
@@ -151,7 +151,7 @@ namespace Web.Models
         public UserProfile_form() { }
         public UserProfile_form(UserProfile prof)
         {
-            id = prof.id;
+   //         id = prof.id;
             UserId = prof.UserId;
             id_uk = prof.id_uk;
             login = prof.login;        
@@ -167,7 +167,7 @@ namespace Web.Models
             Role = null;
         } 
 
-        public int id { get; set; }
+   //     public int id { get; set; }
         public int UserId { get; set; }
         [Display(Name = "Управляющая компания")]
         public int id_uk { get; set; }
