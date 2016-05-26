@@ -182,7 +182,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [Authorize]
         public ActionResult FeedBack()
         {
             //---------------------------
@@ -223,7 +223,7 @@ namespace Web.Controllers
 
         // Перегруженная версия для сохранения изменений
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [Authorize]
         [ValidateInput(true)]
         public ActionResult FeedBack(feedback mess)
         {
@@ -369,7 +369,7 @@ namespace Web.Controllers
         }
 
 
-        [Authorize(Roles = "User")]
+        [Authorize]
         [HttpGet]
         public ActionResult editprof()
         {
@@ -396,7 +396,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [Authorize]
         public ActionResult editprof(UserProfile model)
         {
             //---------------------------
@@ -412,40 +412,6 @@ namespace Web.Controllers
                 return Json(new string[] { "Ok", string.Format("Ваш профиль \"{0}\" был изменен", model.login) });
             };
             return Json(new string[] { "Error", "Ошибка при изменении профиля"});
-        }
-
-        //Методы с газовым счетчиком
-        //type = 1;
-        [Authorize(Roles = "User")]
-        public ActionResult Gas()
-        {
-            //---------------------------
-            //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
-            Counter_model model = new Counter_model();
-            model.ListCounter = repository.Counter.Where(u => u.UserId.Equals(WebSecurity.CurrentUserId)).Where(p => p.Type.Equals(1));
-            model.ListData = null;
-            if (model.ListCounter.Count() != 0)
-            {
-                using (var context = new EFDbContext())
-                {
-                    string res = "";
-                    foreach (var item in model.ListCounter)
-                    {
-                        if (!res.Equals("")) { res = res + ","; } 
-                        res = res + item.id.ToString();
-                    }
-                    model.ListData = context.Database.SqlQuery<Counter_data>("SELECT * FROM [dbo].[Counter_data] WHERE id IN  ( "+res+" )").ToArray();
-                }
-            }
-            else
-            {
-                model.ListData = new List<Counter_data>().ToArray();
-            }
-          
-             
-            return View(model);
         }
 
         //Вывести все счетчики пользователя
@@ -661,7 +627,6 @@ namespace Web.Controllers
                         cp.ListData = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
                         temp.energoi.Add(cp);
                     }
-                    // temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                 }
                 catch
                 {

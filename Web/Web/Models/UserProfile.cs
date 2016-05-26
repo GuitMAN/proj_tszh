@@ -87,8 +87,13 @@ namespace Web.Models
     public class RegisterModel
     {
         [Required]
-        [Display(Name = "логин")]
+        [Display(Name = "Логин")]
         public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 6)]

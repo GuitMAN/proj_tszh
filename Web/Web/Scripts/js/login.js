@@ -24,22 +24,22 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 
         },
         register: function (reguser) {
-            $http.post('/Login/Register', reguser)
-                .then(function (res) {
-                    if (res.data[0] == 'Ok') {
+            return $http.post('/Login/Register', reguser)
+                .then(function (response) {
+                    if (response.data[0] == 'Ok') {
                         Session.create(1, res.data.id, res.data.Role, res.data.Login);
                     } else {
                         Session.destroy();
                     }
-                    return data;
+                    return response;
                 })
         },
         logout: function () {
             return $http.post('/Login/logoout')//, config)
-               .then(function (res) {
-                   if (res.status == 200)
+               .then(function (response) {
+                   if (response.status == 200)
                        Session.destroy();
-                   return res;
+                   return response;
                })
         },
         manage: function (model) {
@@ -150,10 +150,9 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
     }
     $scope.register = function (reguser) {
         AuthService.register(reguser)
-            .then(function (data) {
-
+            .then(function (response) {
+                return $location.path('#/');
             });
-        return $location.path('#/');
     };
 
 })

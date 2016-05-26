@@ -14,7 +14,7 @@ using System.Net;
 namespace Web.Controllers
 {
 
-    [InitializeMembership]
+    //[InitializeMembership]
     public class LoginController : Controller
     {
         Repo repository;
@@ -98,35 +98,40 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-//        [AllowAnonymous]
-//        [ValidateAntiForgeryToken]
+        //        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid )
-            {   
-                try
+            if (WebSecurity.IsAuthenticated)
+            {
+                if (ModelState.IsValid)
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.RequireRoles();
-                    WebSecurity.Login(model.UserName, model.Password);
-                    Account_model result = new Account_model();
-                    result.id = WebSecurity.CurrentUserId;
-                    result.Login = WebSecurity.CurrentUserName;
-                    result.Role = Roles.GetRolesForUser();
-                    return Json(result);
+                    try
+                    {
+                        MembershipCreateStatus createStatus;
+                        WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                        //Membership.CreateUser(model.UserName, model.Password, model.Email,
+                        //passwordQuestion: null, passwordAnswer: null, isApproved: true,
+                        //providerUserKey: null, status: out createStatus);
+                        WebSecurity.RequireRoles();
+                        WebSecurity.Login(model.UserName, model.Password);
+                        Account_model result = new Account_model();
+                        result.id = WebSecurity.CurrentUserId;
+                        result.Login = WebSecurity.CurrentUserName;
+                        result.Role = Roles.GetRolesForUser();
+                        return Json(result);
 
- //                   return RedirectToAction("Index", "User");
+                        //                   return RedirectToAction("Index", "User");
+                    }
+                    catch (MembershipCreateUserException e)
+                    {
+                        ModelState.AddModelError("Ошибка при регистрации: ", ErrorCodeToString(e.StatusCode));
+                        return new HttpStatusCodeResult(203, "Ошибка при регистрации: " + ErrorCodeToString(e.StatusCode));
+                    }
                 }
-                catch (MembershipCreateUserException e)
-                {
-                    ModelState.AddModelError("Ошибка при регистрации: ", ErrorCodeToString(e.StatusCode));
-                    return new HttpStatusCodeResult(203, "Ошибка при регистрации: " + ErrorCodeToString(e.StatusCode));  
-                }
+                return Json("Error", "Не все поля заполнены");              
             }
-
-            return View(model);
-        }
-
+            return RedirectToAction("Index", "Home");
+        } 
         [Authorize]
         public ActionResult LogoOut(string ReturnUrl)
         {

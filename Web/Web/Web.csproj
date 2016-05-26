@@ -1470,7 +1470,6 @@
     <Content Include="Views\Admtszh\ViewUsers.cshtml" />
     <Content Include="Views\User\editprof.cshtml" />
     <Content Include="Views\User\FeedBack.cshtml" />
-    <Content Include="Views\User\Gas.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\No_uk.cshtml" />
     <Content Include="Views\User\profile.cshtml" />
@@ -1483,16 +1482,6 @@
     <Content Include="Views\Login\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Login\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Nav\Menu_main.cshtml" />
-    <Content Include="Views\User\EditGas.cshtml" />
-    <Content Include="Views\User\SetGas.cshtml" />
-    <Content Include="Views\User\Energo.cshtml" />
-    <Content Include="Views\User\EditEnergo.cshtml" />
-    <Content Include="Views\User\SetEnergo.cshtml" />
-    <Content Include="Views\User\ColdWater.cshtml" />
-    <Content Include="Views\User\EditColdWater.cshtml" />
-    <Content Include="Views\User\SetColdWater.cshtml" />
-    <Content Include="Views\User\HotWater.cshtml" />
-    <Content Include="Views\User\EditHotWater.cshtml" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap-theme.css.map" />
     <Content Include="Styles\bootstrap-dist\css\bootstrap.css.map" />
     <Content Include="Views\Home\Article.cshtml" />
@@ -1502,7 +1491,6 @@
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Styles\bootstrap-dist\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Views\User\SetHotWater.cshtml" />
     <Content Include="Views\Nav\menu_top.cshtml" />
     <Content Include="Styles\assets\js\README.md" />
     <Content Include="Styles\themes\font\fontawesome-webfont.eot" />
