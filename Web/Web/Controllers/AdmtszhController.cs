@@ -156,24 +156,32 @@ namespace Web.Controllers
 
         public ActionResult ViewUsers()
         {
-            if (!WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+
             //Проверка на принадлежность пользователя
-            UserProfile user = null;
+            Admtszh moder;
+            //UserProfile user = null;
             string requestDomain = Request.Headers["host"];
             uk_profile uk;
-            user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
-            if (uk != null)
+            moder = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            if (moder != null)
             {
-                if (!uk.host.Equals(requestDomain)) 
+                //  user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                uk = repository.uk_profile.Where(p => p.id.Equals(moder.id_uk)).SingleOrDefault();
+                if (uk != null)
+                {
+                    //if (!uk.host.Equals(requestDomain)) 
+                    //{
+                    //    return RedirectToAction("editprof", "Admtszh");
+                    //}
+                }
+                else
                 {
                     return RedirectToAction("editprof", "Admtszh");
                 }
             }
             else
             {
-               return RedirectToAction("editprof", "Admtszh"); 
+                return RedirectToAction("editprof", "Admtszh");
             }
 
             IEnumerable<webpages_UsersInRoles> uir = repository.webpages_UsersInRoles;
