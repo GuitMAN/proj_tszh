@@ -244,43 +244,43 @@ HomeApp.controller('ViewDataMetersCtrl', function ($http, $scope, $rootScope, Us
 HomeApp.factory('UserServices', function ($http) {
     return {
         feedback: function (feedmodel) {
-            return $http.post('/User/Feedback', feedmodel)
+            return $http.post('http://moe-tszh.ru/User/Feedback', feedmodel)
               .then(function (response) {
                   return response;
               })
         },
         editprof: function (profmodel) {
-            return $http.post('/User/editprof', profmodel)
+            return $http.post('http://moe-tszh.ru/User/editprof', profmodel)
               .then(function (response) {
                   return response;
               })
         },
         createprof: function (profmodel) {
-            return $http.post('/User/send_profile', profmodel)
+            return $http.post('http://moe-tszh.ru/User/send_profile', profmodel)
               .then(function (response) {
                   return response;
               })
         },
         viewmeters: function () {
-            return $http.post('/User/ViewMeters')
+            return $http.post('http://moe-tszh.ru/User/ViewMeters')
                 .then(function (response) {
                     return response;
                 })
         },
         addmeter: function (meter) {
-            return $http.post('/User/AddMeter', meter)
+            return $http.post('http://moe-tszh.ru/User/AddMeter', meter)
                 .then(function (response) {
                     return response;
                 })
         },
         viewdatameters: function () {
-            return $http.post('/User/ViewDataMeters')
+            return $http.post('http://moe-tszh.ru/User/ViewDataMeters')
                 .then(function (response) {
                     return response;
                 })
         },
         addvaluemeter: function (valuemeter) {
-            return $http.post('/User/AddValueMeter', valuemeter)
+            return $http.post('http://moe-tszh.ru/User/AddValueMeter', valuemeter)
                 .then(function (response) {
                     return response;
                 })

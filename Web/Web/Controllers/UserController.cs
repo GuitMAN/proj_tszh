@@ -10,9 +10,11 @@ using Web.Models.Repository;
 using WebMatrix.WebData;
 using Web.Utils;
 using System.Collections;
+using System.Web.Http.Cors;
 
 namespace Web.Controllers
 {
+
     public class UserController : Controller
     {
         Repo repository;
@@ -416,14 +418,14 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [Authorize]
         public ActionResult ViewMeters()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [Authorize]
         public ActionResult ViewMeters(int id = 0)
         {
             //Test Autorize

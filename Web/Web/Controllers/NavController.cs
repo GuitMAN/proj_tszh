@@ -8,8 +8,10 @@ using System.Data;
 //using Web.Models;
 using Web.Models.Repository;
 
+
 namespace Web.Controllers
 {
+
     public class NavController : Controller
     {
         //

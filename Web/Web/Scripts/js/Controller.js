@@ -5,7 +5,7 @@
 
 
 
-var HomeApp = angular.module('HomeApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngResource', 'ngCookies']);
+var HomeApp = angular.module('HomeApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngResource', 'ngCookies', 'ngSanitize']);
 
 ArrMonth = [
   { id: '1', name: 'Январь' },
@@ -36,64 +36,70 @@ HomeApp.filter('JsonDate', function () {
 
 /* Config */
 HomeApp.config([
-  '$routeProvider', '$locationProvider',
-  function ($routeProvide, $locationProvider) {
-     // $locationProvider.html5Mode(true);
+  '$routeProvider', '$locationProvider', '$sceDelegateProvider',
+function ($routeProvide, $locationProvider, $sceDelegateProvider) {
+
+    $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    // Allow loading from our assets domain.  Notice the difference between * and **.
+    'http://moe-tszh.ru/**'
+    ]);
       $routeProvide
           .when('/', {
-              templateUrl: '/home/article',
+              templateUrl: 'http://moe-tszh.ru/home/article',
               controller: 'HomeCtrl'
           })
           .when('/article/:artId', {
-              templateUrl: '/home/article',
+              templateUrl: 'http://moe-tszh.ru/home/article',
               controller: 'HomeCtrl'
           })
           .when('/login', {
-              templateUrl: '/login/index',
+              templateUrl: 'http://moe-tszh.ru/login/index',
               controller: 'LoginCtrl'
           })
           .when('/logoout', {
-              templateUrl: '/login/logoout',
+              templateUrl: 'http://moe-tszh.ru/login/logoout',
               controller: 'LogoutCtrl'
           })
           .when('/register', {
-              templateUrl: '/login/register',
+              templateUrl: 'http://moe-tszh.ru/login/register',
               controller: 'RegisterCtrl'
           })
           .when('/manage', {
-              templateUrl: '/login/manage',
-              controller: 'FeedbackCtrl'
+              templateUrl: 'http://moe-tszh.ru/login/manage',
+              controller: 'ManageCtrl'
           })
           .when('/feedback', {
-              templateUrl: '/user/feedback',
+              templateUrl: 'http://moe-tszh.ru/user/feedback',
               controller: 'FeedbackCtrl'
           })
           .when('/profile', {
-              templateUrl: '/user/profile',
-              controller: 'FeedbackCtrl'
+              templateUrl: 'http://moe-tszh.ru/user/profile',
+              controller: 'ProfileCtrl'
           })
           .when('/editprof', {
-              templateUrl: '/user/editprof',
+              templateUrl: 'http://moe-tszh.ru/user/editprof',
               controller: 'EditProfCtrl'
           })
           .when('/createprof', {
-              templateUrl: '/user/send_profile',
+              templateUrl: 'http://moe-tszh.ru/user/send_profile',
               controller: 'CreateProfCtrl'
           })
           .when('/meters', {
-              templateUrl: '/user/ViewMeters',
+              templateUrl: 'http://moe-tszh.ru/user/ViewMeters',
               controller: 'MetersCtrl'
           })
           .when('/addmeter',{
-              templateUrl: '/user/addmeter',
+              templateUrl: 'http://moe-tszh.ru/user/addmeter',
              controller: 'MetersCtrl'
           })
           .when('/datameters', {
-              templateUrl: '/user/ViewDataMeters',
+              templateUrl: 'http://moe-tszh.ru/user/ViewDataMeters',
               controller: 'ViewDataMetersCtrl'
           })
           .otherwise({
-              redirectTo: '/'
+              redirectTo: 'http://moe-tszh.ru/home/'
           });
   }
 ]);

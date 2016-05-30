@@ -11,10 +11,12 @@ using Web.Models;
 using Web.Models.Repository;
 using System.Net;
 
+
 namespace Web.Controllers
 {
 
     //[InitializeMembership]
+
     public class LoginController : Controller
     {
         Repo repository;

@@ -13,10 +13,12 @@ function getHttpConfig() {
 
 /*Login factory*/
 HomeApp.factory('AuthService', function ($http, $cookies, Session) {
+
     return {
         login: function (credentials) {
+ 
             //           var config = getHttpConfig();
-            return $http.post('/Login', credentials)//, config)
+            return $http.post('http://moe-tszh.ru/Login', credentials)//, config)
               .then(function (res) {
                   Session.create(1, res.data.id, res.data.Role, res.data.Login);
                   return res;
@@ -24,7 +26,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 
         },
         register: function (reguser) {
-            return $http.post('/Login/Register', reguser)
+            return $http.post('http://moe-tszh.ru/Login/Register', reguser)
                 .then(function (response) {
                     if (response.data[0] == 'Ok') {
                         Session.create(1, res.data.id, res.data.Role, res.data.Login);
@@ -35,7 +37,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                 })
         },
         logout: function () {
-            return $http.post('/Login/logoout')//, config)
+            return $http.post('http://moe-tszh.ru/Login/logoout')//, config)
                .then(function (response) {
                    if (response.status == 200)
                        Session.destroy();
@@ -43,7 +45,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                })
         },
         manage: function (model) {
-            return $http.post('/Login/manage', model)
+            return $http.post('http://moe-tszh.ru/Login/manage', model)
                   .then(function (response) {
                       return response;
                   })
@@ -134,6 +136,7 @@ HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location) {
 
     AuthService.logout();
     return $location.path('#/');
+
 })
 
 

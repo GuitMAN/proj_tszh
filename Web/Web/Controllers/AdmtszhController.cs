@@ -153,7 +153,7 @@ namespace Web.Controllers
         }
 
 
-
+        [Authorize]
         public ActionResult ViewUsers()
         {
 

@@ -2,12 +2,13 @@
 
 
 @*@{
-    Layout = "~/Views/Shared/_LayoutUk.cshtml";
-    ViewBag.Title = "Профиль";
-}*@
+        Layout = "~/Views/Shared/_LayoutUk.cshtml";
+        ViewBag.Title = "Профиль";
+    }*@
+<div ng-controller="profileCtrl">
 
-<h3>Просмотр профиля</h3>
-<br><a href="#/editprof"><i class="icon-cog"></i> Редактировать профиль</a>
+    <h3>Просмотр профиля</h3>
+    <br><a href="#/editprof"><i class="icon-cog"></i> Редактировать профиль</a>
     <br><a href="#/manage"><i class="icon-pencil"></i> Изменить пароль</a>
     @*@Html.ActionLink("Редактировать профиль","editprof","User")*@
     @*@Html.ActionLink("Изменить пароль", "Manage", "Login")*@
@@ -19,3 +20,4 @@
     <br> Ваш E-mail: @Model.Email
     <br> Дата регистрации: @WebSecurity.GetCreateDate(User.Identity.Name).ToLocalTime()
 
+</div>
