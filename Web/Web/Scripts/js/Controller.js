@@ -37,14 +37,22 @@ HomeApp.filter('JsonDate', function () {
 /* Config */
 HomeApp.config([
   '$routeProvider', '$locationProvider', '$sceDelegateProvider',
-function ($routeProvide, $locationProvider, $sceDelegateProvider) {
+function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider) {
 
     $sceDelegateProvider.resourceUrlWhitelist([
     // Allow same origin resource loads.
     'self',
     // Allow loading from our assets domain.  Notice the difference between * and **.
-    'http://moe-tszh.ru/**'
+    'http://moe-tszh.ru**', 'http://localhost**'
     ]);
+
+    //$httpProvider.defaults.headers.post = {
+    //    'AccessControlAllowHeaders':
+    //        'Content-Type, application/json, X-Requested-With, XMLHttpRequest'
+    //};
+    //$httpProvider.defaults.headers.post = {
+    //    'withCredentials': true
+    //};
       $routeProvide
           .when('/', {
               templateUrl: 'http://moe-tszh.ru/home/article',
@@ -87,7 +95,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider) {
               controller: 'CreateProfCtrl'
           })
           .when('/meters', {
-              templateUrl: 'http://moe-tszh.ru/user/ViewMeters',
+              templateUrl: 'http://localhost:53574/user/ViewMeters',
               controller: 'MetersCtrl'
           })
           .when('/addmeter',{
@@ -95,7 +103,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider) {
              controller: 'MetersCtrl'
           })
           .when('/datameters', {
-              templateUrl: 'http://moe-tszh.ru/user/ViewDataMeters',
+              templateUrl: 'http://localhost:53574/user/ViewMeters',
               controller: 'ViewDataMetersCtrl'
           })
           .otherwise({

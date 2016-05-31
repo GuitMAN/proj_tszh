@@ -12,6 +12,7 @@ namespace Web
         {
             var cors = new EnableCorsAttribute("*", "*", "*");
             config.EnableCors();
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

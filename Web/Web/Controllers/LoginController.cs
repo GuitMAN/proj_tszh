@@ -109,7 +109,6 @@ namespace Web.Controllers
                 {
                     try
                     {
-                        MembershipCreateStatus createStatus;
                         WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                         //Membership.CreateUser(model.UserName, model.Password, model.Email,
                         //passwordQuestion: null, passwordAnswer: null, isApproved: true,

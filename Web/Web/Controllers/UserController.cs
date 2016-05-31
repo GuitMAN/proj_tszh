@@ -418,19 +418,19 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        [Authorize]
+
         public ActionResult ViewMeters()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+
         public ActionResult ViewMeters(int id = 0)
         {
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            if (!WebSecurity.IsAuthenticated)
+                return Json(new string[] { "Error", "Ошибка авторизации" });
 
             IEnumerable<Counter> counter;
             if (id == 0)

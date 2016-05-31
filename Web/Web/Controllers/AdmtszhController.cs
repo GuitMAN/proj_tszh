@@ -265,8 +265,9 @@ namespace Web.Controllers
             string requestDomain = Request.Headers["host"];
             try
             {
-                uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
-                users = repository.UserProfile.Where(p => p.id_uk.Equals(uk.id));
+                //   uk = repository.uk_profile.Where(p => p.).SingleOrDefault();
+                admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                users = repository.UserProfile.Where(p => p.id_uk.Equals((admuser.id_uk)));
             }
             catch
             { }

@@ -262,7 +262,7 @@ HomeApp.factory('UserServices', function ($http) {
               })
         },
         viewmeters: function () {
-            return $http.post('http://moe-tszh.ru/User/ViewMeters')
+            return $http.post('http://localhost:53574/User/ViewMeters',)
                 .then(function (response) {
                     return response;
                 })
