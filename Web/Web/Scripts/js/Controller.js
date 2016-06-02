@@ -2,7 +2,7 @@
 'use strict';
 
 /* Controllers */
-
+var _host = 'http://moe-tszh.ru';
 
 
 var HomeApp = angular.module('HomeApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngResource', 'ngCookies', 'ngSanitize']);
@@ -52,59 +52,59 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
     //};
       $routeProvide
           .when('/', {
-              templateUrl: 'http://moe-tszh.ru/home/article',
+              templateUrl: _host+'/home/article',
               controller: 'HomeCtrl'
           })
           .when('/article/:artId', {
-              templateUrl: 'http://moe-tszh.ru/home/article',
+              templateUrl: _host + '/home/article',
               controller: 'HomeCtrl'
           })
           .when('/login', {
-              templateUrl: 'http://moe-tszh.ru/login/index',
+              templateUrl: _host + '/login/index',
               controller: 'LoginCtrl'
           })
           .when('/logoout', {
-              templateUrl: 'http://moe-tszh.ru/login/logoout',
+              templateUrl: _host + '/login/logoout',
               controller: 'LogoutCtrl'
           })
           .when('/register', {
-              templateUrl: 'http://moe-tszh.ru/login/register',
+              templateUrl: _host + '/login/register',
               controller: 'RegisterCtrl'
           })
           .when('/manage', {
-              templateUrl: 'http://moe-tszh.ru/login/manage',
+              templateUrl: _host + '/login/manage',
               controller: 'ManageCtrl'
           })
           .when('/feedback', {
-              templateUrl: 'http://moe-tszh.ru/user/feedback',
+              templateUrl: _host + '/user/feedback',
               controller: 'FeedbackCtrl'
           })
           .when('/profile', {
-              templateUrl: 'http://moe-tszh.ru/user/profile',
+              templateUrl: _host + '/user/profile',
               controller: 'ProfileCtrl'
           })
           .when('/editprof', {
-              templateUrl: 'http://moe-tszh.ru/user/editprof',
+              templateUrl: _host + '/user/editprof',
               controller: 'EditProfCtrl'
           })
           .when('/createprof', {
-              templateUrl: 'http://moe-tszh.ru/user/send_profile',
+              templateUrl: _host + '/user/send_profile',
               controller: 'CreateProfCtrl'
           })
           .when('/meters', {
-              templateUrl: 'http://localhost:53574/user/ViewMeters',
+              templateUrl: _host + '/user/ViewMeters',
               controller: 'MetersCtrl'
           })
           .when('/addmeter',{
-              templateUrl: 'http://moe-tszh.ru/user/addmeter',
+              templateUrl: _host + '/user/addmeter',
              controller: 'MetersCtrl'
           })
           .when('/datameters', {
-              templateUrl: 'http://localhost:53574/user/ViewMeters',
+              templateUrl: _host + '/user/ViewMeters',
               controller: 'ViewDataMetersCtrl'
           })
           .otherwise({
-              redirectTo: '/'
+              redirectTo:  _host+'/'
           });
   }
 ]);
@@ -117,7 +117,7 @@ HomeApp.run(['$http', '$cookies', function($http, $cookies) {
 /* Factory */
 HomeApp.factory('Article', [
   '$resource', function ($resource) {
-      return $resource('/home/getarticle/:artId',
+      return $resource( _host+'/home/getarticle/:artId',
           {
               artId: 'articles'
           }, 

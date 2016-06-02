@@ -40,7 +40,7 @@ namespace Web
 
         protected void Application_BeginRequest()
         {
-            var allowedOrigins = new[] { "http://moe-tszh.ru", "localhost:53574" };
+            var allowedOrigins = new[] { Request.Headers["host"] };
             var request = HttpContext.Current.Request;
             var response = HttpContext.Current.Response;
             var origin = request.Headers["Origin"];

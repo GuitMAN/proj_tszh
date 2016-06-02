@@ -244,25 +244,25 @@ HomeApp.controller('ViewDataMetersCtrl', function ($http, $scope, $rootScope, Us
 HomeApp.factory('UserServices', function ($http) {
     return {
         feedback: function (feedmodel) {
-            return $http.post('http://moe-tszh.ru/User/Feedback', feedmodel)
+            return $http.post(_host + '/User/Feedback', feedmodel)
               .then(function (response) {
                   return response;
               })
         },
         editprof: function (profmodel) {
-            return $http.post('http://moe-tszh.ru/User/editprof', profmodel)
+            return $http.post(_host + '/User/editprof', profmodel)
               .then(function (response) {
                   return response;
               })
         },
         createprof: function (profmodel) {
-            return $http.post('http://moe-tszh.ru/User/send_profile', profmodel)
+            return $http.post(_host + '/User/send_profile', profmodel)
               .then(function (response) {
                   return response;
               })
         },
         viewmeters: function () {
-            return $http.post('http://localhost:53574/User/ViewMeters'//,
+            return $http.post(_host + '/User/ViewMeters'//,
         //         {
         //             'Content-Type':'application/json'
         //}
@@ -272,19 +272,19 @@ HomeApp.factory('UserServices', function ($http) {
                 })
         },
         addmeter: function (meter) {
-            return $http.post('http://moe-tszh.ru/User/AddMeter', meter)
+            return $http.post(_host + '/User/AddMeter', meter)
                 .then(function (response) {
                     return response;
                 })
         },
         viewdatameters: function () {
-            return $http.post('http://moe-tszh.ru/User/ViewDataMeters')
+            return $http.post(_host + '/User/ViewDataMeters')
                 .then(function (response) {
                     return response;
                 })
         },
         addvaluemeter: function (valuemeter) {
-            return $http.post('http://moe-tszh.ru/User/AddValueMeter', valuemeter)
+            return $http.post(_host + '/User/AddValueMeter', valuemeter)
                 .then(function (response) {
                     return response;
                 })

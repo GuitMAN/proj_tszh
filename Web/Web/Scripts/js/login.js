@@ -37,7 +37,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                 })
         },
         logout: function () {
-            return $http.post('http://localhost:53574/Login/logoout')//, config)
+            return $http.post(_host + '/Login/logoout')//, config)
                .then(function (response) {
                    if (response.status == 200)
                        Session.destroy();
@@ -45,7 +45,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                })
         },
         manage: function (model) {
-            return $http.post('http://localhost:53574/Login/manage', model)
+            return $http.post(_host + '/Login/manage', model)
                   .then(function (response) {
                       return response;
                   })
