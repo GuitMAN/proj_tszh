@@ -36,22 +36,19 @@ HomeApp.filter('JsonDate', function () {
 
 /* Config */
 HomeApp.config([
-  '$routeProvider', '$locationProvider', '$sceDelegateProvider',
+  '$routeProvider', '$locationProvider', '$sceDelegateProvider', '$httpProvider',
 function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider) {
 
     $sceDelegateProvider.resourceUrlWhitelist([
     // Allow same origin resource loads.
     'self',
     // Allow loading from our assets domain.  Notice the difference between * and **.
-    'http://moe-tszh.ru**', 'http://localhost**'
+    'http://localhost:53574**'
     ]);
-
+ //   $httpProvider.defaults.headers.common = {  'withCredentials': true };
+    $httpProvider.defaults.withCredentials = true;
     //$httpProvider.defaults.headers.post = {
-    //    'AccessControlAllowHeaders':
-    //        'Content-Type, application/json, X-Requested-With, XMLHttpRequest'
-    //};
-    //$httpProvider.defaults.headers.post = {
-    //    'withCredentials': true
+    //   'Content-Type': 'application/json', 'Authorization': 'Vladimir:111111'
     //};
       $routeProvide
           .when('/', {
@@ -107,12 +104,14 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               controller: 'ViewDataMetersCtrl'
           })
           .otherwise({
-              redirectTo: 'http://moe-tszh.ru/home/'
+              redirectTo: '/'
           });
   }
 ]);
 
-
+HomeApp.run(['$http', '$cookies', function($http, $cookies) {
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+}]);
 
 
 /* Factory */

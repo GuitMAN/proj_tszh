@@ -40,11 +40,26 @@ namespace Web
 
         protected void Application_BeginRequest()
         {
+            var allowedOrigins = new[] { "http://moe-tszh.ru", "localhost:53574" };
+            var request = HttpContext.Current.Request;
+            var response = HttpContext.Current.Response;
+            var origin = request.Headers["Origin"];
 
-            if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
+            if (origin != null && allowedOrigins.Any(x => x == origin))
             {
-                Response.Flush();
+                response.AddHeader("Access-Control-Allow-Origin", origin);
+                response.AddHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                response.AddHeader("Access-Control-Allow-Headers", "Content-Type, Accept, withCredentials, Authorization");
+                response.AddHeader("Access-Control-Allow-Credentials", "true");
+                if (request.HttpMethod == "OPTIONS")
+                {
+                    response.End();
+                }
             }
+            //if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
+            //{
+            //    Response.Flush();
+            //}
         }
         private class SimpleMembershipInitializer
         {

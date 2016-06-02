@@ -262,7 +262,11 @@ HomeApp.factory('UserServices', function ($http) {
               })
         },
         viewmeters: function () {
-            return $http.post('http://localhost:53574/User/ViewMeters',)
+            return $http.post('http://localhost:53574/User/ViewMeters'//,
+        //         {
+        //             'Content-Type':'application/json'
+        //}
+        )
                 .then(function (response) {
                     return response;
                 })

@@ -18,7 +18,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         login: function (credentials) {
  
             //           var config = getHttpConfig();
-            return $http.post('http://moe-tszh.ru/Login', credentials)//, config)
+            return $http.post('/Login', credentials)//, config)
               .then(function (res) {
                   Session.create(1, res.data.id, res.data.Role, res.data.Login);
                   return res;
@@ -26,7 +26,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 
         },
         register: function (reguser) {
-            return $http.post('http://moe-tszh.ru/Login/Register', reguser)
+            return $http.post('http://localhost:53574/Login/Register', reguser)
                 .then(function (response) {
                     if (response.data[0] == 'Ok') {
                         Session.create(1, res.data.id, res.data.Role, res.data.Login);
@@ -37,7 +37,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                 })
         },
         logout: function () {
-            return $http.post('http://moe-tszh.ru/Login/logoout')//, config)
+            return $http.post('http://localhost:53574/Login/logoout')//, config)
                .then(function (response) {
                    if (response.status == 200)
                        Session.destroy();
@@ -45,7 +45,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                })
         },
         manage: function (model) {
-            return $http.post('http://moe-tszh.ru/Login/manage', model)
+            return $http.post('http://localhost:53574/Login/manage', model)
                   .then(function (response) {
                       return response;
                   })
@@ -180,7 +180,7 @@ HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location
 });
 
 /*Section of authentication*/
-HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, AuthService, $rootScope, Session, $log) {
+HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, $http, AUTH_EVENTS, AuthService, $rootScope, Session, $log) {
     $scope.Session = Session;
     var curname = $cookies.get("username");
     var role = $cookies.get("userRole");
@@ -222,6 +222,4 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, AUTH_EVENTS, Aut
             //console.log("navHeght: ", $scope.navHeight);
         }
     }
-
-
 });
