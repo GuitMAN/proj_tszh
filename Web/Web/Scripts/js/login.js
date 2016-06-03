@@ -9,7 +9,7 @@ function getHttpConfig() {
         }
     };
     return config;
-}
+};
 
 /*Login factory*/
 HomeApp.factory('AuthService', function ($http, $cookies, Session) {
@@ -39,7 +39,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         logout: function () {
             return $http.post(_host + '/Login/logoout')//, config)
                .then(function (response) {
-                   if (response.status == 200)
+                   if (response.status === 200)
                        Session.destroy();
                    return response;
                })
@@ -87,7 +87,7 @@ HomeApp.service('Session', function ($cookies) {
         this.currentUser = null;
     };
     return this;
-})
+});
 
 
 /*fucking constant. I think remove that in future */
@@ -98,7 +98,7 @@ HomeApp.constant('AUTH_EVENTS', {
     sessionTimeout: 'auth-session-timeout',
     notAuthenticated: 'auth-not-authenticated',
     notAuthorized: 'auth-not-authorized'
-})
+});
 
 
 HomeApp.constant('USER_ROLES', {
@@ -106,7 +106,7 @@ HomeApp.constant('USER_ROLES', {
     admin: 'Admin',
     editor: 'Moder',
     guest: 'User'
-})
+});
 
 /* controller for login form*/
 HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session, $location) {
@@ -128,7 +128,7 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
             });
     };
 
-})
+});
 
 
 /* controller for logout*/
@@ -137,7 +137,7 @@ HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location) {
     AuthService.logout();
     return $location.path('#/');
 
-})
+});
 
 
 /* For register form*/
@@ -158,7 +158,7 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
             });
     };
 
-})
+});
 /* controller for logout*/
 HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location) {
     $scope.model = {

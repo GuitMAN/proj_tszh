@@ -3,7 +3,7 @@
 
 /* Controllers */
 // 'http://moe-tszh.ru';
-var _host = 'http://moe-tszh.ru';
+var _host = '';
     //'http://localhost:53574';
 //
 
@@ -87,6 +87,22 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
           .when('/datameters', {
               templateUrl: _host + '/user/ViewMeters',
               controller: 'ViewDataMetersCtrl'
+          })
+          .when('/operprof', {
+              templateUrl: '/admtszh/profile',
+              controller: 'OperProfileCtrl'
+          })
+          .when('/editoperprof', {
+              templateUrl: '/admtszh/editprof',
+              controller: 'EditOperProfileCtrl'
+          })
+          .when('/readfeedback', {
+              templateUrl: '/admtszh/readfeedback',
+              controller: 'ReadFeedBackCtrl'
+          })
+          .when('/viewusercounters', {
+              templateUrl: '/admtszh/viewcounters',
+              controller: 'ViewUserCountersCtrl'
           })
           .otherwise({
               redirectTo: '/'

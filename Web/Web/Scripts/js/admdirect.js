@@ -24,23 +24,22 @@ ArrMonth = [
   { id: '12', name: 'Декабрь' }
 ];
 
-
 /* Config */
 admtszhApp.config([
   '$routeProvider', '$locationProvider',
   function ($routeProvide, $locationProvider) {
       $routeProvide
-          .when('/ViewCounters', {
+          .when('/ViewUserCounters', {
               templateUrl: '/home/ViewCounter',
-              controller: 'ViewCounterCtrl'
+              controller: 'ViewUserCountersCtrl'
           })
-          .when('/ViewCounters/:year', {
+          .when('/ViewUserCounters/:year', {
               templateUrl: '/home/ViewCounter',
-              controller: 'ViewCounterCtrl'
+              controller: 'ViewUserCountersCtrl'
           })
-          .when('/ViewCounters/:year/:month', {
+          .when('/ViewUserCounters/:year/:month', {
               templateUrl: '/home/ViewCounter',
-              controller: 'ViewCounterCtrl'
+              controller: 'ViewUserCountersCtrl'
           })
           .otherwise({
               redirectTo: '/'
@@ -86,7 +85,7 @@ admtszhApp.service('Counters', [
               year: '0'
           }, 
           {
-              'query': { method: 'GET',  isArray:true }
+              'query': { method: 'POST',  isArray:true }
           }      
    
       );
@@ -133,7 +132,7 @@ phonecatApp.controller('PhoneListCtrl', [
 
 
 /* Phone Detail Controller */
-admtszhApp.controller('ViewCounterCtrl', [
+admtszhApp.controller('ViewUserCountersCtrl', [
   '$scope', '$http', '$location', '$routeParams', 'Counters',
   function ($scope, $http, $location, $routeParams, Counters) {
 

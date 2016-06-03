@@ -1,56 +1,21 @@
 ﻿@model Web.Models.Admtszh
 
 @{
-    ViewBag.Title = "profile";
-    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+    ViewBag.Title = "Профиль оператора";
+    //  Layout = "~/Views/Shared/_LayoutUk.cshtml";
 }
 
 
-<h2>profile</h2><h4>Admtszh</h4>
-<br>@Html.ActionLink("Редактировать профиль", "editprof")
-<br>@Html.ActionLink("Изменить пароль", "Manage", "Login")
+<h3>Профиль оператора</h3>
+<br><a href="#/editoperprof"><i class="icon-cog"></i> Редактировать профиль</a>
+<br><a href="#/manage"><i class="icon-pencil"></i> Изменить пароль</a>
 <div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.id_uk)
-        </dt>
-
-        <dd>
-            @ViewData["uk_name"]
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.post)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.post)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SurName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SurName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Patronymic)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Patronymic)
-        </dd>
-
-    </dl>
+    <br>@Html.DisplayNameFor(model => model.id_uk): @ViewData["uk_name"]
+    <br>@Html.DisplayNameFor(model => model.post): @Html.DisplayFor(model => model.post)
+    <br>@Html.DisplayNameFor(model => model.SurName): @Html.DisplayFor(model => model.SurName)
+    <br>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)
+    <br>@Html.DisplayNameFor(model => model.Patronymic): @Html.DisplayFor(model => model.Patronymic)
+    <br>
+    <br>Дата регистрации: @WebSecurity.GetCreateDate(User.Identity.Name).ToLocalTime()
 </div>
 

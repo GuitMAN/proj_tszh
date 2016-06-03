@@ -2,12 +2,10 @@
 
 @{
     ViewBag.Title = "readFeedBack";
-    Layout = "~/Views/Shared/_LayoutUk.cshtml";
+//    Layout = "~/Views/Shared/_LayoutUk.cshtml";
 }
 
-<h2>readFeedBack</h2>
-
-
+<h3>Сообщения от пользователей</h3>
 <table class="table" border="1">
     <tr>
         <th>
@@ -18,12 +16,13 @@
         <th>
             @Html.DisplayNameFor(model => model.id_user)
         </th>
-
         <th>
             @Html.DisplayNameFor(model => model.message)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.datetime)
+        </th>
+        <th>
         </th>
         <th>
         </th>
@@ -34,10 +33,10 @@
         <td>
         @if (item.status)
         {
-            @: + 
+            @: {{@item.status  | checkmark}} 
         } else
         { 
-            @: - 
+            @: {{@item.status | checkmark}}
         }
         </td>
         <td>
@@ -55,17 +54,9 @@
             @Html.DisplayFor(modelItem => item.datetime)
         </td>
         <td> @Html.ActionLink("Удалить", "DelMess", new { id = item.id })</td>
+        <td> @Html.ActionLink("Ответить", "Reple", new { id = item.id })</td>
 </tr>
 }
 
 </table>
 
-@section Scripts {
-    @Styles.Render("~/Styles/jqueryui.min")
-    <script src="~/Scripts/jquery-1.8.0.min.js"></script>
-    @Scripts.Render("~/bundles/jqueryui.min")
-
-    <script>
-        $("#draggable").text()
-    </script>
-}

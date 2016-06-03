@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http.Cors;
-//using System.Web;
 using System.Web.Mvc;
-//using Web.Models;
 using Web.Models.Repository;
-//using WebMatrix.WebData;
-//using System.Web.Security;
+
 
 namespace Web.Models
 {
@@ -69,12 +65,7 @@ namespace Web.Models
 
 
 
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult ViewCounter()
-        {
-            return View();
-        }
+
 
 
         [HttpGet]
@@ -90,12 +81,6 @@ namespace Web.Models
 
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult Contact()
-        {
-            return View();
-        }
-
 
         #region Вспомогательные методы
         public string get_adr(int id_adr=0)

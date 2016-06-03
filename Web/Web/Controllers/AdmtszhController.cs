@@ -34,6 +34,7 @@ namespace Web.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public ActionResult profile(string returnUrl)
         {
             //---------------------------
@@ -43,11 +44,10 @@ namespace Web.Controllers
             //Проверка на принадлежность пользователя
             Admtszh admuser = null;
             uk_profile uk = null;
-            string requestDomain = Request.Headers["host"];
             try
             {
                 admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
+                uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
                 ViewData["uk_name"] = uk.Name;
                 
               //  ViewData["user_adr"] = get_adr(user.Adress);
@@ -103,9 +103,10 @@ namespace Web.Controllers
             {
 
                 repository.SaveAdmtszh(model);
-                TempData["message"] = string.Format("Изменения в профиле были сохранены");
-            }
-            return View(model);
+                TempData["message"] = string.Format("Ваш профиль \"{0}\" был изменен", model.id);
+                return Json(new string[] { "Ok", string.Format("Ваш профиль \"{0}\" был изменен", model.id) });
+            };
+            return Json(new string[] { "Error", "Ошибка при изменении профиля" });
         }
 
 
@@ -268,10 +269,15 @@ namespace Web.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
-        //       [JsonNetFilter]
+
         [HttpGet]
-        public JsonResult ViewCounters(int month = 0, int year=0)
+        public ActionResult ViewCounter()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ViewCounters(int month = 0, int year=0)
         {
             Admtszh admuser = null;
             uk_profile uk = null;
@@ -284,7 +290,7 @@ namespace Web.Controllers
                 admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 users = repository.UserProfile.Where(p => p.id_uk.Equals((admuser.id_uk)));
             }
-            catch
+            catch (Exception ex)
             {
                 Log.Write(ex);
             }
