@@ -179,6 +179,22 @@ HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location
     };
 });
 
+ArrMonth = [
+  { id: '1', name: 'Январь' },
+  { id: '2', name: 'Февраль' },
+  { id: '3', name: 'Март' },
+  { id: '4', name: 'Апрель' },
+  { id: '5', name: 'Май' },
+  { id: '6', name: 'Июнь' },
+  { id: '7', name: 'Июль' },
+  { id: '8', name: 'Август' },
+  { id: '8', name: 'Сентябрь' },
+  { id: '10', name: 'Октябрь' },
+  { id: '11', name: 'Ноябрь' },
+  { id: '12', name: 'Декабрь' }
+];
+
+
 /*Section of authentication*/
 HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, $http, AUTH_EVENTS, AuthService, $rootScope, Session, $log) {
     $scope.Session = Session;

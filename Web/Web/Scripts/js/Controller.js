@@ -2,25 +2,13 @@
 'use strict';
 
 /* Controllers */
+// 'http://moe-tszh.ru';
 var _host = 'http://moe-tszh.ru';
+    //'http://localhost:53574';
+//
 
 
 var HomeApp = angular.module('HomeApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngResource', 'ngCookies', 'ngSanitize']);
-
-ArrMonth = [
-  { id: '1', name: 'Январь' },
-  { id: '2', name: 'Февраль' },
-  { id: '3', name: 'Март' },
-  { id: '4', name: 'Апрель' },
-  { id: '5', name: 'Май' },
-  { id: '6', name: 'Июнь' },
-  { id: '7', name: 'Июль' },
-  { id: '8', name: 'Август' },
-  { id: '8', name: 'Сентябрь' },
-  { id: '10', name: 'Октябрь' },
-  { id: '11', name: 'Ноябрь' },
-  { id: '12', name: 'Декабрь' }
-];
 
 HomeApp.filter('JsonDate', function () {
     'use strict';
@@ -35,21 +23,18 @@ HomeApp.filter('JsonDate', function () {
 });
 
 /* Config */
-HomeApp.config([
-  '$routeProvider', '$locationProvider', '$sceDelegateProvider', '$httpProvider',
+HomeApp.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', '$httpProvider',
 function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider) {
 
     $sceDelegateProvider.resourceUrlWhitelist([
     // Allow same origin resource loads.
     'self',
     // Allow loading from our assets domain.  Notice the difference between * and **.
-    'http://localhost:53574**'
+    'http://localhost**', 'http://moe-tszh.ru**', 'http://xn----itbevkug.xn--p1ai**'
     ]);
  //   $httpProvider.defaults.headers.common = {  'withCredentials': true };
     $httpProvider.defaults.withCredentials = true;
-    //$httpProvider.defaults.headers.post = {
-    //   'Content-Type': 'application/json', 'Authorization': 'Vladimir:111111'
-    //};
+
       $routeProvide
           .when('/', {
               templateUrl: _host+'/home/article',
@@ -104,7 +89,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               controller: 'ViewDataMetersCtrl'
           })
           .otherwise({
-              redirectTo:  _host+'/'
+              redirectTo: '/'
           });
   }
 ]);

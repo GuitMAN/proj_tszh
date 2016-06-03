@@ -9,8 +9,7 @@ using Web.Models;
 using Web.Models.Repository;
 using WebMatrix.WebData;
 using Web.Utils;
-using System.Collections;
-using System.Web.Http.Cors;
+
 
 namespace Web.Controllers
 {
@@ -26,23 +25,23 @@ namespace Web.Controllers
             repository = repo;
         }
 
-         public UserController()
+        public UserController()
         {
             repository = new Repo();
         }
         //
         // GET: /uk/User/
-       [AllowAnonymous]
-        public ActionResult Index(string id="Главная")
+        [AllowAnonymous]
+        public ActionResult Index(string id = "Главная")
         {
-           string requestDomain = Request.Headers["host"];
-           uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
-           int uk_id;
-           if (uk == null)
-               uk_id = 0;
-           else
-               uk_id = uk.id;
-           Article art = repository.Articles.Where(t => t.title.Equals(id)).Where(u => u.id_uk.Equals(uk_id)).SingleOrDefault();
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
+            int uk_id;
+            if (uk == null)
+                uk_id = 0;
+            else
+                uk_id = uk.id;
+            Article art = repository.Articles.Where(t => t.title.Equals(id)).Where(u => u.id_uk.Equals(uk_id)).SingleOrDefault();
 
             return View(art);
         }
@@ -58,8 +57,9 @@ namespace Web.Controllers
                 user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 int id = user.UserId;
             }
-            catch
+            catch (Exception ex)
             {
+                Log.Write(ex);
                 return View();
             }
 
@@ -72,10 +72,10 @@ namespace Web.Controllers
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+            if (!WebSecurity.IsAuthenticated)
                 return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
-            UserProfile user=null;
+            UserProfile user = null;
             uk_profile uk = null;
             string requestDomain = Request.Headers["host"];
             try
@@ -88,7 +88,7 @@ namespace Web.Controllers
             catch (Exception ex)
             {
                 Log.Write(ex);
-                return Redirect("send_profile");    
+                return Redirect("send_profile");
             }
             //----------------------------
             return View(user);
@@ -100,22 +100,22 @@ namespace Web.Controllers
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+            if (!WebSecurity.IsAuthenticated)
                 return RedirectToAction("Index", "Login");
-            UserProfile user=null;
+            UserProfile user = null;
             UserProfile_nouk_form model = new UserProfile_nouk_form();
             try
             {
                 user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 model.UserId = user.UserId;
-                    model.SurName = user.SurName;
-                    model.Name = user.Name;
-                    model.Patronymic = user.Patronymic;
-                    model.Personal_Account = user.Personal_Account;
-                    model.Adress = get_adr(user.Adress);
-                    model.Apartment = user.Apartment;
-                    model.Email = user.Email;
-                    model.phone = user.phone;
+                model.SurName = user.SurName;
+                model.Name = user.Name;
+                model.Patronymic = user.Patronymic;
+                model.Personal_Account = user.Personal_Account;
+                model.Adress = get_adr(user.Adress);
+                model.Apartment = user.Apartment;
+                model.Email = user.Email;
+                model.phone = user.phone;
 
             }
             catch (Exception ex)
@@ -133,12 +133,12 @@ namespace Web.Controllers
         {
             //---------------------------
             //Проверка на авторизацию
-            if (!WebSecurity.IsAuthenticated&&!WebSecurity.Initialized)
+            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
                 return RedirectToAction("Index", "Login");
             UserProfile user = new UserProfile();
             string requestDomain = Request.Headers["host"];
-            uk_profile uk = repository.uk_profile.Select(p => p).Where(p=>p.host.Equals(requestDomain)).SingleOrDefault();
-            if (uk==null)
+            uk_profile uk = repository.uk_profile.Select(p => p).Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
+            if (uk == null)
                 return RedirectToAction("Index", "Login");
 
             string title;
@@ -170,9 +170,9 @@ namespace Web.Controllers
                     FeedBack_from_nouk(mess);
                     SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, title, message);
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    Log.Write(ex);
                 }
                 repository.SaveUser(user);
                 string[] res = { "Ok", "Ваша заявка отправлена: ", message };
@@ -184,13 +184,13 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult FeedBack()
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
             //---------------------------
             //Проверка на принадлежность пользователя
             UserProfile user = null;
@@ -198,15 +198,15 @@ namespace Web.Controllers
             try
             {
                 user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                if (user==null)
+                if (user == null)
                     return RedirectToAction("No_uk");
                 if (user.id_uk == 0)
                     return RedirectToAction("No_uk");
-                string requestDomain = Request.Headers["host"]; 
+                string requestDomain = Request.Headers["host"];
                 uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
                 if (!requestDomain.Equals(uk.host))
                 {
- //                   return Redirect("http://" + uk.host);
+                    //                   return Redirect("http://" + uk.host);
                 }
             }
             catch (Exception ex)
@@ -231,8 +231,8 @@ namespace Web.Controllers
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             UserProfile user = null;
             uk_profile uk = null;
@@ -245,10 +245,6 @@ namespace Web.Controllers
                     return RedirectToAction("No_uk");
                 string requestDomain = Request.Headers["host"];
                 uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
-                if (!requestDomain.Equals(uk.host))
-                {
- //                   return Redirect("http://" + uk.host);
-                }
             }
             catch (Exception ex)
             {
@@ -273,7 +269,7 @@ namespace Web.Controllers
             }
             else if (mess.message.Length > 2000)
             {
-                string[] res =  { "Error", "Недопустимая длина строки"};           
+                string[] res = { "Error", "Недопустимая длина строки" };
                 ModelState.AddModelError("Error", "Недопустимая длина строки");
                 return Json(res);
             }
@@ -284,14 +280,14 @@ namespace Web.Controllers
                 mess.status = false;
                 mess.id_user = WebSecurity.CurrentUserId;
                 mess.message = Regex.Replace(mess.message, @"(\r\n)", "<br>");
-                if (uk.Email!=null)
+                if (uk.Email != null)
                     SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, mess.title, mess.message);
                 repository.SaveFeedBack(mess);
                 TempData["message"] = string.Format("Ваша заявка отправлена", mess.title);
                 string[] res = { "Ok", "Ваша заявка отправлена: ", mess.title };
                 return Json(res);
             }
-            return Json(new string[] { "Error", "Ошибка"});
+            return Json(new string[] { "Error", "Ошибка" });
         }
 
         [Authorize]
@@ -299,16 +295,17 @@ namespace Web.Controllers
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             UserProfile user = null;
             uk_profile uk = null;
             try
             {
-                string requestDomain = Request.Headers["host"];
-                uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
-                if (uk.id!=0)
+                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+
+                uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
+                if (uk.id != 0)
                 {
                     //генерация исключения
                 }
@@ -326,7 +323,7 @@ namespace Web.Controllers
                 mess.id_uk = uk.id;
                 mess.id_user = WebSecurity.CurrentUserId;
                 if (uk.Email != null)
-                    SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, "Обращение от "+ user.SurName + user.Name + ": " + mess.title, mess.message);
+                    SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, "Обращение от " + user.SurName + user.Name + ": " + mess.title, mess.message);
                 repository.SaveFeedBack(mess);
                 return RedirectToAction("Index");
             }
@@ -339,8 +336,8 @@ namespace Web.Controllers
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
             return View();
         }
 
@@ -351,8 +348,8 @@ namespace Web.Controllers
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
             uk_adress adress;
             if (ModelState.IsValid)
             {
@@ -369,16 +366,16 @@ namespace Web.Controllers
             }
             return View(model);
         }
+           
 
-
-        [Authorize]
         [HttpGet]
+        [Authorize(Roles = "User")]
         public ActionResult editprof()
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             UserProfile user = null;
             try
@@ -397,13 +394,14 @@ namespace Web.Controllers
             return View(user);
         }
 
+
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "User")]
         public ActionResult editprof(UserProfile model)
         {
             //---------------------------
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+            if (!WebSecurity.IsAuthenticated)
                 return RedirectToAction("Index", "Login");
 
             if (ModelState.IsValid)
@@ -416,16 +414,17 @@ namespace Web.Controllers
             return Json(new string[] { "Error", "Ошибка при изменении профиля"});
         }
 
+
         //Вывести все счетчики пользователя
         [HttpGet]
-
+        [Authorize(Roles = "User")]
         public ActionResult ViewMeters()
         {
             return View();
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "User")]
         public ActionResult ViewMeters(int id = 0)
         {
             //Test Autorize
@@ -450,14 +449,10 @@ namespace Web.Controllers
         public ActionResult AddMeter()
         {
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
 
-            //Counter_model model model;
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
-            Counter_model_add model = new Counter_model_add();
-           
+            Counter_model_add model = new Counter_model_add();         
             return View(model);
         }
 
@@ -466,8 +461,8 @@ namespace Web.Controllers
         public ActionResult AddMeter(Counter_model_add model_add)
         {
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
 
             Counter meter = new Counter();
             meter.UserId = WebSecurity.CurrentUserId;
@@ -513,7 +508,7 @@ namespace Web.Controllers
         public ActionResult AddValueMeter(Counter_data model_data)
         {
             //Test Autorize
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
+            if (!WebSecurity.IsAuthenticated)
                 return RedirectToAction("Index", "Login");
 
             //int li = repository.context.Database.SqlQuery<int>("LAST_INSERT_ID()").FirstOrDefault();

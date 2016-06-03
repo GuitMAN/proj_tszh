@@ -40,12 +40,12 @@ namespace Web
 
         protected void Application_BeginRequest()
         {
-            var allowedOrigins = new[] { Request.Headers["host"] };
+           // var allowedOrigins = new[] { "http://xn----itbevkug.xn--p1ai" };
             var request = HttpContext.Current.Request;
             var response = HttpContext.Current.Response;
             var origin = request.Headers["Origin"];
 
-            if (origin != null && allowedOrigins.Any(x => x == origin))
+            if (origin != null)// && allowedOrigins.Any(x => x == origin))
             {
                 response.AddHeader("Access-Control-Allow-Origin", origin);
                 response.AddHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -56,11 +56,9 @@ namespace Web
                     response.End();
                 }
             }
-            //if (Request.Headers.AllKeys.Contains("Origin") && Request.HttpMethod == "OPTIONS")
-            //{
-            //    Response.Flush();
-            //}
         }
+
+
         private class SimpleMembershipInitializer
         {
             public SimpleMembershipInitializer()

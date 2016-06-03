@@ -10,6 +10,7 @@ using System.Web.Security;
 using System.Web;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
+using Web.Utils;
 //using Web.Filter;
 //using Microsoft.AspNet.Identity;
 
@@ -37,8 +38,8 @@ namespace Web.Controllers
         {
             //---------------------------
             //Проверка на авторизацию
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Login", "Home");
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Login", "Home");
             //Проверка на принадлежность пользователя
             Admtszh admuser = null;
             uk_profile uk = null;
@@ -66,8 +67,8 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult editprof()
         {
-            if (!WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.Initialized)
+            //    return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             Admtszh user = null;
             try
@@ -95,8 +96,8 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult editprof(Admtszh model)
         {
-            if (!WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.Initialized)
+            //    return RedirectToAction("Index", "Login");
 
             if (ModelState.IsValid)
             {
@@ -112,8 +113,8 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult readFeedBack()
         {
-            if (!WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+            //if (!WebSecurity.Initialized)
+            //    return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
             Admtszh user = null;
             string requestDomain = Request.Headers["host"];
@@ -194,16 +195,21 @@ namespace Web.Controllers
             return View(users);
         }
 
-
+        [Authorize]
         public ActionResult EditUser(int id = 0)
         {
-           
+            //Проверка на принадлежность пользователя
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             UserProfile profile = repository.UserProfile.Where(i => i.UserId == id).SingleOrDefault();
+            if (admuser.id_uk!=profile.id_uk)
+            {
+                return Json("Error","Запрещено! Пользователь не принадлежит вашему ТСЖ");
+            }
             string[] ir = Roles.GetUsersInRole(profile.login);
             foreach (string r in ir)
             {
                 if (r=="Admin")
-                    return Redirect("Запрещено");
+                    return Json("Error","Запрещено! Данный пользователь имеет более высокии привилегии");
             }
             
             IEnumerable<uk_profile> list_uk = repository.uk_profile.OrderBy(p => p.id);
@@ -224,6 +230,14 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult EditUser(UserProfile_form model)
         {
+            //Проверка на принадлежность пользователя
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            int user_uk = repository.UserProfile.Where(i => i.UserId == model.UserId).SingleOrDefault().id_uk;
+
+            if (admuser.id_uk != user_uk)
+            {
+                return Json("Error", "Запрещено! Пользователь не принадлежит вашему ТСЖ");
+            }
             webpages_UsersInRoles userrole = new webpages_UsersInRoles();
             string[] ir = Roles.GetRolesForUser(model.login);
 
@@ -231,6 +245,7 @@ namespace Web.Controllers
                 Roles.RemoveUserFromRoles(model.login, ir);
             if (model.Role != null)
                 Roles.AddUserToRoles(model.login, model.Role);
+            
             UserProfile profile = new UserProfile(model);
             repository.SaveUserRole(userrole);
             if (ModelState.IsValid)
@@ -262,7 +277,7 @@ namespace Web.Controllers
             uk_profile uk = null;
             //Counter_model model = new Counter_model();
             IEnumerable<UserProfile> users = null;
-            string requestDomain = Request.Headers["host"];
+            //string requestDomain = Request.Headers["host"];
             try
             {
                 //   uk = repository.uk_profile.Where(p => p.).SingleOrDefault();
@@ -270,7 +285,9 @@ namespace Web.Controllers
                 users = repository.UserProfile.Where(p => p.id_uk.Equals((admuser.id_uk)));
             }
             catch
-            { }
+            {
+                Log.Write(ex);
+            }
 
             //To do add array of user's counters 
             List < Counter_model> model = new List<Counter_model>();
@@ -335,9 +352,9 @@ namespace Web.Controllers
                         }
        //                 temp.gas =      ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).Where(d =>d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
-                    catch
+                    catch(Exception ex)
                     {
-
+                        Log.Write(ex);
                     }
                     try
                     {
@@ -359,9 +376,9 @@ namespace Web.Controllers
                         }
  //                       temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
-                    catch
+                    catch (Exception ex)
                     {
-
+                        Log.Write(ex);
                     }
                     try
                     {
@@ -383,9 +400,9 @@ namespace Web.Controllers
                         }
 //                        temp.cw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;                  
                     }
-                    catch
+                    catch (Exception ex)
                     {
-
+                        Log.Write(ex);
                     }
                     try
                     {
@@ -408,16 +425,12 @@ namespace Web.Controllers
                         
   //                      temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
-                    catch
+                    catch (Exception ex)
                     {
-
+                        Log.Write(ex);
                     }
-                    try
-                    {
-                        temp.month = d_start;                    
-                    }
-                    catch { }
 
+                    temp.month = d_start;                    
                     temp.status = status;
                     model.Add(temp);
                     
@@ -432,15 +445,18 @@ namespace Web.Controllers
             Admtszh admuser = null;
             uk_profile uk = null;
             //Counter_model model = new Counter_model();
-            UserProfile user = null;
+            IEnumerable<UserProfile> users;
             string requestDomain = Request.Headers["host"];
             try
             {
-                uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
-                user = repository.UserProfile.Where(p => p.UserId.Equals(id)).FirstOrDefault();
+                admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                users = repository.UserProfile.Where(p => p.id_uk.Equals((admuser.id_uk)));
+
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
             string result = null;
             using (var context = new EFDbContext())
             {
@@ -457,10 +473,7 @@ namespace Web.Controllers
                     result = context.SQLStringConnect("UPDATE[dbo].[Counter_data] SET status = 1 WHERE id IN( " + res + ")");
                 }
             }
-            if (result!=null)
-                return new HttpStatusCodeResult(400, "result");
-            else
-                return new HttpStatusCodeResult(200);
+            return Json(result);
         }
 
         [HttpPost]
@@ -487,14 +500,13 @@ namespace Web.Controllers
             string requestDomain = Request.Headers["host"];
             try
             {
-                uk = repository.uk_profile.Where(p => p.host == requestDomain).SingleOrDefault();
-                users = repository.UserProfile.Where(u => u.id_uk.Equals(uk.id));
-
+                Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                users = repository.UserProfile.Where(u => u.id_uk.Equals(admuser.id_uk));
             }
-            catch
-            { }
-
-
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
             return Json(users, JsonRequestBehavior.AllowGet);
         }
 

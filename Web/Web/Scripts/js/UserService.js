@@ -21,6 +21,12 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
     }
 })
 
+
+
+HomeApp.controller('ProfileCtrl', function ($scope){
+
+})
+
 /* User`s controllers & services */
 HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Session, $location) {
 
