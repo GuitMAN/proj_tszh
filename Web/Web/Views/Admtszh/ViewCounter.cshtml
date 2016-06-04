@@ -1,23 +1,9 @@
 ﻿
 
-<div class="alert alert-info">
-    <p>Sort Type: {{ sortType }}</p>
-    <p>Sort Reverse: {{ sortReverse }}</p>
-    <p>Search Query: {{ searchDef }}</p>
-</div>
-<form>
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text" class="form-control" placeholder="Поиск счетчика" st-search="Name" ng-model="searchDef">
-        </div>
-    </div>
-</form>
-
 <section>
-     <h4>Год: <a href="#/ViewCounters/{{year-1}}"><<</a> | {{year}} | <a href="#/ViewCounters/{{year+1}}">  >></a></h4>
-    <select ng-change="select_month()" ng-model="selectedMonth" value"{{month}}">
-        <option value="">---Please select---</option>
+     <h4>Год: {{month_year.year-1}}<input type="submit" value="<<" class="btn btn-default" ng-click="down_y()"></a> | {{month_year.year}} | <input type="submit" value=">>" class="btn btn-default" ng-click="up_y()" ng-disabled='now_y'>{{now_y}}</h4>
+    <select ng-change="select_month()" ng-model="selectedMonth" value"{{month_year.month}}">
+        @*<option value="">---Please select---</option>*@
         <option ng-repeat="option in monthOptions" value="{{option.id}}">{{option.name}}</option>
     </select>
 </section>
@@ -27,10 +13,7 @@
         <tr>
             <th></th>
             <td>
-                <a href="#/ViewCounters" ng-click="sortType = 'Name'">
-                    Фамилия Имя 
-                    <span ng-show="sortType == 'Name'" class="fa fa-caret-down"></span>
-                </a>
+
             </td>
             <td>
                Газ             
@@ -59,10 +42,10 @@
         <tr ng-repeat="item in counter | orderBy:sortType:sortReverse | filter:searchDef">
             <td cs-select="row"></td>
             <td>{{ item.Name }}</td>
-            <td> <div ng-repeat="ig in item.gasi">{{ig.data}} | {{ig.place}}</div><hr>Итого: {{ sum(item.gasi) }}</td>
-            <td> <div ng-repeat="ie in item.energoi">{{ie.data}} | {{ie.place}}</div><hr>Итого: {{ sum(item.energoi) }}<hr></td>
-            <td> <div ng-repeat="icw in item.cwi">{{icw.data}} | {{icw.place}}</div><hr>Итого: {{ sum(item.cwi) }}</td>
-            <td> <div ng-repeat="ihw in item.hwi">{{ihw.data}} | {{ihw.place}}</div><hr>Итого: {{ sum(item.hwi) }}</td>
+            <td> <div ng-repeat="ig in item.gasi">{{ig.data}} | {{ig.place}}<hr>Итого: {{ ig.id }}</div> </td>
+            <td> <div ng-repeat="ie in item.energoi">{{ie.data}} | {{ie.place}}<hr>Итого: {{ ie.id }}</div><hr></td>
+            <td> <div ng-repeat="icw in item.cwi">{{icw.data}} | {{icw.place}}<hr>Итого: {{ icw.id }}</div></td>
+            <td> <div ng-repeat="ihw in item.hwi">{{ihw.data}} | {{ihw.place}}<hr>Итого: {{ ihw.id }}</div></td>
             <td>{{ item.street}}, {{item.house}}, {{item.flat}}</td>
             <td>{{ item.month | JsonDate | date : 'MMM - y' }}</td>
             <td>{{ item.status | checkmark }}</td>

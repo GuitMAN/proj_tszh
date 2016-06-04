@@ -70,6 +70,7 @@ namespace Web.Models
 
     public class count_place
     {
+        public int id { get; set; }
         public decimal data { get; set; }
         public string place { get; set; }
     }

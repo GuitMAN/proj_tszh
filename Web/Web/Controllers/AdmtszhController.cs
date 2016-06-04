@@ -338,107 +338,120 @@ namespace Web.Controllers
                     DateTime d_start = new DateTime(year, month,1);
                     DateTime d_end = d_start.AddMonths(1);
                     bool status = true;
-                    try
+                    
+                    for (int j = 1; j <= 4; j++)
                     {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1));
-                        foreach (Counter counter in counters)
+                                if (j==1) temp.gasi = new List<count_place>();
+                                if (j == 2) temp.energoi = new List<count_place>();
+                                if (j == 3) temp.cwi = new List<count_place>();
+                                if (j == 4) temp.hwi = new List<count_place>();
+                        try
                         {
-
-                            temp.gasi = new List<count_place>();
-
-                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
-                            foreach (var it in t_data)
+                            IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(j));
+                            foreach (Counter counter in counters)
                             {
-                                count_place cp = new count_place();
-                                cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1)).FirstOrDefault().Name;
-                                status = status && it.status;
-                                temp.gasi.Add(cp);
+                                Counter_data t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).SingleOrDefault();
+//                                foreach (var it in t_data)
+                                    count_place cp = new count_place();
+                                    cp.id = t_data.id;
+                                    cp.data = t_data.data;
+                                    cp.place = ListCounter.Where(p => p.id.Equals(t_data.id)).FirstOrDefault().Name;
+                                    status = t_data.status;
+
+                                    if (j == 1)temp.gasi.Add(cp);
+                                    if (j == 2) temp.energoi.Add(cp);
+                                    if (j == 3) temp.cwi.Add(cp);
+                                    if (j == 4) temp.hwi.Add(cp);
+                                    cp = null; 
                             }
+                            //                 temp.gas =      ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).Where(d =>d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                         }
-       //                 temp.gas =      ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).Where(d =>d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
-                    }
-                    catch(Exception ex)
-                    {
-                        Log.Write(ex);
-                    }
-                    try
-                    {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(2));
-                        foreach (Counter counter in counters)
+                        catch (Exception ex)
                         {
-
-                            temp.energoi = new List<count_place>();
-
-                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
-                            foreach (var it in t_data)
-                            {
-                                count_place cp = new count_place();
-                                cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(2)).FirstOrDefault().Name;
-                                status = status && it.status;
-                                temp.energoi.Add(cp);
-                            }
+                            Log.Write(ex);
                         }
- //                       temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                     }
-                    catch (Exception ex)
-                    {
-                        Log.Write(ex);
-                    }
-                    try
-                    {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(3));
-                        foreach (Counter counter in counters)
-                        {
+//                    try
+//                    {
+//                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(2));
+//                        foreach (Counter counter in counters)
+//                        {
 
-                            temp.cwi = new List<count_place>();
+//                            temp.energoi = new List<count_place>();
 
-                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
-                            foreach (var it in t_data)
-                            {
-                                count_place cp = new count_place();
-                                cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1)).FirstOrDefault().Name;
-                                status = status && it.status;
-                                temp.cwi.Add(cp);
-                            }
-                        }
-//                        temp.cw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;                  
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Write(ex);
-                    }
-                    try
-                    {
-                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(4));
-                        foreach (Counter counter in counters)
-                        {
+//                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+//                            foreach (var it in t_data)
+//                            {
+//                                count_place cp = new count_place();
+//                                cp.id = it.id;
+//                                cp.data = it.data;
+//                                cp.place = ListCounter.Where(p => p.id.Equals(it.id)).FirstOrDefault().Name;
+//                                status = status && it.status;
+//                                temp.energoi.Add(cp);
+//                            }
+//                        }
+// //                       temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+//                    }
+//                    catch (Exception ex)
+//                    {
+//                        Log.Write(ex);
+//                    }
+//                    try
+//                    {
+//                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(3));
+//                        foreach (Counter counter in counters)
+//                        {
 
-                            temp.hwi = new List<count_place>();
+//                            temp.cwi = new List<count_place>();
 
-                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
-                            foreach (var it in t_data)
-                            {
-                                count_place cp = new count_place();
-                                cp.data = it.data;
-                                cp.place = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(1)).FirstOrDefault().Name;
-                                status = status && it.status;
-                                temp.hwi.Add(cp);
-                            }
-                        }
+//                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+//                            foreach (var it in t_data)
+//                            {
+//                                count_place cp = new count_place();
+//                                cp.id = it.id;
+//                                cp.data = it.data;
+//                                cp.place = ListCounter.Where(p => p.id.Equals(it.id)).FirstOrDefault().Name;
+//                                status = status && it.status;
+//                                temp.cwi.Add(cp);
+//                            }
+//                        }
+////                        temp.cw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;                  
+//                    }
+//                    catch (Exception ex)
+//                    {
+//                        Log.Write(ex);
+//                    }
+//                    try
+//                    {
+//                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(4));
+//                        foreach (Counter counter in counters)
+//                        {
+
+//                            temp.hwi = new List<count_place>();
+
+//                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
+//                            foreach (var it in t_data)
+//                            {
+//                                count_place cp = new count_place();
+//                                cp.id = it.id;
+//                                cp.data = it.data;
+//                                cp.place = ListCounter.Where(p => p.id.Equals(it.id)).FirstOrDefault().Name;
+//                                status = status && it.status;
+//                                temp.hwi.Add(cp);
+//                            }
+//                        }
                         
-  //                      temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Write(ex);
-                    }
+//  //                      temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
+//                    }
+//                    catch (Exception ex)
+//                    {
+//                        Log.Write(ex);
+//                    }
 
                     temp.month = d_start;                    
                     temp.status = status;
                     model.Add(temp);
+                    temp = null;
                     
                 }
             }

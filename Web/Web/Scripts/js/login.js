@@ -18,7 +18,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         login: function (credentials) {
  
             //           var config = getHttpConfig();
-            return $http.post('/Login', credentials)//, config)
+            return $http.post(_host + '/Login', credentials)//, config)
               .then(function (res) {
                   Session.create(1, res.data.id, res.data.Role, res.data.Login);
                   return res;
@@ -26,7 +26,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 
         },
         register: function (reguser) {
-            return $http.post('http://localhost:53574/Login/Register', reguser)
+            return $http.post(_host + '/Login/Register', reguser)
                 .then(function (response) {
                     if (response.data[0] == 'Ok') {
                         Session.create(1, res.data.id, res.data.Role, res.data.Login);
@@ -41,6 +41,9 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                .then(function (response) {
                    if (response.status === 200)
                        Session.destroy();
+                   $cookies.remove('userId');
+                   $cookies.remove('username');
+                   $cookies.remove('userRole');
                    return response;
                })
         },
@@ -122,9 +125,9 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
                 if (response.data[0] == 'Error') {
                     //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     $scope.response = response.data;
-                    return $location.path('#/');
+                    
                 }
-
+                return location.reload();
             });
     };
 
@@ -135,7 +138,9 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
 HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location) {
 
     AuthService.logout();
-    return $location.path('#/');
+    location.replace('#/');
+    location.reload();
+
 
 });
 
@@ -154,8 +159,9 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
     $scope.register = function (reguser) {
         AuthService.register(reguser)
             .then(function (response) {
-                return $location.path('#/');
+                location.load('#/');
             });
+        
     };
 
 });

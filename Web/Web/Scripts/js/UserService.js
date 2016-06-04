@@ -216,6 +216,7 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session) {
         UserServices.addmeter(meter).then(function (response) {
 
             $scope.response = response.data;
+            $location.path('#/');
         });
     }
 });
@@ -229,19 +230,57 @@ HomeApp.controller('ViewDataMetersCtrl', function ($http, $scope, $rootScope, Us
         "data": '',
         "status": ''
     };
-
+    $scope.datameters =[ {
+        "gasi": [],
+        "energoi": [],
+        "cwi": [],
+         "cwi": []
+    }];
+    //    {
+    //    "gasi": [{
+    //        "ListData": [
+    //        ],
+    //        "counter": {
+    //        }
+    //    }],
+    //    "energoi": [{
+    //        "ListData": [
+    //        ],
+    //        "counter": {
+    //        }
+    //    }],
+    //    "cwi": [{
+    //        "ListData": [
+    //        ],
+    //        "counter": {
+    //        }
+    //    }],
+    //    "hwi": [{
+    //        "ListData": [],
+    //        "counter": {}
+    //    }
+    //    ]
+    //}];
     $scope.submit = function (data) {
+                 $scope.status = true;
+                 data.write = Date.now;
+                 data.status = false;
         UserServices.addvaluemeter(data).then(function (response) {
-            $rootScope.response = response.data;
+            $scope.response = response.data;
             console.log("data:", response);
-            if (response.data[0] == 'Ok') {
-                $rootScope.status = true;
-                $rootScope.datameters.gasi.ListData.push(data);
-            }
+            if (response.data == 'Ok') {
+                //Впоследствие необходимо от location.reload() отойти
+                location.reload(); 
+            } 
+ 
         });
     };
     UserServices.viewdatameters().then(function (response) {
-        $rootScope.datameters = response.data;
+        $scope.datameters.pop();
+        $scope.datameters.push(response.data)
+        //    $scope.datameters.energoi.push(response.data.energoi);
+     //   $scope.datameters.cwi.push(response.data.cwi);
+     //   $scope.datameters.energoi.push(response.data[0].energoi);
     });
 
 });
@@ -292,6 +331,7 @@ HomeApp.factory('UserServices', function ($http) {
         addvaluemeter: function (valuemeter) {
             return $http.post(_host + '/User/AddValueMeter', valuemeter)
                 .then(function (response) {
+                    
                     return response;
                 })
         }

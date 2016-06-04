@@ -17,6 +17,10 @@ HomeApp.controller('ProfileCtrl', function ($scope){
 
 })
 
+
+HomeApp.controller('OperProfileCtrl', function () {
+});
+
 /* User`s controllers & services */
 HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices, Session, $location) {
 
@@ -73,13 +77,98 @@ HomeApp.controller('CreateOperProfCtrl', function ($http, $scope, OperServices, 
     }
 });
 
-HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices, Session, $location) {
-    month_year = {
+HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices, Session, $location, $routeParams) {
+    $scope.month_year = {
         month: '',
         year: ''
     };
+    $scope.status = false;
 
-    OperServices.viewcounters()
+    var now;
+    $scope.now_y = false;
+    if (now==null) now= new Date();
+    if (!$routeParams.year) {
+        $scope.month_year.year = now.getFullYear();
+        $routeParams.year = now.getFullYear();
+        $scope.month_year.month = now.getMonth();
+    }
+    else {
+        if (parseInt($routeParams.year) > now.getFullYear()) {
+            $scope.month_year.year = now.getFullYear();
+            $routeParams.year = now.getFullYear();
+            $scope.month_year.month = now.getMonth();
+
+        }
+        else {
+            $scope.month_year.year = parseInt($routeParams.year);
+            if ($routeParams.month) {
+                $scope.month_year.month = parseInt($routeParams.month);
+            }
+            else {
+                $scope.month_year.month = now.getMonth();
+            }
+        }
+    }
+
+    $scope.NameMonth = ArrMonth[$scope.month_year.month].name;
+
+    $scope.monthOptions = [];
+    for (var i = 0; i < 12; ++i) {
+        $scope.monthOptions[i] = ArrMonth[i];
+        if ($scope.month_year.year == now.getFullYear()) {
+            if (i == now.getMonth()) {
+                break;
+            }
+        }
+    };
+    OperServices.viewcounters($scope.month_year).then(function (response) {
+        $scope.counter = response.data;
+        console.log("data:", response);
+        if (response.data[0] == 'Ok') {
+            $scope.status = true;
+        }
+    });
+    $scope.down_y = function () {
+        $scope.now_y = true;
+        $scope.month_year.year = $scope.month_year.year - 1;
+        $scope.monthOptions = [];
+        for (var i = 0; i < 12; ++i) {
+            $scope.monthOptions[i] = ArrMonth[i];
+            if ($scope.month_year.year == now.getFullYear()) {
+                if (i == now.getMonth()) {
+                    break;
+                }
+            }
+        };
+    }
+    $scope.up_y = function () {
+        if ($scope.month_year.year >= now.getYear()) {
+            $scope.now_y = true;
+        } else {
+            $scope.now_y
+        }
+        $scope.month_year.year = $scope.month_year.year + 1;
+        $scope.monthOptions = [];
+        for (var i = 0; i < 12; ++i) {
+            $scope.monthOptions[i] = ArrMonth[i];
+            if ($scope.month_year.year == now.getFullYear()) {
+                if (i == now.getMonth()) {
+                    break;
+                }
+            }
+        };
+    }
+
+    $scope.select_month = function () {    
+        $scope.month_year.month = $scope.selectedMonth;
+        OperServices.viewcounters($scope.month_year).then(function (response) {
+            $scope.counter = response.data;
+            console.log("data:", response);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+            }
+        });
+    }
 
   });
 
@@ -87,25 +176,25 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
 HomeApp.factory('OperServices', function ($http) {
     return {
         feedback: function (feedmodel) {
-            return $http.post(_host + '/Admtszh/postfeed', feedmodel)
+            return $http.post(_host + '/admtszh/postfeed', feedmodel)
               .then(function (response) {
                   return response;
               })
         },
         editprof: function (profmodel) {
-            return $http.post(_host + '/Admtszh/editprof', profmodel)
+            return $http.post(_host + '/admtszh/editprof', profmodel)
               .then(function (response) {
                   return response;
               })
         },
         createprof: function (profmodel) {
-            return $http.post(_host + '/Admtszh/editprof', profmodel)
+            return $http.post(_host + '/admtszh/editprof', profmodel)
               .then(function (response) {
                   return response;
               })
         },
-        viewcounters: function (profmodel) {
-            return $http.post(_host + '/Admtszh/editprof', month_year)
+        viewcounters: function (month_year) {
+            return $http.post(_host + '/admtszh/viewcounters', month_year)
               .then(function (response) {
                   return response;
               })

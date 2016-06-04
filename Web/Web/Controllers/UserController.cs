@@ -565,7 +565,7 @@ namespace Web.Controllers
             //------------------------------------
             //To do add array of user's counters 
 
-            List<Counter_user_viewdata> model = new List<Counter_user_viewdata>();
+            Counter_user_viewdata model = new  Counter_user_viewdata();
             IEnumerable<Counter> ListCounter = null;
             IEnumerable<Counter_data> ListData = null;
 
@@ -660,7 +660,7 @@ namespace Web.Controllers
                 catch
                 {
                 }
-                model.Add(temp);                         
+                model=temp;                         
             }
             return Json(model, JsonRequestBehavior.AllowGet);
         }

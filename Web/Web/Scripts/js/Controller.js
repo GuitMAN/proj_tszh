@@ -85,7 +85,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
              controller: 'MetersCtrl'
           })
           .when('/datameters', {
-              templateUrl: _host + '/user/ViewMeters',
+              templateUrl: _host + '/user/ViewDataMeters',
               controller: 'ViewDataMetersCtrl'
           })
           .when('/operprof', {
@@ -101,7 +101,15 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               controller: 'ReadFeedBackCtrl'
           })
           .when('/viewusercounters', {
-              templateUrl: '/admtszh/viewcounters',
+              templateUrl: '/admtszh/viewcounter',
+              controller: 'ViewUserCountersCtrl'
+          })
+          .when('/viewusercounters/:year', {
+              templateUrl: '/home/ViewCounter',
+              controller: 'ViewUserCountersCtrl'
+          })
+          .when('/viewusercounters/:year/:month', {
+              templateUrl: '/home/ViewCounter',
               controller: 'ViewUserCountersCtrl'
           })
           .otherwise({
