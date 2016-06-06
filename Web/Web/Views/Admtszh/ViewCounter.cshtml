@@ -42,10 +42,10 @@
         <tr ng-repeat="item in counter | orderBy:sortType:sortReverse | filter:searchDef">
             <td cs-select="row"></td>
             <td>{{ item.Name }}</td>
-            <td> <div ng-repeat="ig in item.gasi">{{ig.data}} | {{ig.place}}<hr>Итого: {{ ig.id }}</div> </td>
-            <td> <div ng-repeat="ie in item.energoi">{{ie.data}} | {{ie.place}}<hr>Итого: {{ ie.id }}</div><hr></td>
-            <td> <div ng-repeat="icw in item.cwi">{{icw.data}} | {{icw.place}}<hr>Итого: {{ icw.id }}</div></td>
-            <td> <div ng-repeat="ihw in item.hwi">{{ihw.data}} | {{ihw.place}}<hr>Итого: {{ ihw.id }}</div></td>
+            <td> <div ng-repeat="ig in item.gasi">{{ig.data}} | {{ig.place}} | ID: {{ ig.id }}<hr></div> </td>
+            <td> <div ng-repeat="ie in item.energoi">{{ie.data}} | {{ie.place}} | ID: {{ ie.id }}<hr></div><hr></td>
+            <td> <div ng-repeat="icw in item.cwi">{{icw.data}} | {{icw.place}} | ID: {{ icw.id }}<hr></div></td>
+            <td> <div ng-repeat="ihw in item.hwi">{{ihw.data}} | {{ihw.place}} | ID: {{ ihw.id }}<hr></div></td>
             <td>{{ item.street}}, {{item.house}}, {{item.flat}}</td>
             <td>{{ item.month | JsonDate | date : 'MMM - y' }}</td>
             <td>{{ item.status | checkmark }}</td>

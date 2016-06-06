@@ -395,7 +395,7 @@ namespace Web.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = "User")]
         public ActionResult editprof(UserProfile model)
         {

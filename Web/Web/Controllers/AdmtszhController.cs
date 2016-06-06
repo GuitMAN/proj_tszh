@@ -65,6 +65,7 @@ namespace Web.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public ActionResult editprof()
         {
             //if (!WebSecurity.Initialized)
@@ -92,8 +93,8 @@ namespace Web.Controllers
             return View(user);
         }
 
-        [HttpPost]
         [Authorize]
+        [HttpPut]
         public ActionResult editprof(Admtszh model)
         {
             //if (!WebSecurity.Initialized)
@@ -197,6 +198,7 @@ namespace Web.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public ActionResult EditUser(int id = 0)
         {
             //Проверка на принадлежность пользователя
@@ -228,7 +230,7 @@ namespace Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPut]
         public ActionResult EditUser(UserProfile_form model)
         {
             //Проверка на принадлежность пользователя
@@ -371,88 +373,20 @@ namespace Web.Controllers
                             Log.Write(ex);
                         }
                     }
-//                    try
-//                    {
-//                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(2));
-//                        foreach (Counter counter in counters)
-//                        {
 
-//                            temp.energoi = new List<count_place>();
 
-//                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
-//                            foreach (var it in t_data)
-//                            {
-//                                count_place cp = new count_place();
-//                                cp.id = it.id;
-//                                cp.data = it.data;
-//                                cp.place = ListCounter.Where(p => p.id.Equals(it.id)).FirstOrDefault().Name;
-//                                status = status && it.status;
-//                                temp.energoi.Add(cp);
-//                            }
-//                        }
-// //                       temp.energo =   ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(2)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
-//                    }
-//                    catch (Exception ex)
-//                    {
-//                        Log.Write(ex);
-//                    }
-//                    try
-//                    {
-//                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(3));
-//                        foreach (Counter counter in counters)
-//                        {
-
-//                            temp.cwi = new List<count_place>();
-
-//                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
-//                            foreach (var it in t_data)
-//                            {
-//                                count_place cp = new count_place();
-//                                cp.id = it.id;
-//                                cp.data = it.data;
-//                                cp.place = ListCounter.Where(p => p.id.Equals(it.id)).FirstOrDefault().Name;
-//                                status = status && it.status;
-//                                temp.cwi.Add(cp);
-//                            }
-//                        }
-////                        temp.cw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(3)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;                  
-//                    }
-//                    catch (Exception ex)
-//                    {
-//                        Log.Write(ex);
-//                    }
-//                    try
-//                    {
-//                        IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(4));
-//                        foreach (Counter counter in counters)
-//                        {
-
-//                            temp.hwi = new List<count_place>();
-
-//                            IEnumerable<Counter_data> t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end);
-//                            foreach (var it in t_data)
-//                            {
-//                                count_place cp = new count_place();
-//                                cp.id = it.id;
-//                                cp.data = it.data;
-//                                cp.place = ListCounter.Where(p => p.id.Equals(it.id)).FirstOrDefault().Name;
-//                                status = status && it.status;
-//                                temp.hwi.Add(cp);
-//                            }
-//                        }
+                    if ((temp.gasi.Count == 0) && (temp.energoi.Count == 0) && (temp.cwi.Count == 0) && (temp.hwi.Count == 0))
+                    {
+                       // temp = null;
+                    }
+                    else
+                    {
+                        temp.month = d_start;
+                        temp.status = status;
+                        model.Add(temp);
                         
-//  //                      temp.hw =       ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(4)).FirstOrDefault().id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
-//                    }
-//                    catch (Exception ex)
-//                    {
-//                        Log.Write(ex);
-//                    }
-
-                    temp.month = d_start;                    
-                    temp.status = status;
-                    model.Add(temp);
+                    }
                     temp = null;
-                    
                 }
             }
             return Json(model, JsonRequestBehavior.AllowGet);

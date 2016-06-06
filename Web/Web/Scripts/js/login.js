@@ -41,9 +41,6 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                .then(function (response) {
                    if (response.status === 200)
                        Session.destroy();
-                   $cookies.remove('userId');
-                   $cookies.remove('username');
-                   $cookies.remove('userRole');
                    return response;
                })
         },
@@ -139,8 +136,11 @@ HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location) {
 
     AuthService.logout();
     location.replace('#/');
-    location.reload();
+//    location.reload();
 
+    $cookies.remove('userId');
+    $cookies.remove('username');
+    $cookies.remove('userRole');
 
 });
 

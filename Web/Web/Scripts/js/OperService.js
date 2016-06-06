@@ -182,7 +182,7 @@ HomeApp.factory('OperServices', function ($http) {
               })
         },
         editprof: function (profmodel) {
-            return $http.post(_host + '/admtszh/editprof', profmodel)
+            return $http.put(_host + '/admtszh/editprof', profmodel)
               .then(function (response) {
                   return response;
               })
