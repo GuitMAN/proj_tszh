@@ -54,14 +54,14 @@ HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices,
 /* User`s controllers & services */
 HomeApp.controller('CreateOperProfCtrl', function ($http, $scope, OperServices, Session, $location) {
 
-    $scope.profmodel = {
-        id_uk: '',
-        AdmtszhId: Session.userId,
-        SurName: '',
-        Name: '',
-        Patronymic: '',
-        post: ''
-    };
+    //$scope.profmodel = {
+    //    id_uk: '',
+    //    AdmtszhId: Session.userId,
+    //    SurName: '',
+    //    Name: '',
+    //    Patronymic: '',
+    //    post: ''
+    //};
 
     $scope.status = false;
     $scope.submit = function (profmodel) {
@@ -85,7 +85,7 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
     $scope.status = false;
 
     var now;
-    $scope.now_y = false;
+    $scope.now_y = true;
     if (now==null) now= new Date();
     if (!$routeParams.year) {
         $scope.month_year.year = now.getFullYear();
@@ -129,7 +129,7 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
         }
     });
     $scope.down_y = function () {
-        $scope.now_y = true;
+        $scope.now_y = false;
         $scope.month_year.year = $scope.month_year.year - 1;
         $scope.monthOptions = [];
         for (var i = 0; i < 12; ++i) {
@@ -142,12 +142,13 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
         };
     }
     $scope.up_y = function () {
-        if ($scope.month_year.year >= now.getYear()) {
+        if ($scope.month_year.year >= now.getFullYear()) {
             $scope.now_y = true;
-        } else {
-            $scope.now_y
         }
-        $scope.month_year.year = $scope.month_year.year + 1;
+        else
+        {
+            $scope.month_year.year = $scope.month_year.year + 1;
+        }
         $scope.monthOptions = [];
         for (var i = 0; i < 12; ++i) {
             $scope.monthOptions[i] = ArrMonth[i];
@@ -156,7 +157,8 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
                     break;
                 }
             }
-        };
+        }
+
     }
 
     $scope.select_month = function () {    

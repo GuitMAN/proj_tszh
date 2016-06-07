@@ -1,7 +1,7 @@
 ﻿
 
 <section>
-     <h4>Год: {{month_year.year-1}}<input type="submit" value="<<" class="btn btn-default" ng-click="down_y()"></a> | {{month_year.year}} | <input type="submit" value=">>" class="btn btn-default" ng-click="up_y()" ng-disabled='now_y'>{{now_y}}</h4>
+     <h4>Год: {{month_year.year-1}}<input type="submit" value="<<" class="btn btn-default" ng-click="down_y()"></a> | {{month_year.year}} | <input type="submit" value=">>" class="btn btn-default" ng-click="up_y()" ng-disabled='now_y'></h4>
     <select ng-change="select_month()" ng-model="selectedMonth" value"{{month_year.month}}">
         @*<option value="">---Please select---</option>*@
         <option ng-repeat="option in monthOptions" value="{{option.id}}">{{option.name}}</option>

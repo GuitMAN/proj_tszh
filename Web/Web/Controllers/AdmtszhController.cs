@@ -157,13 +157,14 @@ namespace Web.Controllers
 
 
         [Authorize]
+        [HttpGet]
         public ActionResult ViewUsers()
         {
 
             //Проверка на принадлежность пользователя
             Admtszh moder;
             //UserProfile user = null;
-            string requestDomain = Request.Headers["host"];
+            //string requestDomain = Request.Headers["host"];
             uk_profile uk;
             moder = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             if (moder != null)

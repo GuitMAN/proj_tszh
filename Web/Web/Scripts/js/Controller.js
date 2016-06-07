@@ -3,7 +3,7 @@
 
 /* Controllers */
 // 'http://moe-tszh.ru';
-var _host = '';
+var _host = 'http://moe-tszh.ru';
     //'http://localhost:53574';
 //
 
@@ -89,28 +89,32 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               controller: 'ViewDataMetersCtrl'
           })
           .when('/operprof', {
-              templateUrl: '/admtszh/profile',
+              templateUrl: _host + '/admtszh/profile',
               controller: 'OperProfileCtrl'
           })
           .when('/editoperprof', {
-              templateUrl: '/admtszh/editprof',
+              templateUrl: _host + '/admtszh/editprof',
               controller: 'EditOperProfileCtrl'
           })
           .when('/readfeedback', {
-              templateUrl: '/admtszh/readfeedback',
+              templateUrl: _host + '/admtszh/readfeedback',
               controller: 'ReadFeedBackCtrl'
           })
           .when('/viewusercounters', {
-              templateUrl: '/admtszh/viewcounter',
+              templateUrl: _host + '/admtszh/viewcounter',
               controller: 'ViewUserCountersCtrl'
           })
           .when('/viewusercounters/:year', {
-              templateUrl: '/home/ViewCounter',
+              templateUrl: _host + '/home/ViewCounter',
               controller: 'ViewUserCountersCtrl'
           })
           .when('/viewusercounters/:year/:month', {
-              templateUrl: '/home/ViewCounter',
+              templateUrl: _host + '/home/ViewCounter',
               controller: 'ViewUserCountersCtrl'
+          })
+          .when('/viewusers/:year/:month', {
+              templateUrl: _host + '/home/ViewUser',
+              controller: 'ViewUsersCtrl'
           })
           .otherwise({
               redirectTo: '/'
