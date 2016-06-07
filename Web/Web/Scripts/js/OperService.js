@@ -174,6 +174,13 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
 
   });
 
+
+HomeApp.controller('ViewUsersCtrl', function ($scope) {
+
+})
+
+
+
 /* Factory of user`s controller */
 HomeApp.factory('OperServices', function ($http) {
     return {
