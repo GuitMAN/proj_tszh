@@ -24,7 +24,7 @@ namespace Web.Controllers
         }
 
         public PartialViewResult Menu(int menu_id = 0)
-        {  
+        {
             //Связываемся с нашей БД
             //Repo p = new Repo();
             //Отправляем результат предствалению
@@ -55,5 +55,9 @@ namespace Web.Controllers
             return PartialView(categories);
         }
 
+        public PartialViewResult menu_moder()
+        {
+            return PartialView();
+        }
     }
 }

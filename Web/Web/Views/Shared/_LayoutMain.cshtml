@@ -127,20 +127,7 @@
 
                     <div class="span3">
                         <div class="well" style="padding: 8px 0;">
-                            <ul class="nav nav-list">
-                                @if (User.IsInRole("Moder"))
-                                {
-                                <li class="nav-header">Раздел администрации</li>
-                                <li class="active"><a href="#"><i class="icon-white icon-home"></i>Главная</a></li>
-                                <li><a href="#/operprof"><i class="icon-user"></i>Профиль орератора</a></li>
-                                <li><a href="#/ukconf"><i class="icon-cog"></i>Общие настройки</a></li>
-                                <li><a href="#/readfeedback/"><i class="icon-bell"></i>Обращения</a></li>
-                                <li><a href="#/viewusercounters/">Счетчики пользователей</a></li>
-                                <li><a href="#/viewusers/">Все пользователи</a></li>
-                                <li class="nav-header">Another list header</li>
-                                }
-                                <li class="divider"></li>
-                            </ul>
+                            @Html.Action("menu_moder", "Nav")
 
                             <!-- Single button -->
                             <div class="btn-group" id="Singlebutton" uib-dropdown is-open="status.isopen">

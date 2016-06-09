@@ -1,0 +1,16 @@
+﻿
+<ul class="nav nav-list">
+    @Html.Action("menu_moder", "Nav")
+    @if (User.IsInRole("Moder"))
+    {
+        <li class="nav-header">Раздел администрации</li>
+                                <li class="active"><a href="#"><i class="icon-white icon-home"></i>Главная</a></li>
+                                <li><a href="#/operprof"><i class="icon-user"></i>Профиль орератора</a></li>
+                                <li><a href="#/ukconf"><i class="icon-cog"></i>Общие настройки</a></li>
+                                <li><a href="#/readfeedback/"><i class="icon-bell"></i>Обращения</a></li>
+                                <li><a href="#/viewusercounters/">Счетчики пользователей</a></li>
+                                <li><a href="#/viewusers/">Все пользователи</a></li>
+                                <li class="nav-header">Another list header</li>
+    }
+    <li class="divider"></li>
+</ul>
