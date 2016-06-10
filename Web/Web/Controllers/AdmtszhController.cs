@@ -201,34 +201,42 @@ namespace Web.Controllers
         [Authorize]
         [HttpGet]
         public ActionResult EditUser(int id = 0)
-        {
+        {       
             //Проверка на принадлежность пользователя
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             UserProfile profile = repository.UserProfile.Where(i => i.UserId == id).SingleOrDefault();
-            if (admuser.id_uk!=profile.id_uk)
+            if (id > 0)
             {
-                return Json("Error","Запрещено! Пользователь не принадлежит вашему ТСЖ");
+
+                if (admuser.id_uk != profile.id_uk)
+                {
+                    return Json("Error", "Запрещено! Пользователь не принадлежит вашему ТСЖ");
+                }
+                string[] ir = Roles.GetUsersInRole(profile.login);
+                foreach (string r in ir)
+                {
+                    if (r == "Admin")
+                        return Json("Error", "Запрещено! Данный пользователь имеет более высокии привилегии");
+                }
+
+                IEnumerable<uk_profile> list_uk = repository.uk_profile.OrderBy(p => p.id);
+                ViewData["uk_profile"] = from n in list_uk
+                                         select new SelectListItem { Text = n.Name, Value = n.id.ToString() };
+
+                IEnumerable<uk_adress> list_adr = repository.uk_adress.Where(p => p.id_uk.Equals(profile.id_uk)).OrderBy(p => p.id);
+                ViewData["uk_adress"] = from adr in list_adr
+                                        select new SelectListItem { Text = adr.City.ToString() + ", " + adr.Street.ToString() + ", " + adr.House, Value = adr.id.ToString() };
+
+                //присвоить роль пользователю
+                UserProfile_form model = new UserProfile_form(profile);
+                model.Role = Roles.GetRolesForUser(profile.login);
+                return Json(model, JsonRequestBehavior.AllowGet);
             }
-            string[] ir = Roles.GetUsersInRole(profile.login);
-            foreach (string r in ir)
+            else
             {
-                if (r=="Admin")
-                    return Json("Error","Запрещено! Данный пользователь имеет более высокии привилегии");
-            }
-            
-            IEnumerable<uk_profile> list_uk = repository.uk_profile.OrderBy(p => p.id);
-            ViewData["uk_profile"] = from n in list_uk
-                                     select new SelectListItem { Text = n.Name, Value = n.id.ToString() };
-
-            IEnumerable<uk_adress> list_adr = repository.uk_adress.Where(p => p.id_uk.Equals(profile.id_uk)).OrderBy(p => p.id);
-            ViewData["uk_adress"] = from adr in list_adr
-                                    select new SelectListItem { Text = adr.City.ToString() + ", " + adr.Street.ToString() + ", " + adr.House, Value = adr.id.ToString() };
-
-            //присвоить роль пользователю
-            UserProfile_form model = new UserProfile_form(profile);
-            model.Role = Roles.GetRolesForUser(profile.login);
-
-            return View(model);
+               
+                return View(new UserProfile_form());
+            }         
         }
 
         [HttpPut]
@@ -269,7 +277,7 @@ namespace Web.Controllers
             //присвоить роль пользователю
             model.Role = Roles.GetRolesForUser(model.login);
 
-            return View(model);
+            return Json(model);
         }
 
 

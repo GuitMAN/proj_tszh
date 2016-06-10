@@ -116,6 +116,10 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               templateUrl: _host + '/admtszh/ViewUsers',
               controller: 'ViewUsersCtrl'
           })
+          .when('/edituser/:id', {
+              templateUrl: _host + '/admtszh/edituser',
+              controller: 'EditUsersCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });

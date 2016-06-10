@@ -179,6 +179,24 @@ HomeApp.controller('ViewUsersCtrl', function ($scope) {
 
 })
 
+HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams, $sce) {
+    OperServices.viewuseredit($routeParams['id']).then(function (response) {
+        $scope.profmodel = response.data;
+    });
+
+    $scope.submit = function (profmodel) {
+        OperServices.saveuseredit(profmodel).then(function (response) {
+            $scope.response = response.data;
+            console.log("data:", response);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+                return $location.path('#/');
+            }
+        });
+
+    }
+
+})
 
 
 /* Factory of user`s controller */
@@ -207,8 +225,18 @@ HomeApp.factory('OperServices', function ($http) {
               .then(function (response) {
                   return response;
               })
+        },
+        viewuseredit: function (id) {
+            return $http.get(_host + '/admtszh/edituser', { params: { id: id } }).then(function (response) {
+                return response;
+            })
+        },
+        saveuseredit: function (usermodel) {
+            return $http.put(_host + '/admtszh/edituser', usermodel)
+                .then(function (response) {
+                    return response;
+                })
         }
- 
     }
 });
 

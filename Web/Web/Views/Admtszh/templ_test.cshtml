@@ -35,7 +35,14 @@
             <input type="hidden" ng-model="profmodel.id" ng-init="profmodel.id">
             <input type="hidden" ng-model="profmodel.id_uk" ng-init="profmodel.id_uk">
             <input type="hidden" ng-model="profmodel.UserId" ng-init="profmodel.UserId">
-            <input type="hidden" ng-model="profmodel.Adress" ng-init="profmodel.Adress">
+            <input type="hidden" ng-model="profmodel.Adress" ng-init="profmodel.Adress = @Model.Adress">
+
+            <div class="form-group">
+                E-mail:
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.post" ng-init="profmodel.post">
+                </div>
+            </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.SurName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -101,7 +108,7 @@
 </form>
 
 <div>
-
+    
 </div>
 <hr>
 <pre>{{profmodel | json}} </pre>
