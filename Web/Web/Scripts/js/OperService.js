@@ -190,7 +190,7 @@ HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams
             console.log("data:", response);
             if (response.data[0] == 'Ok') {
                 $scope.status = true;
-                return $location.path('#/');
+              //  return $location.path('#/');
             }
         });
 
