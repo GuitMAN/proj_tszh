@@ -88,12 +88,13 @@ namespace Web.Models
     {
         [Required]
         [Display(Name = "Логин")]
+        [DataType(DataType.EmailAddress)]
         public string UserName { get; set; }
 
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "E-mail")]
-        public string Email { get; set; }
+        //[Required]
+        //[DataType(DataType.EmailAddress)]
+        //[Display(Name = "E-mail")]
+        //public string Email { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "{0} должен содержать не менее {2} символов.", MinimumLength = 6)]

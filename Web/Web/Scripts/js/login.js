@@ -25,7 +25,8 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
               })
 
         },
-        register: function (reguser) {
+        register: function (reguser, RegisterForm) {
+            
             return $http.post(_host + '/Login/Register', reguser)
                 .then(function (response) {
                     if (response.data[0] == 'Ok') {
@@ -156,12 +157,24 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
     if (AuthService.isAuthenticated()) {
         return $location.path('#/');
     }
-    $scope.register = function (reguser) {
-        AuthService.register(reguser)
-            .then(function (response) {
-                location.load('#/');
-            });
-        
+    
+    $scope.register = function (reguser, RegisterForm) {
+        if (RegisterForm.$valid) {
+            if ($scope.reguser.Password != $scope.reguser.ConfirmPassword) {
+                alert("Пароли не совпадают");
+            }
+            else {
+                //alert($scope.reguser.Password.length.toString());
+                if ($scope.reguser.Password.length.toString() < 5) {
+                    alert("Пароль не должен быть менее 6 символов");
+                }
+                else {
+                    AuthService.register(reguser).then(function (response) {
+                        location.load('#/');
+                    });
+                }
+            }
+        }
     };
 
 });

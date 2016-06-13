@@ -10,7 +10,7 @@ using Web.Filter;
 using Web.Models;
 using Web.Models.Repository;
 using System.Net;
-
+using System.Text.RegularExpressions;
 
 namespace Web.Controllers
 {
@@ -103,7 +103,7 @@ namespace Web.Controllers
         //        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (WebSecurity.IsAuthenticated)
+            if (!WebSecurity.IsAuthenticated)
             {
                 if (ModelState.IsValid)
                 {
@@ -129,7 +129,15 @@ namespace Web.Controllers
                         return new HttpStatusCodeResult(203, "Ошибка при регистрации: " + ErrorCodeToString(e.StatusCode));
                     }
                 }
-                return Json("Error", "Не все поля заполнены");              
+                if (string.IsNullOrEmpty(model.UserName))
+                {
+                    return Json("Error", "Неправильный E-mail");
+                }
+                if (string.IsNullOrEmpty(model.Password))
+                {
+                    return Json("Error", "Ошибка при вводе пароля");
+                }
+
             }
             return RedirectToAction("Index", "Home");
         } 
