@@ -183,6 +183,20 @@ HomeApp.controller('ViewUsersCtrl', function ($scope) {
 
 })
 
+HomeApp.controller('ViewSettingsCtrl', function ($scope, OperServices, $http, $sce) {
+    $scope.model = {
+        id: ''
+    };
+    OperServices.viewusettings().then(function (response) {
+        $scope.model = response.data;
+   
+        $http.get(_host + '/admin/ViewAddrUk', { params: { id: $scope.model.id } }).then(function (response) {
+            $scope.sce = $sce;
+            $scope.t = response.data;
+        })
+    });
+})
+
 HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams, $sce) {
     OperServices.viewuseredit($routeParams['id']).then(function (response) {
         $scope.profmodel = response.data;
@@ -240,7 +254,12 @@ HomeApp.factory('OperServices', function ($http) {
                 .then(function (response) {
                     return response;
                 })
-        }
+        },
+        viewusettings: function () {
+        return $http.get(_host + '/admtszh/edituk').then(function (response) {
+            return response;
+        })
+    },
     }
 });
 

@@ -1,61 +1,59 @@
 ﻿
 
 @{
-    ViewBag.Title = "EditUk";
- //   Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Настройки профиля ТСЖ";
+    //   Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Редактирование УК или ТСЖ</h2>
-<div>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+
+
+
+<div >
+    <h2>Настройки управляющей компании</h2>
+    <form>
+        @*@Html.AntiForgeryToken()*@
 
         <div class="form-horizontal">
-            <h4>uk_profile</h4>
+            <h4>{{model.Name}}</h4>
             <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.id)
+            
+            <input type="hidden" ng-model="model.id" ng-init="model.id">
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2">Имя :</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line" type="text" ng-model="model.Name" ng-init="model.Name">
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("E-mail: ", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line" type="text" ng-model="model.Email" ng-init="model.Email">
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.host, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.Label("HostName: ", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    http://
-                    @Html.EditorFor(model => model.host, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.host, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line" type="text" ng-model="model.host" ng-init="model.host" ng-disabled="true">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Сохранить" class="btn btn-default" />
+                    <input type="submit" value="Сохранить" class="btn btn-default" ng-click="submit(model)" />
                 </div>
             </div>
         </div>
-    }
+    </form>
 </div>
 
 
 <div>
     <p>
-        @Html.ActionLink("Добавить новый адрес", "CreateAddr", new { @Model.id })
+       Добавить новый адрес (link)
     </p>
-    @Html.Action("ViewAddrUk")
+    <p ng-bind-html="sce.trustAsHtml(t)"></p>
 </div>
 <div>
-    @Html.ActionLink("Вернуться к списку", "ViewUk")
+    @*@Html.ActionLink("Вернуться к списку", "ViewUk")*@
 </div>
 

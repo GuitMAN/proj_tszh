@@ -120,6 +120,10 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               templateUrl: _host + '/admtszh/edituser',
               controller: 'EditUsersCtrl'
           })
+          .when('/settings', {
+              templateUrl: _host + '/home/edituk_tpl',
+              controller: 'ViewSettingsCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });
