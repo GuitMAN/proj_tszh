@@ -5,17 +5,72 @@
     //  Layout = "~/Views/Shared/_LayoutUk.cshtml";
 }
 
+<style>
 
-<h3>Профиль оператора</h3>
-<br><a href="#/editoperprof"><i class="icon-cog"></i> Редактировать профиль</a>
-<br><a href="#/manage"><i class="icon-pencil"></i> Изменить пароль</a>
-<div>
-    <br>@Html.DisplayNameFor(model => model.id_uk): @ViewData["uk_name"]
-    <br>@Html.DisplayNameFor(model => model.post): @Html.DisplayFor(model => model.post)
-    <br>@Html.DisplayNameFor(model => model.SurName): @Html.DisplayFor(model => model.SurName)
-    <br>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)
-    <br>@Html.DisplayNameFor(model => model.Patronymic): @Html.DisplayFor(model => model.Patronymic)
+    .ng-modal-overlay {
+    /* полупорозрачный DIV, который охватывает весь экран */
+    position:absolute;
+    z-index:9999;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:#000000;
+    opacity: 0.8;
+}
+.ng-modal-dialog {
+    /* Отцентрированный даилог с тенью */
+    z-index:10000;
+    position: absolute;
+    width: 50%;
+
+    /* Центрирование */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+
+    background-color: #fff;
+    box-shadow: 4px 4px 80px #000;
+}
+.ng-modal-dialog-content {
+    padding:10px;
+    text-align: left;
+}
+.ng-modal-close {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 120%;
+    display: inline-block;
+    font-weight: bold;
+    font-family: 'arial', 'sans-serif';
+}
+
+</style>
+
+
+
+<div ng-controller="ProfileCtrl">
+    <h3>Профиль оператора</h3>
+    <br><a href="#/editoperprof"><i class="icon-cog"></i> Редактировать профиль</a>
     <br>
-    <br>Дата регистрации: @WebSecurity.GetCreateDate(User.Identity.Name).ToLocalTime()
-</div>
+    @*<button ng-click='toggleModal()'>Открыть модальный диалог</button>
+    <modal-dialog show='modalShown' width='450px' height='100%'></modal-dialog>*@
 
+    <br><a href="#/manage"><i class="icon-pencil"></i> Изменить пароль</a>
+    <div>
+        <br>@Html.DisplayNameFor(model => model.id_uk): @ViewData["uk_name"]
+        <br>@Html.DisplayNameFor(model => model.post): @Html.DisplayFor(model => model.post)
+        <br>@Html.DisplayNameFor(model => model.SurName): @Html.DisplayFor(model => model.SurName)
+        <br>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)
+        <br>@Html.DisplayNameFor(model => model.Patronymic): @Html.DisplayFor(model => model.Patronymic)
+        <br>
+        <br>Дата регистрации: @WebSecurity.GetCreateDate(User.Identity.Name).ToLocalTime()
+
+    </div>
+
+</div>

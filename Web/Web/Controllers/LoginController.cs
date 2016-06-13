@@ -51,7 +51,7 @@ namespace Web.Controllers
                     result.id = WebSecurity.GetUserId(model.UserName);
                     result.Login = model.UserName;
                     result.Role = Roles.GetRolesForUser(model.UserName);
-                    string requestDomain =Request.Headers["host"];
+                    string requestDomain = Request.Headers["host"];
                     UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
                     if (user != null)
                     {

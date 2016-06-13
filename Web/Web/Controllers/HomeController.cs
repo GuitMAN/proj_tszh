@@ -39,9 +39,22 @@ namespace Web.Models
             else
                 uk_id = uk.id; 
             Article art = repository.Articles.Where(t => t.title.Equals(id)).Where(u => u.id_uk.Equals(uk_id)).SingleOrDefault();
-
+            if (art == null)
+            {
+                art = new Article();
+            }
+            art.summary = requestDomain;
             return Json(art, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public ActionResult edituk_tpl()
+        {
+            return View();
+        }
+
+
+
 
         [HttpGet]
         [AllowAnonymous]

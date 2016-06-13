@@ -19,7 +19,7 @@ namespace Web
                                      "mytszh.ru",
                                      "mytsn.ru",
                                      "moe-tszh.ru",
-                                     "localhost:51242"
+                                     "localhost:53574"
                                  };
 
 
@@ -40,38 +40,38 @@ namespace Web
             );
 
 
-            //int i = 0;
-            //foreach (string p in subhosts)
-            //{
-            //    i++;
-            //    string i_str = i.ToString();
-            //    routes.Add("default" + i_str, new SubDomainRoute(
-            //            p,
-            //            "",
-            //            new { controller = "User", action = "Index", id = "Главная" },
-            //            new[] { "Web.Controllers" } // Namespaces defaults
-            //            ));
-            //    routes.Add("default_param" + i_str, new SubDomainRoute(
-            //            p,
-            //            "{controller}/{action}/{id}",
-            //            new { controller = "User", action = "Index", id = UrlParameter.Optional },
-            //            new[] { "Web.Controllers" } // Namespaces defaults
-            //            ));
+            int i = 0;
+            foreach (string p in subhosts)
+            {
+                i++;
+                string i_str = i.ToString();
+                routes.Add("default" + i_str, new SubDomainRoute(
+                        p,
+                        "",
+                        new { controller = "Home", action = "Index", id = "Главная" },
+                        new[] { "Web.Controllers" } // Namespaces defaults
+                        ));
+                routes.Add("default_param" + i_str, new SubDomainRoute(
+                        p,
+                        "{controller}/{action}/{id}",
+                        new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                        new[] { "Web.Controllers" } // Namespaces defaults
+                        ));
 
-            //    routes.Add("host_default" + i_str, new SubDomainRoute(
-            //            "{host}."+p,
-            //            "",
-            //            new { controller = "User", action = "Index", id = "Главная" },
-            //            new[] { "Web.Controllers" } // Namespaces defaults
-            //            ));
+                routes.Add("host_default" + i_str, new SubDomainRoute(
+                        "{host}." + p,
+                        "",
+                        new { controller = "Home", action = "Index", id = "Главная" },
+                        new[] { "Web.Controllers" } // Namespaces defaults
+                        ));
 
-            //    routes.Add("host_param" + i_str, new SubDomainRoute(
-            //            "{host}."+p,
-            //            "{controller}/{action}/{id}",
-            //            new { controller = "User", action = "Index", id = UrlParameter.Optional },
-            //            new[] { typeof(Controllers.UserController).Namespace } // Namespaces defaults
-            //            ));
-            //}
+                routes.Add("host_param" + i_str, new SubDomainRoute(
+                        "{host}." + p,
+                        "{controller}/{action}/{id}",
+                        new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                        new[] { typeof(Controllers.UserController).Namespace } // Namespaces defaults
+                        ));
+            }
 
         }
     }

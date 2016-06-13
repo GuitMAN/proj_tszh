@@ -452,7 +452,13 @@ namespace Web.Controllers
 
         }
 
-
+        [HttpGet]
+        public ActionResult EditUk()
+        {
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
+            return Json(uk, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult get_users()
         {
