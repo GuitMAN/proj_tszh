@@ -183,11 +183,17 @@ HomeApp.controller('ViewUsersCtrl', function ($scope) {
 
 })
 
-HomeApp.controller('ViewSettingsCtrl', function ($scope, OperServices, $http, $sce) {
+HomeApp.controller('SettingsCtrl', function ($scope, OperServices, $http, $sce) {
     $scope.model = {
         id: ''
     };
-    OperServices.viewusettings().then(function (response) {
+
+    $scope.submit = function(model) {
+        OperServices.setsettings($scope.model).then(function (response) {
+            $scope.resp = response.data;
+        });
+    };
+    OperServices.viewsettings().then(function (response) {
         $scope.model = response.data;
    
         $http.get(_host + '/admin/ViewAddrUk', { params: { id: $scope.model.id } }).then(function (response) {
@@ -195,6 +201,12 @@ HomeApp.controller('ViewSettingsCtrl', function ($scope, OperServices, $http, $s
             $scope.t = response.data;
         })
     });
+
+    OperServices.viewaddres().then(function (response)
+    {
+        $scope.addresses = response.data;
+    })
+
 })
 
 HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams, $sce) {
@@ -255,12 +267,23 @@ HomeApp.factory('OperServices', function ($http) {
                     return response;
                 })
         },
-        viewusettings: function () {
-        return $http.get(_host + '/admtszh/edituk').then(function (response) {
-            return response;
-        })
-    },
+        viewsettings: function () {
+            return $http.get(_host + '/admtszh/edituk').then(function (response) {
+                return response;
+            })
+        },
+        setsettings: function (uk_model) {
+            return $http.put(_host + '/admtszh/edituk', uk_model).then(function (response) {
+                return response;
+            })
+        },
+        viewaddres: function () {
+            return $http.get(_host + '/admtszh/viewaddruk').then(function (response) {
+                return response;
+            })
+        },
     }
+        
 });
 
 HomeApp.directive('modalDialog', function () {

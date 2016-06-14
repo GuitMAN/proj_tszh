@@ -47,25 +47,6 @@ namespace Web.Controllers
         }
 
 
-        public ActionResult No_uk()
-        {
-            if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
-            UserProfile user;
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                int id = user.UserId;
-            }
-            catch (Exception ex)
-            {
-                Log.Write(ex);
-                return View();
-            }
-
-            return View();
-
-        }
 
         [Authorize]
         public ActionResult profile(string returnUrl)
@@ -723,13 +704,13 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult AjaxStreet(string term = "")
         {
-            IEnumerable<string> categories = repository.uk_adress
+            IEnumerable<string> addresses = repository.uk_adress
                 .Select(p => p.Street)
                 .Where(p => p.ToUpper().Contains(term.ToUpper()))
                 .Distinct()
                 .OrderBy(x => x);
 
-            return Json(categories, JsonRequestBehavior.AllowGet);
+            return Json(addresses, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

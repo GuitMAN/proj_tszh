@@ -1,4 +1,18 @@
-﻿/* User`s controllers & services */
+﻿HomeApp.controller('No_Uk_Ctrl', function ($scope, UserServices ){
+    $scope.model = {
+        'City': '',
+        'Street': '',
+        'House': '',
+        'Apartment':''
+    }
+    //$scope.toSeek = function (selected) {
+     UserServices.seekaddr("").then(function (response) {
+         $scope.streetList = response.data;
+    });
+})
+
+
+/* User`s controllers & services */
 HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Session) {
 
     $scope.feedmodel = {
@@ -272,8 +286,7 @@ HomeApp.controller('ViewDataMetersCtrl', function ($http, $scope, $rootScope, Us
                 //Впоследствие необходимо от location.reload() отойти
                 location.reload(); 
             } 
- 
-        });
+         });
     };
     UserServices.viewdatameters().then(function (response) {
         $scope.datameters.pop();
@@ -282,8 +295,8 @@ HomeApp.controller('ViewDataMetersCtrl', function ($http, $scope, $rootScope, Us
      //   $scope.datameters.cwi.push(response.data.cwi);
      //   $scope.datameters.energoi.push(response.data[0].energoi);
     });
-
 });
+
 
 /* Factory of user`s controller */
 HomeApp.factory('UserServices', function ($http) {
@@ -334,8 +347,51 @@ HomeApp.factory('UserServices', function ($http) {
                     
                     return response;
                 })
+        },
+        seekaddr: function (seek) {
+            return $http.get(_host + '/User/AjaxStreet', seek)
+                .then(function (response) {
+                    return response;
+                })
         }
+
     }
 });
 
 
+/*
+ * Объявляем директиву, которая будет создавать сам список
+ */
+HomeApp.directive('dropdownList',function( $timeout ){
+    return {
+        restrict: 'E',
+        scope: {
+            itemsList: '=',
+            //: '=',
+            placeholder: '@'
+        },
+        template: '<input type="text" ng-model="street" placeholder="{{ placeholder }}" />' +
+                '<div class="search-item-list"><ul class="list">' +
+                '<li ng-repeat="item in itemsList | filter:street" >{{ item }}</li>' +
+                '</ul></div><pre>{{ itemsList | json}}</pre>',
+        link: function (scope, el, attr) {
+            var $listContainer = angular.element(el[0].querySelectorAll('.search-item-list')[0]);
+            el.find('input').bind('focus', function () {
+                $listContainer.addClass('show');
+            });
+            el.find('input').bind('blur', function () {
+                /*
+                   * 'blur' реагирует быстрее чем ng-click,
+                   * поэтому без $timeout chooseItem не успеет поймать item до того, как лист исчезнет
+                   */
+                $timeout(function () { $listContainer.removeClass('show') }, 200);
+            });
+
+            scope.chooseItem = function (item) {
+                scope.street = item;
+                //scope.searchResult = scope.Street;
+                $listContainer.removeClass('show');
+            }
+        }
+    }
+});

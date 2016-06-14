@@ -122,7 +122,11 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
           })
           .when('/settings', {
               templateUrl: _host + '/home/edituk_tpl',
-              controller: 'ViewSettingsCtrl'
+              controller: 'SettingsCtrl'
+          })
+          .when('/no_uk', {
+              templateUrl: _host + '/home/no_uk_tpl',
+              controller: 'No_Uk_Ctrl'
           })
           .otherwise({
               redirectTo: '/'

@@ -1,0 +1,106 @@
+﻿@*@{
+        ViewBag.Title = "No_uk";
+        Layout = "~/Views/Shared/_LayoutUk.cshtml";
+    }*@
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+}
+
+input {
+  padding: 3px 5px;
+  border: 1px solid gray;
+  border-radius: 3px;
+}
+
+.list {
+  list-style-type: none;
+  margin: 0;
+  opacity: 0;
+  padding: 4px 7px;
+  position: absolute;
+  margin-left: -1000px;
+  background: white;
+  box-shadow: 1px 1px 6px rgb(195, 195, 195);
+  border-radius: 2px;
+  -webkit-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+}
+
+.list li {
+  padding: 3px 5px;
+  cursor: pointer;
+}
+
+.list li:hover {
+  background: lightgray;
+}
+
+.show .list { 
+  margin-left: 0;
+  opacity: 1;
+}
+
+.list li .amount {
+  display: inline-block;
+  padding: 2px 3px;
+  background-color: rgb(83, 177, 211);
+  border-radius: 3px;
+  margin: 0 0 3px 10px;
+  font-size: 65%;
+  color: white;
+}
+
+</style>
+
+<div class="row-fluid">
+
+    <h3>Найди свой дом</h3>
+    <br>
+    <form>
+        <div class="form-horizontal">
+            <fieldset>
+                <legend>Введите ваш адрес</legend>
+
+                <div class="form-group">
+                    Город:
+                    <div class="col-md-10">
+                        <select class="form-control text-box single-line" type="text" ng-model="model.City" ng-init="seek.model"></select>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    Улица:
+                    <div class="col-md-10">
+                        @*<input class="form-control text-box single-line " type="text" ng-model="model.Street" ng-init="model.Street">*@
+                        <br><dropdown-list  data-items-list="streetList" data-placeholder="улица..." ></dropdown-list> 
+                    </div>
+                </div>
+                <div class="form-group">
+                    Дом:
+                    <div class="col-md-10">
+                        <label id="buf"></label>
+                        <input class="form-control text-box single-line" type="text" ng-model="model.House" ng-init="model.House">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    Квартира: 
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" type="text" ng-model="model.Apartment" ng-init="model.Apartment">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Поиск" class="btn btn-default" ng-click="toSeek(model)" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</div>
+<pre>{{streetList | json}}</pre>
+<pre>{{ itemsList | json}}</pre>

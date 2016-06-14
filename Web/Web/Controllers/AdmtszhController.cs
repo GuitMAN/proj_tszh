@@ -460,6 +460,37 @@ namespace Web.Controllers
             return Json(uk, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPut]
+        public ActionResult EditUk(uk_profile uk = null)
+        {
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            if ((uk != null) && (admuser != null))
+            {
+                if (uk.id == admuser.id_uk)
+                {
+                    repository.SaveUkProfile(uk);
+                    return Json("Ok");
+                }
+            }
+            return Json("Error","Ошибка доступа");
+        }
+
+
+
+        [HttpGet]
+        public ActionResult ViewAddrUk()
+        {
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            if (admuser != null)
+            {
+                return Json(repository.uk_adress.Where(p => p.id_uk.Equals(admuser.id_uk)), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Error","Ошибка доступа. Не существует профиля оператора");
+            }
+        }
+
         public JsonResult get_users()
         {
 

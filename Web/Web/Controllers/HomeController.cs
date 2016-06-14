@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Web.Models.Repository;
-
+using Web.Utils;
+using WebMatrix.WebData;
 
 namespace Web.Models
 {
@@ -53,6 +54,24 @@ namespace Web.Models
             return View();
         }
 
+        public ActionResult No_uk_tpl()
+        {
+            if (!WebSecurity.IsAuthenticated)
+                return RedirectToAction("Index", "Login");
+            UserProfile user;
+            try
+            {
+                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                int id = user.UserId;
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+                return View();
+            }
+
+            return View();
+        }
 
 
 

@@ -4011,7 +4011,7 @@
     <Content Include="Views\User\editprof.cshtml" />
     <Content Include="Views\User\FeedBack.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\No_uk.cshtml" />
+    <Content Include="Views\Home\No_uk_tpl.cshtml" />
     <Content Include="Views\User\profile.cshtml" />
     <Content Include="Views\User\SeekAdress.cshtml" />
     <Content Include="Views\User\send_profile.cshtml" />

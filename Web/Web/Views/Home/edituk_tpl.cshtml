@@ -1,59 +1,85 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "Настройки профиля ТСЖ";
     //   Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<h2>Настройки управляющей компании</h2>
+<form>
+    @*@Html.AntiForgeryToken()*@
 
+    <div class="form-horizontal">
+        <h4>{{model.Name}}</h4>
+        <hr />
 
+        <input type="hidden" ng-model="model.id" ng-init="model.id">
 
-<div >
-    <h2>Настройки управляющей компании</h2>
-    <form>
-        @*@Html.AntiForgeryToken()*@
-
-        <div class="form-horizontal">
-            <h4>{{model.Name}}</h4>
-            <hr />
-            
-            <input type="hidden" ng-model="model.id" ng-init="model.id">
-
-            <div class="form-group">
-                <label class="control-label col-md-2">Имя :</label>
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" type="text" ng-model="model.Name" ng-init="model.Name">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("E-mail: ", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" type="text" ng-model="model.Email" ng-init="model.Email">
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("HostName: ", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input class="form-control text-box single-line" type="text" ng-model="model.host" ng-init="model.host" ng-disabled="true">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Сохранить" class="btn btn-default" ng-click="submit(model)" />
-                </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Имя :</label>
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" type="text" ng-model="model.Name" ng-init="model.Name">
             </div>
         </div>
-    </form>
-</div>
-
+        <div class="form-group">
+            @Html.Label("E-mail: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" type="text" ng-model="model.Email" ng-init="model.Email">
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("HostName: ", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" type="text" ng-model="model.host" ng-init="model.host" ng-disabled="true">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" ng-click="submit(model)" />
+            </div>
+        </div>
+    </div>
+</form>
 
 <div>
     <p>
-       Добавить новый адрес (link)
+        Добавить новый адрес (link)
     </p>
-    <p ng-bind-html="sce.trustAsHtml(t)"></p>
+    @*<p ng-bind-html="sce.trustAsHtml(t)"></p>*@
+    <h2>Список домов, принадлежащих ТСЖ</h2>
+
+    <div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Город")
+            </th>
+            <th>
+                @Html.DisplayName("Улица")
+            </th>
+            <th>
+                @Html.DisplayName("Дом")
+            </th>
+            <th></th>
+        </tr>
+        <tr ng-repeat="item in addresses">
+            <td>
+                {{item.City}}
+            </td>
+            <td>
+                {{item.Street}}
+            </td>
+            <td>
+                {{ item.House}}
+            </td>
+            <td>
+                Edit | Del
+            </td>
+        </tr>
+    </table>
+</div>
+
 </div>
 <div>
     @*@Html.ActionLink("Вернуться к списку", "ViewUk")*@
 </div>
 
+<pre>{{addresses | json}}</pre>
