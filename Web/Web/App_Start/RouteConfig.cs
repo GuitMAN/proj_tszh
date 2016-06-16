@@ -28,15 +28,15 @@ namespace Web
                url: "",
                defaults: new { controller = "Home", action = "Index" }
             );
-            routes.MapRoute(
-                name: "",
-                url: "Home/"+'#'+"/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "",
+            //    url: "Home/"+'#'+"/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
             routes.MapRoute(
                     name: "",
                     url: "{controller}/{action}/{id}",
-                    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                    defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }
             );
 
 

@@ -702,17 +702,44 @@ namespace Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult AjaxStreet(string term = "")
+        public ActionResult AjaxAddress(string term = "")
+        {
+            IEnumerable<uk_adress> addresses = repository.uk_adress
+                //.Select(p => p.Street)
+                .Where(p => p.Street.ToUpper().Contains(term.ToUpper()))
+                .Distinct()
+                .OrderBy(x => x.Street);
+
+            return Json(addresses, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult AjaxStreet(string street = "")
         {
             IEnumerable<string> addresses = repository.uk_adress
                 .Select(p => p.Street)
-                .Where(p => p.ToUpper().Contains(term.ToUpper()))
+                .Where(p => p.ToUpper().Contains(street.ToUpper()))
                 .Distinct()
                 .OrderBy(x => x);
 
             return Json(addresses, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult AjaxHouse(string street = "")
+        {
+            IEnumerable<string> addresses = repository.uk_adress
+                .Where(p => p.Street.ToUpper().Equals(street.ToUpper()))
+                .Select(p => p.House)
+                .Distinct()
+                .OrderBy(x => x);
+
+            return Json(addresses, JsonRequestBehavior.AllowGet);
+        }
+
+
         #endregion
-	}
+    }
 }

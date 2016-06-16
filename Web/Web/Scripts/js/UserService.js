@@ -1,18 +1,4 @@
-﻿HomeApp.controller('No_Uk_Ctrl', function ($scope, UserServices ){
-    $scope.model = {
-        'City': '',
-        'Street': '',
-        'House': '',
-        'Apartment':''
-    }
-    //$scope.toSeek = function (selected) {
-     UserServices.seekaddr("").then(function (response) {
-         $scope.streetList = response.data;
-    });
-})
-
-
-/* User`s controllers & services */
+﻿/* User`s controllers & services */
 HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Session) {
 
     $scope.feedmodel = {
@@ -348,8 +334,8 @@ HomeApp.factory('UserServices', function ($http) {
                     return response;
                 })
         },
-        seekaddr: function (seek) {
-            return $http.get(_host + '/User/AjaxStreet', seek)
+        seekaddr: function () {
+            return $http.get(_host + '/User/AjaxStreet')
                 .then(function (response) {
                     return response;
                 })
@@ -359,6 +345,51 @@ HomeApp.factory('UserServices', function ($http) {
 });
 
 
+HomeApp.controller('No_Uk_Ctrl', function ($scope, $rootScope, UserServices, $http) {
+    $scope.model = {
+        'Street': '',
+        'House': '',
+        'Apartment':''
+    }
+   
+        $http({
+            method: 'GET',
+            url: '/User/AjaxStreet'
+        }).success(function (data, status, headers, config) {
+            $scope.streets = data;
+        }).error(function (data, status, headers, config) {
+            $scope.message = 'Unexpected Error';
+        });
+    
+
+        $scope.gethouses = function () {
+        var streetId = $scope.street;
+        if (streetId) {
+            $http(
+                {
+                    method: 'GET',
+                    url: '/User/AjaxHouse',
+                    params:{ street: streetId }
+                })
+                .success(function (data, status, headers, config) {
+                    $scope.houses = data;
+                });
+        }
+        else {
+            $scope.houses = null;
+        }
+    };
+
+        $scope.SetAddres = function () {
+
+        }
+    //UserServices.seekaddr().then(function (response) {
+    //    $scope.adsressList = response.data;
+    //    UserServices.houseList 
+    //});
+    
+})
+
 /*
  * Объявляем директиву, которая будет создавать сам список
  */
@@ -367,16 +398,16 @@ HomeApp.directive('dropdownList',function( $timeout ){
         restrict: 'E',
         scope: {
             itemsList: '=',
-            //: '=',
+            searchResult: '=',
             placeholder: '@'
         },
-        template: '<input type="text" ng-model="street" placeholder="{{ placeholder }}" />' +
+        template: '<input type="text" ng-model="search" placeholder="{{ placeholder }}" />' +
                 '<div class="search-item-list"><ul class="list">' +
-                '<li ng-repeat="item in itemsList | filter:street" >{{ item }}</li>' +
+                '<li ng-repeat="item in itemsList | filter:search" ng-click="chooseItem( item )">{{item.Street}}</li>' +
                 '</ul></div><pre>{{ itemsList | json}}</pre>',
         link: function (scope, el, attr) {
             var $listContainer = angular.element(el[0].querySelectorAll('.search-item-list')[0]);
-            el.find('input').bind('focus', function () {
+                el.find('input').bind('focus', function () {
                 $listContainer.addClass('show');
             });
             el.find('input').bind('blur', function () {
@@ -388,8 +419,8 @@ HomeApp.directive('dropdownList',function( $timeout ){
             });
 
             scope.chooseItem = function (item) {
-                scope.street = item;
-                //scope.searchResult = scope.Street;
+                scope.search = item.Street; 
+                scope.searchResult = scope.search;
                 $listContainer.removeClass('show');
             }
         }

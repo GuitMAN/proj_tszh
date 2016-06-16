@@ -63,44 +63,57 @@ input {
             <fieldset>
                 <legend>Введите ваш адрес</legend>
 
-                <div class="form-group">
-                    Город:
-                    <div class="col-md-10">
-                        <select class="form-control text-box single-line" type="text" ng-model="model.City" ng-init="seek.model"></select>
+                @*<div class="form-group">
+        Город:
+        <div class="col-md-10">
+            <select class="form-control text-box single-line" type="text" ng-model="model.City" ng-init="seek.model"></select>
 
-                    </div>
-                </div>
+        </div>
+    </div>
 
-                <div class="form-group">
-                    Улица:
-                    <div class="col-md-10">
-                        @*<input class="form-control text-box single-line " type="text" ng-model="model.Street" ng-init="model.Street">*@
-                        <br><dropdown-list  data-items-list="streetList" data-placeholder="улица..." ></dropdown-list> 
-                    </div>
-                </div>
-                <div class="form-group">
-                    Дом:
-                    <div class="col-md-10">
-                        <label id="buf"></label>
-                        <input class="form-control text-box single-line" type="text" ng-model="model.House" ng-init="model.House">
+    <div class="form-group">
+        Улица:
+        <div class="col-md-10">
+            <br><dropdown-list  data-items-list="adsressList" data-search-result="model.Street" data-placeholder="улица..." ></dropdown-list>
+            {{model.Street}}
+        </div>
+    </div>
 
-                    </div>
-                </div>
-                <div class="form-group">
-                    Квартира: 
-                    <div class="col-md-10">
-                        <input class="form-control text-box single-line" type="text" ng-model="model.Apartment" ng-init="model.Apartment">
-                    </div>
-                </div>
+    <div class="form-group">
+        Дом:
+        <div class="col-md-10">
+            <label id="buf"></label>
+            <input class="form-control text-box single-line" type="text" ng-model="model.House" ng-init="model.House" >
 
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Поиск" class="btn btn-default" ng-click="toSeek(model)" />
-                    </div>
+        </div>
+    </div>
+    <div class="form-group">
+        Квартира:
+        <div class="col-md-10">
+            <input class="form-control text-box single-line" type="text" ng-model="model.Apartment" ng-init="model.Apartment">
+        </div>
+    </div>
+                *@
+
+
+
+    <div>
+        <select data-ng-model="street" data-ng-options="street for street in streets" data-ng-change="gethouses()">
+            <option value="">-- Select Street --</option>
+        </select>
+
+        <select data-ng-model="house" data-ng-disabled="!street" data-ng-options="house for house in houses">
+            <option value="">-- Select House --</option>
+        </select>
+                        <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Далее" class="btn btn-default" ng-click="SetAddres()" ng-disabled="!house" />
+        </div>
+    </div>
                 </div>
             </fieldset>
         </div>
     </form>
 </div>
-<pre>{{streetList | json}}</pre>
-<pre>{{ itemsList | json}}</pre>
+<pre>{{streets | json}}</pre>
+<pre>{{houses | json}}</pre>
