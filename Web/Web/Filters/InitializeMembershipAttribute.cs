@@ -13,28 +13,46 @@ using System.Linq;
 
 namespace Web.Filter
 {
-   // [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    // [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 
     public class InitializeMembershipAttribute : AuthorizeAttribute
     {
 
-        private string[] allowedUsers;
-        private string[] allowedRoles;
-
-        public void MyAuthorizeAttribute(string[] users, string[] roles)
-        {
-            allowedUsers = users;
-            allowedRoles = roles;
-        }
+        private string[] allowedUsers = new string[] { };
+        private string[] allowedRoles = new string[] { };
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            return httpContext.Request.IsAuthenticated &&
-                allowedUsers.Contains(httpContext.User.Identity.Name) &&
-                Role(httpContext);
+            if (!String.IsNullOrEmpty(base.Users))
+            {
+                allowedUsers = base.Users.Split(new char[] { ',' });
+                for (int i = 0; i < allowedUsers.Length; i++)
+                {
+                    allowedUsers[i] = allowedUsers[i].Trim();
+                }
+            }
+            if (!String.IsNullOrEmpty(base.Roles))
+            {
+                allowedRoles = base.Roles.Split(new char[] { ',' });
+                for (int i = 0; i < allowedRoles.Length; i++)
+                {
+                    allowedRoles[i] = allowedRoles[i].Trim();
+                }
+            }
+
+            return httpContext.Request.IsAuthenticated;
         }
 
-        private bool Role(HttpContextBase httpContext)
+        protected bool User(HttpContextBase httpContext)
+        {
+            if (allowedUsers.Length > 0)
+            {
+                return allowedUsers.Contains(httpContext.User.Identity.Name);
+            }
+            return true;
+        }
+
+        protected bool Role(HttpContextBase httpContext)
         {
             if (allowedRoles.Length > 0)
             {
@@ -48,8 +66,28 @@ namespace Web.Filter
             return true;
         }
 
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            if (!AuthorizeCore(filterContext.HttpContext))
+            {
+                if (Role(filterContext.HttpContext))
+                {
+                    filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
+                }
+            }
+            else
+            {
+                if (!Role(filterContext.HttpContext))
+                {
+                    filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
+
+                }
+            }
+        }
+
     }
-    
+
 
 
 

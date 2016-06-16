@@ -350,7 +350,7 @@ namespace Web.Controllers
            
 
         [HttpGet]
-        [Authorize]
+        [InitializeMembership]
         public ActionResult editprof()
         {
             //---------------------------
@@ -377,7 +377,7 @@ namespace Web.Controllers
 
 
         [HttpPut]
-        [Authorize]
+       [InitializeMembership]
         public ActionResult editprof(UserProfile model)
         {
             //---------------------------
@@ -398,14 +398,14 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        [InitializeMembershipAttribute(Roles = "User")]
+        [InitializeMembership(Roles = "User")]
         public ActionResult ViewMeters()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [InitializeMembership(Roles = "User")]
         public ActionResult ViewMeters(int id = 0)
         {
             //Test Autorize

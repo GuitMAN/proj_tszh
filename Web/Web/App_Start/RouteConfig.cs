@@ -24,7 +24,7 @@ namespace Web
 
 
             routes.MapRoute(
-               name: "",
+               name: "def",
                url: "",
                defaults: new { controller = "Home", action = "Index" }
             );

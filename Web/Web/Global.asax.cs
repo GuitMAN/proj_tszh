@@ -40,7 +40,6 @@ namespace Web
 
         protected void Application_BeginRequest()
         {
-           // var allowedOrigins = new[] { "http://xn----itbevkug.xn--p1ai" };
             var request = HttpContext.Current.Request;
             var response = HttpContext.Current.Response;
             var origin = request.Headers["Origin"];
