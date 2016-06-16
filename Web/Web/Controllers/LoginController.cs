@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 namespace Web.Controllers
 {
 
-    //[InitializeMembership]
+    [InitializeMembership]
 
     public class LoginController : Controller
     {

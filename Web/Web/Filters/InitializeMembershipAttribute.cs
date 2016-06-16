@@ -9,50 +9,50 @@ using WebMatrix.WebData;
 using System.Web.Helpers;
 using System.Web;
 using System.Net;
+using System.Linq;
 
 namespace Web.Filter
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+   // [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 
-    public sealed class InitializeMembershipAttribute : ActionFilterAttribute//, IAuthorizationFilter
+    public class InitializeMembershipAttribute : AuthorizeAttribute
     {
 
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        private string[] allowedUsers;
+        private string[] allowedRoles;
+
+        public void MyAuthorizeAttribute(string[] users, string[] roles)
         {
+            allowedUsers = users;
+            allowedRoles = roles;
         }
 
-        //private void ValidateRequestHeader(HttpRequestBase request)
-        //{
-        //    string cookieToken = String.Empty;
-        //    string formToken = String.Empty;
-        //    string tokenValue = request.Headers["RequestVerificationToken"];
-        //    if (!String.IsNullOrEmpty(tokenValue))
-        //    {
-        //        string[] tokens = tokenValue.Split(':');
-        //        if (tokens.Length == 2)
-        //        {
-        //            cookieToken = tokens[0].Trim();
-        //            formToken = tokens[1].Trim();
-        //        }
-        //    }
-        //    AntiForgery.Validate(cookieToken, formToken);
-        //}
-
-
-
-        public void OnAuthenticationChallenge(AuthenticationChallengeContext context)
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            if (context.Result == null || context.Result is HttpUnauthorizedResult)
+            return httpContext.Request.IsAuthenticated &&
+                allowedUsers.Contains(httpContext.User.Identity.Name) &&
+                Role(httpContext);
+        }
+
+        private bool Role(HttpContextBase httpContext)
+        {
+            if (allowedRoles.Length > 0)
             {
-                // ...
+                for (int i = 0; i < allowedRoles.Length; i++)
+                {
+                    if (httpContext.User.IsInRole(allowedRoles[i]))
+                        return true;
+                }
+                return false;
             }
-            else
-            {
-                //Вам сюда нельзя
-            }
+            return true;
         }
 
     }
+    
+
+
+
 
     public class ValidateJsonAntiForgeryToken : AuthorizeAttribute
     {

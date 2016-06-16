@@ -9,7 +9,7 @@ using Web.Models;
 using Web.Models.Repository;
 using WebMatrix.WebData;
 using Web.Utils;
-
+using Web.Filter;
 
 namespace Web.Controllers
 {
@@ -350,7 +350,7 @@ namespace Web.Controllers
            
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [Authorize]
         public ActionResult editprof()
         {
             //---------------------------
@@ -377,7 +377,7 @@ namespace Web.Controllers
 
 
         [HttpPut]
-        [Authorize(Roles = "User")]
+        [Authorize]
         public ActionResult editprof(UserProfile model)
         {
             //---------------------------
@@ -398,7 +398,7 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [InitializeMembershipAttribute(Roles = "User")]
         public ActionResult ViewMeters()
         {
             return View();
