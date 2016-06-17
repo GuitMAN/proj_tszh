@@ -11,12 +11,13 @@ using System.Web;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using Web.Utils;
+using Web.Filter;
 //using Web.Filter;
 //using Microsoft.AspNet.Identity;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles = "Moder")]
+    [MyAuthorize(Roles = "Moder")]
     public class AdmtszhController : Controller
     {
         Repo repository;
@@ -33,7 +34,6 @@ namespace Web.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult profile(string returnUrl)
         {
@@ -64,7 +64,6 @@ namespace Web.Controllers
             return View(admuser);
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult editprof()
         {
@@ -93,7 +92,6 @@ namespace Web.Controllers
             return View(user);
         }
 
-        [Authorize]
         [HttpPut]
         public ActionResult editprof(Admtszh model)
         {
@@ -112,7 +110,6 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [Authorize]
         public ActionResult readFeedBack()
         {
             //if (!WebSecurity.Initialized)
@@ -156,7 +153,6 @@ namespace Web.Controllers
         }
 
 
-        [Authorize]
         [HttpGet]
         public ActionResult ViewUsers()
         {
@@ -198,7 +194,6 @@ namespace Web.Controllers
             return View(users);
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult EditUser(int id = 0)
         {       

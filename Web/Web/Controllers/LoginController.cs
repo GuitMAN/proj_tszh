@@ -15,8 +15,7 @@ using System.Text.RegularExpressions;
 namespace Web.Controllers
 {
 
-    [InitializeMembership]
-
+    [MyAuthorize]
     public class LoginController : Controller
     {
         Repo repository;
@@ -141,7 +140,7 @@ namespace Web.Controllers
             }
             return RedirectToAction("Index", "Home");
         } 
-        [Authorize]
+        [MyAuthorize]
         public ActionResult LogoOut(string ReturnUrl)
         {
             WebSecurity.Logout();
@@ -150,7 +149,7 @@ namespace Web.Controllers
         }
 
 
-        [Authorize]
+        [MyAuthorize]
         public string getUser()
         {
             int us_id = WebSecurity.CurrentUserId;
@@ -159,7 +158,7 @@ namespace Web.Controllers
             return user;
         }
 
-        [Authorize]
+        [MyAuthorize]
         public string get_uk(int uk = 0)
         {
          

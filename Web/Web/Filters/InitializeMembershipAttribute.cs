@@ -10,12 +10,13 @@ using System.Web.Helpers;
 using System.Web;
 using System.Net;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 
 namespace Web.Filter
 {
     // [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 
-    public class InitializeMembershipAttribute : AuthorizeAttribute
+    public class MyAuthorizeAttribute : AuthorizeAttribute
     {
 
         private string[] allowedUsers = new string[] { };
@@ -66,22 +67,35 @@ namespace Web.Filter
             return true;
         }
 
+        private bool isRequareRole(string role)
+        {
+            for (int i = 0; i < allowedRoles.Length; i++)
+            {
+                if (allowedRoles[i].Equals(role))
+                    return true;
+            }
+            return false;
+        }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            if (!AuthorizeCore(filterContext.HttpContext))
+            AuthorizeCore(filterContext.HttpContext);
+            if (Role(filterContext.HttpContext))
             {
-                if (Role(filterContext.HttpContext))
-                {
-                    filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
-                }
+                //if (!AuthorizeCore(filterContext.HttpContext))
+                //{
+                //    filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
+                //}
             }
             else
             {
-                if (!Role(filterContext.HttpContext))
+                if (isRequareRole("User"))
+                {
+                    filterContext.Result = new ViewResult { ViewName = "~/Views/home/no_uk_tpl.cshtml" };
+                }
+                else
                 {
                     filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
-
                 }
             }
         }

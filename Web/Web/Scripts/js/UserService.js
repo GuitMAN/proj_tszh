@@ -96,8 +96,6 @@ HomeApp.controller('MetersCtrl', function ($http, $scope, UserServices, Session)
 
     UserServices.viewmeters().then(function (response) {
         $scope.meters = response.data;
-    }).error(function (res) {
-        $scope.meters = res.data;
     });
 });
 
@@ -283,15 +281,9 @@ HomeApp.factory('UserServices', function ($http) {
               })
         },
         viewmeters: function () {
-            return $http.post(_host + '/User/ViewMeters'//,
-        //         {
-        //             'Content-Type':'application/json'
-        //}
-        )
+            return $http.post(_host + '/User/ViewMeters')
                 .then(function (response) {
                     return response;
-                }).error(function (response) {
-                    return response
                 })
         },
         addmeter: function (meter) {
@@ -304,8 +296,6 @@ HomeApp.factory('UserServices', function ($http) {
             return $http.post(_host + '/User/ViewDataMeters')
                 .then(function (response) {
                     return response;
-                }).error(function (response) {
-                    return response
                 })
         },
         addvaluemeter: function (valuemeter) {

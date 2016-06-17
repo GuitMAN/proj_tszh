@@ -48,7 +48,7 @@ namespace Web.Controllers
 
 
 
-        [Authorize]
+        [MyAuthorize]
         public ActionResult profile(string returnUrl)
         {
             //---------------------------
@@ -75,7 +75,7 @@ namespace Web.Controllers
             return View(user);
         }
 
-        [Authorize]
+        [MyAuthorize]
         [HttpGet]
         public ActionResult send_profile()
         {
@@ -108,7 +108,7 @@ namespace Web.Controllers
             return View(model);
         }
 
-        [Authorize]
+        [MyAuthorize]
         [HttpPost]
         public ActionResult send_profile(UserProfile_nouk_form model)
         {
@@ -165,7 +165,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult FeedBack()
         {
             //---------------------------
@@ -206,7 +206,7 @@ namespace Web.Controllers
 
         // Перегруженная версия для сохранения изменений
         [HttpPost]
-        [Authorize]
+        [MyAuthorize]
         [ValidateInput(true)]
         public ActionResult FeedBack(feedback mess)
         {
@@ -271,7 +271,7 @@ namespace Web.Controllers
             return Json(new string[] { "Error", "Ошибка" });
         }
 
-        [Authorize]
+        [MyAuthorize]
         private ActionResult FeedBack_from_nouk(feedback mess)
         {
             //---------------------------
@@ -312,7 +312,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [MyAuthorize]
         public ActionResult SeekAdress()
         {
             //---------------------------
@@ -324,7 +324,7 @@ namespace Web.Controllers
 
         // Перегруженная версия для сохранения изменений
         [HttpPost]
-        [Authorize]
+        [MyAuthorize]
         public ActionResult SeekAdress(seek_adress model)
         {
             //---------------------------
@@ -350,7 +350,7 @@ namespace Web.Controllers
            
 
         [HttpGet]
-        [InitializeMembership]
+        [MyAuthorize]
         public ActionResult editprof()
         {
             //---------------------------
@@ -377,7 +377,7 @@ namespace Web.Controllers
 
 
         [HttpPut]
-       [InitializeMembership]
+       [MyAuthorize]
         public ActionResult editprof(UserProfile model)
         {
             //---------------------------
@@ -398,14 +398,14 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        [InitializeMembership(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult ViewMeters()
         {
             return View();
         }
 
         [HttpPost]
-        [InitializeMembership(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult ViewMeters(int id = 0)
         {
             //Test Autorize
@@ -426,7 +426,7 @@ namespace Web.Controllers
 
         //Добавление счетчика
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult AddMeter()
         {
             //Test Autorize
@@ -438,7 +438,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult AddMeter(Counter_model_add model_add)
         {
             //Test Autorize
@@ -485,7 +485,7 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult AddValueMeter(Counter_data model_data)
         {
             //Test Autorize
@@ -509,14 +509,14 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult ViewDataMeters()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult ViewDataMeters(int month = 0, int year = 0)
         {
 
@@ -647,7 +647,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "User")]
+        [MyAuthorize(Roles = "User")]
         public ActionResult AddCounterMonthValue(int type = 0)
         {
             if (type == 0) { return View("Error"); }
