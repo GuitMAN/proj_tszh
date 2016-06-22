@@ -66,10 +66,9 @@ namespace Web.Controllers
                         {
                             //User have no current direct company
                             TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                            
+                            //WebSecurity.Logout();   
+                            //return Json(new string[] { "Error", "Имя пользователя или пароль указаны неверно." });                        
                             return Json(result);
-                            //WebSecurity.Logout();
-                          //return new HttpStatusCodeResult(203, "login или пароль");
                         }
                     }
                     else
