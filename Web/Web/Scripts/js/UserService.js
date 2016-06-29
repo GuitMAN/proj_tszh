@@ -313,8 +313,18 @@ HomeApp.factory('UserServices', function ($http) {
                 {
                     return response
                 })
+        },
+        getIdaddr: function (region, street, house) {
+            return $http(
+                {
+                    method: 'GET',
+                    url: '/User/getIdadress',
+                    params: { region: region, street: street, house: house }
+                })
+                .success(function (data, status, headers, config) {
+                    return data;
+                });
         }
-
     }
 });
 
@@ -335,7 +345,7 @@ HomeApp.controller('No_Uk_Ctrl', function ($scope, $rootScope, UserServices, $ht
             $scope.message = 'Unexpected Error';
         });
     
-
+        $rootScope.address = 0;
         $scope.gethouses = function () {
         var streetId = $scope.street;
         if (streetId) {
@@ -355,8 +365,12 @@ HomeApp.controller('No_Uk_Ctrl', function ($scope, $rootScope, UserServices, $ht
     };
 
         $scope.SetAddres = function () {
-
+            UserServices.getIdaddr("Саратов", $scope.street, $scope.house).then(function (response) {
+                $rootScope.address = response.data;
+            })
+            
         }
+
     //UserServices.seekaddr().then(function (response) {
     //    $scope.adsressList = response.data;
     //    UserServices.houseList 

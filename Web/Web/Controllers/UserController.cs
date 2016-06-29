@@ -739,6 +739,15 @@ namespace Web.Controllers
             return Json(addresses, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult getIdadress(string region = "", string street = "", string house = "")
+        {
+            int idAddress = repository.uk_adress
+                .Where(r => r.City.Equals(region))
+                .Where(s => s.Street.Equals(street))
+                .Where(h => h.House.Equals(house)).Select(i => i.id).SingleOrDefault();
+
+            return Json(idAddress, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
     }

@@ -1,120 +1,161 @@
-﻿@*@{
-        ViewBag.Title = "No_uk";
-        Layout = "~/Views/Shared/_LayoutUk.cshtml";
-    }*@
-<div ng-controller="No_Uk_Ctrl">
-@*<style>
-body {
-  font-family: Arial, sans-serif;
-}
+﻿<div ng-controller="No_Uk_Ctrl">
+    @*<style>
+        body {
+          font-family: Arial, sans-serif;
+        }
 
-input {
-  padding: 3px 5px;
-  border: 1px solid gray;
-  border-radius: 3px;
-}
+        input {
+          padding: 3px 5px;
+          border: 1px solid gray;
+          border-radius: 3px;
+        }
 
-.list {
-  list-style-type: none;
-  margin: 0;
-  opacity: 0;
-  padding: 4px 7px;
-  position: absolute;
-  margin-left: -1000px;
-  background: white;
-  box-shadow: 1px 1px 6px rgb(195, 195, 195);
-  border-radius: 2px;
-  -webkit-transition: opacity 0.4s;
-  transition: opacity 0.4s;
-}
+        .list {
+          list-style-type: none;
+          margin: 0;
+          opacity: 0;
+          padding: 4px 7px;
+          position: absolute;
+          margin-left: -1000px;
+          background: white;
+          box-shadow: 1px 1px 6px rgb(195, 195, 195);
+          border-radius: 2px;
+          -webkit-transition: opacity 0.4s;
+          transition: opacity 0.4s;
+        }
 
-.list li {
-  padding: 3px 5px;
-  cursor: pointer;
-}
+        .list li {
+          padding: 3px 5px;
+          cursor: pointer;
+        }
 
-.list li:hover {
-  background: lightgray;
-}
+        .list li:hover {
+          background: lightgray;
+        }
 
-.show .list { 
-  margin-left: 0;
-  opacity: 1;
-}
+        .show .list {
+          margin-left: 0;
+          opacity: 1;
+        }
 
-.list li .amount {
-  display: inline-block;
-  padding: 2px 3px;
-  background-color: rgb(83, 177, 211);
-  border-radius: 3px;
-  margin: 0 0 3px 10px;
-  font-size: 65%;
-  color: white;
-}
+        .list li .amount {
+          display: inline-block;
+          padding: 2px 3px;
+          background-color: rgb(83, 177, 211);
+          border-radius: 3px;
+          margin: 0 0 3px 10px;
+          font-size: 65%;
+          color: white;
+        }
 
-</style>*@
+        </style>*@
 
-<div class="row-fluid">
+    <div class="row-fluid">
 
-    <h3>Найди свой дом</h3>
-    <br>
-    <form>
-        <div class="form-horizontal">
-            <fieldset>
-                <legend>Введите ваш адрес</legend>
+        <h3>Найди свой дом</h3>
+        <br>
+        <form>
+            <div class="form-horizontal">
+                <fieldset ng-hide="address">
+                    <legend>Введите ваш адрес</legend>
 
-                @*<div class="form-group">
-        Город:
-        <div class="col-md-10">
-            <select class="form-control text-box single-line" type="text" ng-model="model.City" ng-init="seek.model"></select>
+                    <div>
+                        <select data-ng-model="street" data-ng-options="street for street in streets" data-ng-change="gethouses()">
+                            <option value="">-- Select Street --</option>
+                        </select>
 
-        </div>
-    </div>
-
-    <div class="form-group">
-        Улица:
-        <div class="col-md-10">
-            <br><dropdown-list  data-items-list="adsressList" data-search-result="model.Street" data-placeholder="улица..." ></dropdown-list>
-            {{model.Street}}
-        </div>
-    </div>
-
-    <div class="form-group">
-        Дом:
-        <div class="col-md-10">
-            <label id="buf"></label>
-            <input class="form-control text-box single-line" type="text" ng-model="model.House" ng-init="model.House" >
-
-        </div>
-    </div>
-    <div class="form-group">
-        Квартира:
-        <div class="col-md-10">
-            <input class="form-control text-box single-line" type="text" ng-model="model.Apartment" ng-init="model.Apartment">
-        </div>
-    </div>
-                *@
-
-
-
-    <div>
-        <select data-ng-model="street" data-ng-options="street for street in streets" data-ng-change="gethouses()">
-            <option value="">-- Select Street --</option>
-        </select>
-
-        <select data-ng-model="house" data-ng-disabled="!street" data-ng-options="house for house in houses">
-            <option value="">-- Select House --</option>
-        </select>
+                        <select data-ng-model="house" data-ng-disabled="!street" data-ng-options="house for house in houses">
+                            <option value="">-- Select House --</option>
+                        </select>
                         <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Далее" class="btn btn-default" ng-click="SetAddres()" ng-disabled="!house" />
-        </div>
-    </div>
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Далее" class="btn btn-default" ng-click="SetAddres()" ng-disabled="!house" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+                <div ng-show="address" ng-controller="CreateProfCtrl" ng-init="profmodel.Adress = address">
+                    <h3>Редактирование профиля</h3>
+
+                    <div ng-hide="status" class="form-horizontal">
+                        @*<input type="hidden" ng-model="profmodel.Apartment" ng-init="profmodel.Apartment">*@
+                        <input type="hidden" ng-model="profmodel.Adress"  value='{{address}}'>
+                        <span ng-show="response[1]" class="label label-important">
+                            {{response[1]}}
+                        </span>
+                        <fieldset>
+                            <legend></legend>
+                            <div class="form-group">
+                                Фамилия
+
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.SurName" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                Имя
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.Name" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                Отчество
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.Patronymic">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                Лицевой счет
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.Personal_Account" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                E-mail
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.Email" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                phone
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.phone" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                mobile
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.mobile" >
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Сохранить" class="btn btn-default" ng-click="submit(profmodel)">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <pre {{profmodel.Adress | json }}></pre>
+                    <pre> {{address | json }}</pre>
                 </div>
-            </fieldset>
-        </div>
-    </form>
-</div>
+            </div>
+        </form>
+        <span ng-show="response[1]" class="badge badge-success">
+            {{response[1]}}
+        </span>
+    </div>
+
+
 <pre>{{streets | json}}</pre>
 <pre>{{houses | json}}</pre>
+
 </div>
