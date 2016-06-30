@@ -3230,7 +3230,7 @@
     <Content Include="Views\Home\No_uk_tpl.cshtml" />
     <Content Include="Views\User\profile.cshtml" />
     <Content Include="Views\User\SeekAdress.cshtml" />
-    <Content Include="Views\User\send_profile.cshtml" />
+    <Content Include="Views\Home\send_profile.cshtml" />
     <Content Include="Views\Nav\Menu.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Manage.cshtml" />

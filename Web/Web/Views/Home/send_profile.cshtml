@@ -1,10 +1,4 @@
-﻿@model Web.Models.UserProfile_nouk_form
-
-@*@{
-        ViewBag.Title = "send_profile";
-        Layout = "~/Views/Shared/_LayoutUk.cshtml";
-    }*@
-<div ng-controller="CreateProfCtrl">
+﻿<div ng-controller="CreateProfCtrl">
     <form>
         <div ng-hide="status" class="form-horizontal">
             @*@Html.AntiForgeryToken()*@
@@ -19,7 +13,7 @@
                     {{response[1]}}
                 </span>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SurName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.SurName, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.SurName" ng-init="profmodel.SurName = ''" value="">
                         @*@Html.EditorFor(model => model.SurName, new { htmlAttributes = new { @class = "form-control" } })*@
@@ -27,48 +21,48 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.Name" ng-init="profmodel.Name = ''" value="">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Patronymic, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.Patronymic, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.Patronymic" ng-init="profmodel.Patronymic = ''" value="">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Adress, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.Adress, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.Adress" ng-init="" value="">
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Apartment, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.Apartment, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.Apartment"  value="">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Personal_Account, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.Personal_Account, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.Personal_Account" value="">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.Email" ng-init="profmodel.Email = ''" value="">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @*@Html.LabelFor(model => model.phone, htmlAttributes: new { @class = "control-label col-md-2" })*@
                     <div class="col-md-10">
                         <input class="form-control text-box single-line" type="text" ng-model="profmodel.phone" ng-init="profmodel.phone = ''" value="">
                     </div>

@@ -58,7 +58,7 @@ HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Sessio
 });
 
 /* User`s controllers & services */
-HomeApp.controller('CreateProfCtrl', function ($http, $scope, UserServices, Session, $location) {
+HomeApp.controller('CreateProfCtrl', function ($http, $rootScope, $scope, UserServices, Session, $location, dataStorage) {
 
     $scope.profmodel = {
         id_uk: '',
@@ -73,6 +73,12 @@ HomeApp.controller('CreateProfCtrl', function ($http, $scope, UserServices, Sess
         phone: '',
         mobile: ''
     };
+
+    UserServices.editprof_get().then(function (response) {
+        if (response.data != '') {
+            $scope.profmodel = response.data;
+        }
+    })
 
     $scope.status = false;
     $scope.submit = function (profmodel) {
@@ -268,6 +274,16 @@ HomeApp.factory('UserServices', function ($http) {
                   return response;
               })
         },
+        editprof_get: function () {
+            return  $http(
+                {
+                    method: 'GET',
+                    url: '/User/editprof',
+                    //params: { region: region, street: street, house: house }
+                }).then(function (response) {
+                    return response;
+                })
+        },
         editprof: function (profmodel) {
             return $http.post(_host + '/User/editprof', profmodel)
               .then(function (response) {
@@ -329,7 +345,20 @@ HomeApp.factory('UserServices', function ($http) {
 });
 
 
-HomeApp.controller('No_Uk_Ctrl', function ($scope, $rootScope, UserServices, $http) {
+
+HomeApp.service('dataStorage', function () {
+    var data;
+    return {
+        setData: function (_data) {
+            data = _data;
+        },
+        getData: function () {
+            return data;
+        }
+    }
+});
+
+HomeApp.controller('No_Uk_Ctrl', function ($scope, $rootScope, UserServices, $http, dataStorage) {
     $scope.model = {
         'Street': '',
         'House': '',
@@ -344,8 +373,8 @@ HomeApp.controller('No_Uk_Ctrl', function ($scope, $rootScope, UserServices, $ht
         }).error(function (data, status, headers, config) {
             $scope.message = 'Unexpected Error';
         });
-    
         $rootScope.address = 0;
+        dataStorage.setData($rootScope.address);
         $scope.gethouses = function () {
         var streetId = $scope.street;
         if (streetId) {
@@ -366,11 +395,29 @@ HomeApp.controller('No_Uk_Ctrl', function ($scope, $rootScope, UserServices, $ht
 
         $scope.SetAddres = function () {
             UserServices.getIdaddr("Саратов", $scope.street, $scope.house).then(function (response) {
-                $rootScope.address = response.data;
+                $scope.address = response.data;
+
+                UserServices.editprof_get().then(function (response) {
+                    if (response.data != '') {
+                        $scope.profmodel = response.data;
+                        $scope.profmodel.Adress = $scope.address;
+                    }
+                })
             })
             
         }
 
+        $scope.submit = function (profmodel) {
+            UserServices.createprof(profmodel).then(function (response) {
+                $scope.response = response.data;
+                console.log("data:", response);
+                if (response.data[0] == 'Ok') {
+                    $scope.status = true;
+                    return $location.path('#/');
+                }
+            });
+
+        }
     //UserServices.seekaddr().then(function (response) {
     //    $scope.adsressList = response.data;
     //    UserServices.houseList 

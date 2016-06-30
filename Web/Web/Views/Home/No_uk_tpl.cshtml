@@ -76,12 +76,12 @@
 
 
                 </fieldset>
-                <div ng-show="address" ng-controller="CreateProfCtrl" ng-init="profmodel.Adress = address">
+                <div ng-show="address"  >
                     <h3>Редактирование профиля</h3>
 
-                    <div ng-hide="status" class="form-horizontal">
+                    <div  class="form-horizontal">
                         @*<input type="hidden" ng-model="profmodel.Apartment" ng-init="profmodel.Apartment">*@
-                        <input type="hidden" ng-model="profmodel.Adress"  value='{{address}}'>
+                        <input type="hidden" ng-model="profmodel.Adress" />
                         <span ng-show="response[1]" class="label label-important">
                             {{response[1]}}
                         </span>
@@ -143,9 +143,10 @@
                                 </div>
                             </div>
                         </fieldset>
+                        <pre {{ profmodel | json }}></pre>
+                        <pre> {{ address | json }}</pre>
                     </div>
-                    <pre {{profmodel.Adress | json }}></pre>
-                    <pre> {{address | json }}</pre>
+                   
                 </div>
             </div>
         </form>

@@ -72,7 +72,7 @@ namespace Web.Models
         public string Personal_Account  { get; set; }
         [Display(Name = "Домашний адрес: город улица дом")]
         [Required(ErrorMessage = "Это поле обязательно к заполнению")]
-        public string Adress  { get; set; }
+        public int Adress  { get; set; }
         [Display(Name = "Квартира")]
         [Required(ErrorMessage = "Это поле обязательно к заполнению")]
         public string Apartment  { get; set; }

@@ -75,38 +75,7 @@ namespace Web.Controllers
             return View(user);
         }
 
-        [MyAuthorize]
-        [HttpGet]
-        public ActionResult send_profile()
-        {
-            //---------------------------
-            //Test Autorize
-            if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
-            UserProfile user = null;
-            UserProfile_nouk_form model = new UserProfile_nouk_form();
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                model.UserId = user.UserId;
-                model.SurName = user.SurName;
-                model.Name = user.Name;
-                model.Patronymic = user.Patronymic;
-                model.Personal_Account = user.Personal_Account;
-                model.Adress = get_adr(user.Adress);
-                model.Apartment = user.Apartment;
-                model.Email = user.Email;
-                model.phone = user.phone;
-
-            }
-            catch (Exception ex)
-            {
-                Log.Write(ex);
-                model.UserId = WebSecurity.CurrentUserId;
-            }
-
-            return View(model);
-        }
+ 
 
         [MyAuthorize]
         [HttpPost]
@@ -128,7 +97,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 user.id_uk = uk.id;
-                //user.Adress = model.Adress;
+                user.Adress = model.Adress;
                 user.Apartment = model.Apartment;
                 user.Email = model.Email;
                 user.login = WebSecurity.CurrentUserName;
@@ -372,7 +341,7 @@ namespace Web.Controllers
                 user = new UserProfile();
                 
             }
-            return View(user);
+            return Json(user, JsonRequestBehavior.AllowGet);
         }
 
 
