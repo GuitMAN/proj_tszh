@@ -113,7 +113,7 @@ namespace Web.Models
                 model.Name = user.Name;
                 model.Patronymic = user.Patronymic;
                 model.Personal_Account = user.Personal_Account;
-                model.Adress = get_adr(user.Adress);
+                model.Adress = user.Adress;
                 model.Apartment = user.Apartment;
                 model.Email = user.Email;
                 model.phone = user.phone;
