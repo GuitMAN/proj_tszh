@@ -75,7 +75,6 @@ namespace Web.Controllers
             return View(user);
         }
 
- 
 
         [MyAuthorize]
         [HttpPost]
@@ -134,7 +133,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [MyAuthorize(Roles = "User")]
+        [Authorize]
         public ActionResult FeedBack()
         {
             //---------------------------
@@ -175,7 +174,7 @@ namespace Web.Controllers
 
         // Перегруженная версия для сохранения изменений
         [HttpPost]
-        [MyAuthorize]
+        [Authorize]
         [ValidateInput(true)]
         public ActionResult FeedBack(feedback mess)
         {
@@ -240,7 +239,7 @@ namespace Web.Controllers
             return Json(new string[] { "Error", "Ошибка" });
         }
 
-        [MyAuthorize]
+        [Authorize]
         private ActionResult FeedBack_from_nouk(feedback mess)
         {
             //---------------------------
@@ -281,7 +280,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [MyAuthorize]
+        [Authorize]
         public ActionResult SeekAdress()
         {
             //---------------------------
@@ -293,7 +292,7 @@ namespace Web.Controllers
 
         // Перегруженная версия для сохранения изменений
         [HttpPost]
-        [MyAuthorize]
+        [Authorize]
         public ActionResult SeekAdress(seek_adress model)
         {
             //---------------------------
@@ -319,7 +318,7 @@ namespace Web.Controllers
            
 
         [HttpGet]
-        [MyAuthorize]
+        [Authorize]
         public ActionResult editprof()
         {
             //---------------------------
@@ -346,7 +345,7 @@ namespace Web.Controllers
 
 
         [HttpPut]
-       [MyAuthorize]
+       [Authorize]
         public ActionResult editprof(UserProfile model)
         {
             //---------------------------
