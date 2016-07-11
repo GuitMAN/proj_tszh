@@ -34,6 +34,14 @@ namespace Web.Controllers
             return View();
         }
 
+
+        public ViewResult Articles()
+        {
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
+        }
+
+
         [HttpGet]
         public ActionResult profile(string returnUrl)
         {

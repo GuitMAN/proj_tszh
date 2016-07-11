@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 namespace Web.Controllers
 {
 
-    [MyAuthorize]
+    [Authorize]
     public class LoginController : Controller
     {
         Repo repository;
@@ -36,7 +36,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
- //       [AllowAnonymous]
+        [AllowAnonymous]
  //       [ValidateJsonAntiForgeryToken]
         public ActionResult Index(LoginModel model, string returnUrl)
         {
@@ -138,8 +138,8 @@ namespace Web.Controllers
 
             }
             return RedirectToAction("Index", "Home");
-        } 
-        [MyAuthorize]
+        }
+
         public ActionResult LogoOut(string ReturnUrl)
         {
             WebSecurity.Logout();
@@ -148,7 +148,7 @@ namespace Web.Controllers
         }
 
 
-        [MyAuthorize]
+
         public string getUser()
         {
             int us_id = WebSecurity.CurrentUserId;
@@ -157,7 +157,7 @@ namespace Web.Controllers
             return user;
         }
 
-        [MyAuthorize]
+        
         public string get_uk(int uk = 0)
         {
          

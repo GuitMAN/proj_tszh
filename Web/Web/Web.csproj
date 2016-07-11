@@ -3168,6 +3168,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="Views\Home\edituk_tpl.cshtml" />
+    <Content Include="Views\Admtszh\Articles.cshtml" />
     <None Include="Views\Home\test.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -3224,8 +3225,8 @@
     <Content Include="Views\Admtszh\profile.cshtml" />
     <Content Include="Views\Admtszh\readFeedBack.cshtml" />
     <Content Include="Views\Admtszh\ViewUsers.cshtml" />
-    <Content Include="Views\User\editprof.cshtml" />
-    <Content Include="Views\User\FeedBack.cshtml" />
+    <Content Include="Views\Home\edituserprof_tpl.cshtml" />
+    <Content Include="Views\Home\FeedBack.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Home\No_uk_tpl.cshtml" />
     <Content Include="Views\User\profile.cshtml" />

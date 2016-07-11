@@ -7,4 +7,9 @@
 <div>{{article.content}}</div>
 <div>Дата публикации: {{article.publicDate | aspDate | date : 'dd.MM.y'}}</div>
 <hr>
+
+
+@if (User.IsInRole("Admin"))
+{
 <pre>{{article | json}} </pre>
+}

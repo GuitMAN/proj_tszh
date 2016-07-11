@@ -155,8 +155,9 @@
         </span>
     </div>
 
-
+@if (User.IsInRole("Admin"))
+{
 <pre>{{streets | json}}</pre>
 <pre>{{houses | json}}</pre>
-
+}
 </div>

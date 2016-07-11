@@ -35,5 +35,8 @@
     </table>
     <hr>
     <a href="#/addmeter">Добавить счетчик</a>
+@if (User.IsInRole("Admin"))
+{
 <pre>{{meters | json}}</pre>
+}
 </div>

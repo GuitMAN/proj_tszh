@@ -119,8 +119,10 @@
         </table>
     </div>
     <hr>
-
+@if (User.IsInRole("Admin"))
+{
     <pre>{{datameters | json}}</pre>
+}
 </div>
 
 

@@ -69,7 +69,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               controller: 'ProfileCtrl'
           })
           .when('/editprof', {
-              templateUrl: _host + '/user/editprof',
+              templateUrl: _host + '/home/edituserprof_tpl',
               controller: 'EditProfCtrl'
           })
           .when('/createprof', {

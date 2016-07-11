@@ -81,5 +81,8 @@
 <div>
     @*@Html.ActionLink("Вернуться к списку", "ViewUk")*@
 </div>
-
+@if (User.IsInRole("Admin"))
+{
+    
 <pre>{{addresses | json}}</pre>
+}

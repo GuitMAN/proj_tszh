@@ -111,4 +111,7 @@
     
 </div>
 <hr>
+@if (User.IsInRole("Admin"))
+{
 <pre>{{profmodel | json}} </pre>
+}

@@ -98,8 +98,9 @@
         </fieldset>
     </form>
 
-
+@if (User.IsInRole("Admin"))
+{
     <pre> {{response}}</pre>
-
+}
 
 </div>

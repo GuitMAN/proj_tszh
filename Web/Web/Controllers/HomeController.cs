@@ -128,6 +128,28 @@ namespace Web.Models
             return View();
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult edituserprof_tpl()
+        {
+            //---------------------------
+            //Test Autorize
+            UserProfile user = null;
+            try
+            {
+                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+                user = new UserProfile();
+                user.UserId = WebSecurity.CurrentUserId;
+            }
+
+            return View(user);
+        }
+
+
 
 
 

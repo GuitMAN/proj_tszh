@@ -53,5 +53,7 @@
     </tbody>
 </table>
 <hr>
-
+@if (User.IsInRole("Admin"))
+{
 <pre>{{counter}}</pre>
+}

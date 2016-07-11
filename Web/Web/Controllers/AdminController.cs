@@ -7,11 +7,12 @@ using Web.Models.Repository;
 using System.Data;
 //using WebMatrix.WebData;
 using System.Web.Security;
-//using Web.Filter;
+using Web.Filter;
+
 
 namespace Web.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [MyAuthorize(Roles ="Admin")]
     public class AdminController : Controller
     {
 
@@ -206,7 +207,21 @@ namespace Web.Controllers
         {
             uk.RegDate = DateTime.UtcNow;
             repository.SaveUkProfile(uk);
-            //Создать роль пользователей
+
+            //необходимо создавать пустые (или дефолтные) статьи для тсж
+            Article article = new Article();
+            article.title = "Главная";
+            article.publicDate = DateTime.UtcNow;
+            repository.SaveArticle(article);
+            Article doc = new Article();
+            doc.title = "Документы";
+            doc.publicDate = DateTime.UtcNow;
+            repository.SaveArticle(doc);
+            Article contact = new Article();
+            contact.title = "Контакты";
+            contact.publicDate = DateTime.UtcNow;
+            repository.SaveArticle(contact);
+
             return RedirectToAction("ViewUk");
         }
 

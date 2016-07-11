@@ -48,7 +48,7 @@ namespace Web.Controllers
 
 
 
-        [MyAuthorize]
+        [Authorize]
         public ActionResult profile(string returnUrl)
         {
             //---------------------------
@@ -76,7 +76,7 @@ namespace Web.Controllers
         }
 
 
-        [MyAuthorize]
+        [Authorize]
         [HttpPost]
         public ActionResult send_profile(UserProfile_nouk_form model)
         {
@@ -345,7 +345,7 @@ namespace Web.Controllers
 
 
         [HttpPut]
-       [Authorize]
+        [Authorize]
         public ActionResult editprof(UserProfile model)
         {
             //---------------------------
@@ -537,7 +537,7 @@ namespace Web.Controllers
                     ListData = new List<Counter_data>().ToArray();
                 }
             }
-            uk_adress adr;
+            //uk_adress adr;
             {
                 Counter_user_viewdata temp = new Counter_user_viewdata();
 
@@ -545,7 +545,7 @@ namespace Web.Controllers
                 if (month == 0) month = DateTime.Now.Month;
                 DateTime d_start = new DateTime(year, 1, 1);
                 DateTime d_end = d_start.AddMonths(12).AddDays(-1);
-                bool status = true;
+                // bool status = true;
                 try
                 {
                     IEnumerable<Counter> counters = ListCounter.Where(t => t.Type.Equals(1));
@@ -664,7 +664,7 @@ namespace Web.Controllers
             catch (Exception ex)
             {
                 Log.Write(ex);
-              //  ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+                //ModelState.AddModelError("City", "УК или ТСЖ не найдена");
             }
         }
 
