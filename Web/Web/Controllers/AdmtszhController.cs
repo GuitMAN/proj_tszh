@@ -46,14 +46,21 @@ namespace Web.Controllers
         {
             Article art;
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            if (id == 0)
-            {
-                art = new Article();
+            string requestDomain = Request.Headers["host"];
+            uk_profile  uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
+
+            if (uk.host.Equals(requestDomain))
+            { 
+                if (id == 0)
+                {
+                    art = new Article();
             }
             else
                 art = repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).Where(q => q.id == id).Single();
 
              return Json(art, JsonRequestBehavior.AllowGet);
+            }
+            return Redirect("http://"+ requestDomain);
         }
 
         // Перегруженная версия Edit() для сохранения изменений
@@ -61,8 +68,13 @@ namespace Web.Controllers
         public ActionResult EditArticle(Article article)
         {
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
 
-            if (admuser.id_uk == article.id_uk)
+
+
+
+            if ((admuser.id_uk == article.id_uk)&&(uk.host.Equals(requestDomain)))
             {
 
                 article.publicDate = DateTime.UtcNow;// -TimeZone.CurrentTimeZone; ;
