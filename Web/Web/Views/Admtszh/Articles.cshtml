@@ -7,11 +7,11 @@
 
 <h2>Articles</h2>
 
-@Html.ActionLink("Добавить новую статью", "CreateArt")
+
 <p>
     <ul>
         @foreach (var p in Model)
         {
-            <li>@Html.ActionLink(p.title + " " + p.id_uk, "EditArticle", new { id = p.id }, new { @class = "" })</li>
+            <li><a href="#/editarticle/@p.id">@p.title</a></li>
         }
 </ul>

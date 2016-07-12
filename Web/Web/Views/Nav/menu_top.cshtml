@@ -2,9 +2,10 @@
 @model IEnumerable<string>
 
 
-    <li><a class="navbar-brand" href="#/">Главная</a></li>
+    @*<li><a class="navbar-brand" href="#/">Главная</a></li>*@
     @foreach (var link in Model)
-            {
-        if (link.Equals("Главная")) { continue; }
-                <li><a class="navbar-brand" href="/home#/article/@link">@link</a></li>
+    {
+        if (link.Equals("Главная"))
+        { continue; }
+        <li><a class="navbar-brand" href="#/article/@link">@link</a></li>
     }

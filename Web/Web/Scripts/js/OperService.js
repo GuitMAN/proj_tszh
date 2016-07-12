@@ -47,7 +47,7 @@ HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices,
         OperServices.editprof(profmodel).then(function (response) {
             $scope.response = response.data;
             console.log("data:", response);
-            if (response.data[0] == 'Ok') {
+            if (response.data[0] === 'Ok') {
                 $scope.status = true;
             }
         });
@@ -72,7 +72,7 @@ HomeApp.controller('CreateOperProfCtrl', function ($http, $scope, OperServices, 
         OperServices.createprof(profmodel).then(function (response) {
             $scope.response = response.data;
             console.log("data:", response);
-            if (response.data[0] == 'Ok') {
+            if (response.data[0] === 'Ok') {
                 $scope.status = true;
                 return $location.path('#/');
             }
@@ -90,7 +90,7 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
 
     var now;
     $scope.now_y = true;
-    if (now==null) now= new Date();
+    if (now===null) now= new Date();
     if (!$routeParams.year) {
         $scope.month_year.year = now.getFullYear();
         $routeParams.year = now.getFullYear();
@@ -119,8 +119,8 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
     $scope.monthOptions = [];
     for (var i = 0; i < 12; ++i) {
         $scope.monthOptions[i] = ArrMonth[i];
-        if ($scope.month_year.year == now.getFullYear()) {
-            if (i == now.getMonth()) {
+        if ($scope.month_year.year === now.getFullYear()) {
+            if (i === now.getMonth()) {
                 break;
             }
         }
@@ -128,7 +128,7 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
     OperServices.viewcounters($scope.month_year).then(function (response) {
         $scope.counter = response.data;
         console.log("data:", response);
-        if (response.data[0] == 'Ok') {
+        if (response.data[0] === 'Ok') {
             $scope.status = true;
         }
     });
@@ -138,8 +138,8 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
         $scope.monthOptions = [];
         for (var i = 0; i < 12; ++i) {
             $scope.monthOptions[i] = ArrMonth[i];
-            if ($scope.month_year.year == now.getFullYear()) {
-                if (i == now.getMonth()) {
+            if ($scope.month_year.year === now.getFullYear()) {
+                if (i === now.getMonth()) {
                     break;
                 }
             }
@@ -156,8 +156,8 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
         $scope.monthOptions = [];
         for (var i = 0; i < 12; ++i) {
             $scope.monthOptions[i] = ArrMonth[i];
-            if ($scope.month_year.year == now.getFullYear()) {
-                if (i == now.getMonth()) {
+            if ($scope.month_year.year === now.getFullYear()) {
+                if (i === now.getMonth()) {
                     break;
                 }
             }
@@ -170,7 +170,7 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
         OperServices.viewcounters($scope.month_year).then(function (response) {
             $scope.counter = response.data;
             console.log("data:", response);
-            if (response.data[0] == 'Ok') {
+            if (response.data[0] === 'Ok') {
                 $scope.status = true;
             }
         });
@@ -218,7 +218,7 @@ HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams
         OperServices.saveuseredit(profmodel).then(function (response) {
             $scope.response = response.data;
             console.log("data:", response);
-            if (response.data[0] == 'Ok') {
+            if (response.data[0] === 'Ok') {
                 $scope.status = true;
               //  return $location.path('#/');
             }
@@ -227,6 +227,31 @@ HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams
     }
 
 })
+
+HomeApp.controller('ArticlesCtrl', function (){
+});
+
+HomeApp.controller('EditArticleCtrl', function ($scope, OperServices, $routeParams, $sce) {
+    OperServices.editarticle_get($routeParams['id']).then(function (response) {
+        $scope.article = response.data;
+    });
+
+    $scope.submit = function (article) {
+        OperServices.editarticle_put(article).then(function (response)
+        {
+            $scope.response = response.data;
+            console.log("data:", response);
+            if (response.data === 'Ok') {
+                $scope.status = true;
+                return $location.path('#/articles');
+
+            }
+
+        })
+    }
+
+})
+
 
 
 /* Factory of user`s controller */
@@ -282,6 +307,17 @@ HomeApp.factory('OperServices', function ($http) {
                 return response;
             })
         },
+        editarticle_get: function (id) {
+            return $http.get(_host + '/admtszh/editarticle', { params: { id: id } }).then(function (response) {
+                return response;
+            })
+        },
+        editarticle_put: function (article) {
+            return $http.put(_host + '/admtszh/editarticle', article).then(function (response) {
+                return response;
+            })
+        },
+
     }
         
 });

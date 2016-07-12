@@ -44,6 +44,14 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               templateUrl: _host + '/home/article',
               controller: 'HomeCtrl'
           })
+          .when('/articles', {
+              templateUrl: _host + '/admtszh/Articles',
+              controller: 'ArticlesCtrl'
+          })
+          .when('/editarticle/:id', {
+              templateUrl: _host + '/home/editarticle_tpl',
+              controller: 'EditArticleCtrl'
+          })
           .when('/login', {
               templateUrl: _host + '/login/index',
               controller: 'LoginCtrl'

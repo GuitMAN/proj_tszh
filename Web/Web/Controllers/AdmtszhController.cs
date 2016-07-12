@@ -34,11 +34,45 @@ namespace Web.Controllers
             return View();
         }
 
-
+        [HttpGet]
         public ViewResult Articles()
         {
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
+        }
+
+        [HttpGet]
+        public ActionResult EditArticle(int id = 0)
+        {
+            Article art;
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            if (id == 0)
+            {
+                art = new Article();
+            }
+            else
+                art = repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).Where(q => q.id == id).Single();
+
+             return Json(art, JsonRequestBehavior.AllowGet);
+        }
+
+        // Перегруженная версия Edit() для сохранения изменений
+        [HttpPut]
+        public ActionResult EditArticle(Article article)
+        {
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+
+            if (admuser.id_uk == article.id_uk)
+            {
+
+                article.publicDate = DateTime.UtcNow;// -TimeZone.CurrentTimeZone; ;
+                repository.SaveArticle(article);
+
+                return Json(new string[] { "Ok", "Страница обновлена" });
+                
+            }
+
+            return Json(new string[] { "Error", "Не удалось обновить статью" });
         }
 
 

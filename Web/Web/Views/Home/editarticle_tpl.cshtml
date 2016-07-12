@@ -1,0 +1,44 @@
+﻿
+
+<form>
+    <input id="id" name="id" type="hidden" ng-model="article.id" ng-init="article.id">
+    <input id="id_uk" name="id_uk" type="hidden" ng-model="article.id_uk" ng-init="article.id_uk">
+    <input id="publicDate" name="publicDate" type="hidden" ng-model="article.publicDate" ng-init="article.publicDate">
+    <span ng-show="response[0]=='Ok'" class="label label-success">
+        {{response[1]}}
+    </span>
+    <span ng-show="response[0]=='Error'" class="label label-important">
+        {{response[1]}}
+    </span>
+    <div class="form-horizontal">
+        <fieldset>
+            <legend>Редактирование статьи</legend>
+            <div class="editor-label">
+                <label for="title">Пункт меню</label>
+            </div>
+            <div class="editor-field">
+                <input class="text-box single-line" id="title" name="title" type="text" ng-model="article.title" ng-init="article.title">
+            </div>
+            <div class="editor-label">
+                <label for="summary">Название статьи</label>
+            </div>
+            <div class="editor-field">
+                <textarea cols="40" id="summary" name="summary" rows="5" ng-model="article.summary" ng-init="article.summary">Главная</textarea>
+            </div>
+            <div class="editor-label">
+                <label for="content">Основной текст</label>
+            </div>
+            <div class="editor-field">
+                <textarea cols="40" id="content" name="content" rows="10" ng-model="article.content" ng-init="article.content">Текст главной страницы для тестового ТСЖ</textarea>
+            </div>
+            <p>
+                <input type="submit" value="Сохранить" ng-click="submit(article)">
+            </p>
+            <div>
+                <a href="#/articles">Вернуться к списку статей</a>
+            </div>
+        </fieldset>
+    </div>
+</form>
+
+<pre> {{article | json}}</pre>

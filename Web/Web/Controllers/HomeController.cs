@@ -149,8 +149,11 @@ namespace Web.Models
             return View(user);
         }
 
-
-
+        [HttpGet]
+        public ActionResult EditArticle_tpl()
+        {
+            return View();
+        }
 
 
         [HttpGet]
