@@ -16,7 +16,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 
     return {
         login: function (credentials) {
- 
+
             //           var config = getHttpConfig();
             return $http.post(_host + '/Login', credentials)//, config)
               .then(function (res) {
@@ -25,17 +25,27 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
               })
 
         },
-        register: function (reguser, RegisterForm) {
-            
+        register: function (reguser) {
+
             return $http.post(_host + '/Login/Register', reguser)
                 .then(function (response) {
                     if (response.data[0] === 'Ok') {
-                        Session.create(1, res.data.id, res.data.Role, res.data.Login);
+
                     } else {
-                        Session.destroy();
+
                     }
                     return response;
                 })
+        },
+        ForgotPassword: function (username) {
+
+            //           var config = getHttpConfig();
+            return $http.post(_host + '/login/forgotpassword', username)//, config)
+              .then(function (res) {
+                  Session.create(1, res.data.id, res.data.Role, res.data.Login);
+                  return res;
+              })
+
         },
         logout: function () {
             return $http.post(_host + '/Login/logoout')//, config)
@@ -123,7 +133,7 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
                 if (response.data[0] === 'Error') {
                     //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     $scope.response = response.data;
-                    
+
                 }
                 return location.reload();
             });
@@ -133,16 +143,13 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
 
 
 /* controller for logout*/
-HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location) {
+/* controller for logout*/
+HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location, Session) {
 
     AuthService.logout();
+    Session.destroy();
+
     location.replace('#/');
-//    location.reload();
-
-    $cookies.remove('userId');
-    $cookies.remove('username');
-    $cookies.remove('userRole');
-
 });
 
 
@@ -157,7 +164,7 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
     if (AuthService.isAuthenticated()) {
         return $location.path('#/');
     }
-    
+
     $scope.register = function (reguser, RegisterForm) {
         if (RegisterForm.$valid) {
             if ($scope.reguser.Password !== $scope.reguser.ConfirmPassword) {
@@ -170,7 +177,7 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
                 }
                 else {
                     AuthService.register(reguser).then(function (response) {
-                        location.load('#/');
+                        return $location.path('#/');
                     });
                 }
             }
@@ -178,6 +185,27 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
     };
 
 });
+
+
+/* For register form*/
+HomeApp.controller('ForgotPasswordCtrl', function ($scope, $rootScope, $location, AuthService, Session) {
+
+
+    //   $scope.Session = Session;
+    //    if (AuthService.isAuthenticated()) {
+    //        return $location.path('#/');
+    //    }
+    $scope.regex = "/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i";
+
+    $scope.ForgotPassword = function (reguser) {
+        AuthService.ForgotPassword(reguser).then(function (response) {
+            return $location.path('#/');
+        });
+    };
+
+});
+
+
 /* controller for logout*/
 HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location) {
     $scope.model = {
@@ -198,20 +226,7 @@ HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location
     };
 });
 
-ArrMonth = [
-  { id: '1', name: 'Январь' },
-  { id: '2', name: 'Февраль' },
-  { id: '3', name: 'Март' },
-  { id: '4', name: 'Апрель' },
-  { id: '5', name: 'Май' },
-  { id: '6', name: 'Июнь' },
-  { id: '7', name: 'Июль' },
-  { id: '8', name: 'Август' },
-  { id: '8', name: 'Сентябрь' },
-  { id: '10', name: 'Октябрь' },
-  { id: '11', name: 'Ноябрь' },
-  { id: '12', name: 'Декабрь' }
-];
+
 
 
 /*Section of authentication*/

@@ -35,10 +35,19 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public ViewResult Articles()
+        public ActionResult Articles()
         {
+            Article art;
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
+
+            if (uk.host.Equals(requestDomain))
+            {
+                return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
+            }
+            else
+                return Json(new string[] { "Error", "Нет доступа к данному разделу." });
         }
 
         [HttpGet]
@@ -50,17 +59,18 @@ namespace Web.Controllers
             uk_profile  uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
 
             if (uk.host.Equals(requestDomain))
-            { 
+            {
                 if (id == 0)
                 {
                     art = new Article();
+                }
+                else
+                {
+                    art = repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).Where(q => q.id == id).Single();                  
+                }
+                return Json(art, JsonRequestBehavior.AllowGet);
             }
-            else
-                art = repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).Where(q => q.id == id).Single();
-
-             return Json(art, JsonRequestBehavior.AllowGet);
-            }
-            return Redirect("http://"+ requestDomain);
+            return new HttpStatusCodeResult(403);
         }
 
         // Перегруженная версия Edit() для сохранения изменений

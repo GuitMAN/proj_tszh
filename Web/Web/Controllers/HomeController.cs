@@ -51,7 +51,18 @@ namespace Web.Models
         [HttpGet]
         public ActionResult edituk_tpl()
         {
-            return View();
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
+            if (uk.host.Equals(requestDomain))
+            {
+
+                return View();
+            }
+            else
+            {
+                return new HttpStatusCodeResult(403);
+            }
         }
 
         public ActionResult No_uk_tpl()
@@ -152,7 +163,18 @@ namespace Web.Models
         [HttpGet]
         public ActionResult EditArticle_tpl()
         {
-            return View();
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
+            if (uk.host.Equals(requestDomain))
+            {
+
+                return View();
+            }
+            else
+            {
+                return new HttpStatusCodeResult(403);
+            }
         }
 
 

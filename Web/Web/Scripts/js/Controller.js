@@ -2,7 +2,7 @@
 'use strict';
 
 /* Controllers */
-// 'http://moe-tszh.ru';
+// 'http://mytsn.ru';
 var _host = '';
     //'http://localhost:53574';
 //
