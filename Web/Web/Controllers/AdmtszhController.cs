@@ -47,7 +47,8 @@ namespace Web.Controllers
                 return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
             }
             else
-                return Json(new string[] { "Error", "Нет доступа к данному разделу." });
+                return new HttpStatusCodeResult(403);
+            //return Json(new string[] { "Error", "Нет доступа к данному разделу." });
         }
 
         [HttpGet]
@@ -81,17 +82,11 @@ namespace Web.Controllers
             string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
 
-
-
-
             if ((admuser.id_uk == article.id_uk)&&(uk.host.Equals(requestDomain)))
             {
-
                 article.publicDate = DateTime.UtcNow;// -TimeZone.CurrentTimeZone; ;
                 repository.SaveArticle(article);
-
-                return Json(new string[] { "Ok", "Страница обновлена" });
-                
+                return Json(new string[] { "Ok", "Страница обновлена" });            
             }
 
             return Json(new string[] { "Error", "Не удалось обновить статью" });
@@ -113,15 +108,15 @@ namespace Web.Controllers
                 admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
                 ViewData["uk_name"] = uk.Name;
-                
-              //  ViewData["user_adr"] = get_adr(user.Adress);
+
+                //  ViewData["user_adr"] = get_adr(user.Adress);
             }
             catch (Exception ex)
             {
                 ViewData["uk_name"] = "нет данных";
-         //       ViewData["user_adr"] = "нет данных";
+                //       ViewData["user_adr"] = "нет данных";
                 if (admuser == null)
-                   return View(new Admtszh());
+                    return View(new Admtszh());
 
             }
             //----------------------------
@@ -129,31 +124,40 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult editprof()
         {
-            //if (!WebSecurity.Initialized)
-            //    return RedirectToAction("Index", "Login");
             //Проверка на принадлежность пользователя
-            Admtszh user = null;
-            try
-            {
-                user = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            }
-            catch
-            {
-
-            }
-            uk_profile uk;
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             string requestDomain = Request.Headers["host"];
-            if (user == null)
+            uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
+
+            if (uk.host.Equals(requestDomain))
             {
-                user = new Admtszh();
-                uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
-                if (uk != null)
-                    user.id_uk = uk.id;
+               // Admtszh user = null;
+                try
+                {
+               //     admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                }
+                catch
+                {
+
+                }
+                
 
             }
-            return View(user);
+            else
+            {
+                // string requestDomain = Request.Headers["host"];
+                if (admuser == null)
+                {
+                    admuser = new Admtszh();
+                    uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
+                    if (uk != null)
+                        admuser.id_uk = uk.id;
+                }
+            }
+            return View(admuser);
         }
 
         [HttpPut]

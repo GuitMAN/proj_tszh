@@ -148,8 +148,8 @@ HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location, Sessio
 
     AuthService.logout();
     Session.destroy();
-
-    location.replace('#/');
+    $location.path('/');
+    location.reload();
 });
 
 
