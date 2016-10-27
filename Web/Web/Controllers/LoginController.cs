@@ -6,11 +6,10 @@ using System.Text;
 using System.Web.Security;
 using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
-using Web.Filter;
 using Web.Models;
 using Web.Models.Repository;
 using System.Net;
-using System.Text.RegularExpressions;
+using System.Net.Mail;
 
 namespace Web.Controllers
 {
@@ -65,11 +64,10 @@ namespace Web.Controllers
                         else
                         {
                             //User have no current direct company
-                            TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                            //WebSecurity.Logout();   
-                            //return Json(new string[] { "Error", "Имя пользователя или пароль указаны неверно." });                        
-                            return Json(result);
-                        }
+                            //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                            WebSecurity.Logout();   
+                            return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });                        
+                           }
                     }
                     else
                     {
@@ -99,6 +97,7 @@ namespace Web.Controllers
 
         [HttpPost]
         //        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Register(RegisterModel model)
         {
             if (!WebSecurity.IsAuthenticated)
@@ -112,6 +111,16 @@ namespace Web.Controllers
                         //passwordQuestion: null, passwordAnswer: null, isApproved: true,
                         //providerUserKey: null, status: out createStatus);
                         WebSecurity.RequireRoles();
+
+                        //Send E-mail
+                        string title = "Добро пожаловать!";
+                        string message = "Вы зарегистрировались в системе http://mytsn.ru\n"
+                            + "Ваши логин: " + model.UserName 
+                            +"\n Пароль: " + model.Password 
+                            + "\nДля получения полного доступа к функционалу Вам необходимо заполнить анкету и отправить запрос на активацию.";
+
+                        SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", model.UserName, title, message);
+
                         WebSecurity.Login(model.UserName, model.Password);
                         Account_model result = new Account_model();
                         result.id = WebSecurity.CurrentUserId;
@@ -119,7 +128,7 @@ namespace Web.Controllers
                         result.Role = Roles.GetRolesForUser();
                         return Json(result);
 
-                        //                   return RedirectToAction("Index", "User");
+                        
                     }
                     catch (MembershipCreateUserException e)
                     {
@@ -137,14 +146,14 @@ namespace Web.Controllers
                 }
 
             }
-            return RedirectToAction("Index", "Home");
+            return new HttpStatusCodeResult(203, "Ошибка при регистрации");
         }
 
+        [AllowAnonymous]
         public ActionResult LogoOut(string ReturnUrl)
         {
             WebSecurity.Logout();
             return new HttpStatusCodeResult(200);
-//            return RedirectToLocal("/home#/login");
         }
 
 
@@ -367,6 +376,40 @@ namespace Web.Controllers
                     return "Произошла неизвестная ошибка. Проверьте введенное значение и повторите попытку. Если проблему устранить не удастся, обратитесь к системному администратору.";
             }
         }
+
+
+        public static void SendMail(string smtpServer, string from, string password,
+        string mailto, string caption, string message, string attachFile = null)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(from);
+                mail.To.Add(new MailAddress(mailto));
+                mail.Subject = caption;
+                mail.Body = message;
+                if (!string.IsNullOrEmpty(attachFile))
+                    mail.Attachments.Add(new Attachment(attachFile));
+                SmtpClient client = new SmtpClient();
+                client.Host = smtpServer;
+                client.Port = 587;
+                client.EnableSsl = true;
+                client.Timeout = 15000;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(from, password);//.Split('@')[0]
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Send(mail);
+                mail.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Utils.Log.Write(ex);
+                //ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+            }
+        }
+
+
+
         #endregion
-	}
+    }
 }

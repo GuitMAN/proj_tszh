@@ -219,7 +219,7 @@ HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location
         AuthService.manage(model).then(function (response) {
             $scope.response = response.data;
             console.log("data:", response);
-            if (response.data[0] == 'Ok') {
+            if (response.data[0] === 'Ok') {
                 $scope.status = true;
             }
         })

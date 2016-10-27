@@ -165,8 +165,8 @@ admtszhApp.controller('ViewUserCountersCtrl', [
       $scope.monthOptions = [];
       for (var i = 0; i < 12; ++i) {
           $scope.monthOptions[i] = ArrMonth[i];
-          if ($scope.year == now.getFullYear()) {
-              if (i == now.getMonth()) {
+          if ($scope.year === now.getFullYear()) {
+              if (i === now.getMonth()) {
                   break;
               }
           }
@@ -179,7 +179,7 @@ admtszhApp.controller('ViewUserCountersCtrl', [
           });
 
       $scope.sum = function (a) {
-          if (!a || Object.prototype.toString.call(a) != "[object Array]") return 0;
+          if (!a || Object.prototype.toString.call(a) !== "[object Array]") return 0;
           var s = 0;
           for (var i = 0; i < a.length; ++i) {
               s = s + a[i].data;
