@@ -29,7 +29,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
 
             return $http.post(_host + '/Login/Register', reguser)
                 .then(function (response) {
-                    if (response.data[0] === 'Ok') {
+                    if (response.data[0] == 'Ok') {
 
                     } else {
 
@@ -50,7 +50,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
         logout: function () {
             return $http.post(_host + '/Login/logoout')//, config)
                .then(function (response) {
-                   if (response.status === 200)
+                   if (response.status == 200)
                        Session.destroy();
                    return response;
                })
@@ -130,7 +130,7 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
     $scope.login = function (credentials) {
         AuthService.login(credentials)
             .then(function (response) {
-                if (response.data[0] === 'Error') {
+                if (response.data[0] == 'Error') {
                     //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     $scope.response = response.data;
 
@@ -168,7 +168,7 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
 
     $scope.register = function (reguser, RegisterForm) {
         if (RegisterForm.$valid) {
-            if ($scope.reguser.Password !== $scope.reguser.ConfirmPassword) {
+            if ($scope.reguser.Password != $scope.reguser.ConfirmPassword) {
                 alert("Пароли не совпадают");
             }
             else {
@@ -219,7 +219,7 @@ HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location
         AuthService.manage(model).then(function (response) {
             $scope.response = response.data;
             console.log("data:", response);
-            if (response.data[0] === 'Ok') {
+            if (response.data[0] == 'Ok') {
                 $scope.status = true;
             }
         })
