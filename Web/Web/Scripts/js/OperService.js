@@ -125,7 +125,7 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
 
     var now;
     $scope.now_y = true;
-    if (now===null) now= new Date();
+    if (now==null) now= new Date();
     if (!$routeParams.year) {
         $scope.month_year.year = now.getFullYear();
         $routeParams.year = now.getFullYear();
@@ -154,8 +154,8 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
     $scope.monthOptions = [];
     for (var i = 0; i < 12; ++i) {
         $scope.monthOptions[i] = ArrMonth[i];
-        if ($scope.month_year.year === now.getFullYear()) {
-            if (i === now.getMonth()) {
+        if ($scope.month_year.year == now.getFullYear()) {
+            if (i == now.getMonth()) {
                 break;
             }
         }
@@ -173,8 +173,8 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
         $scope.monthOptions = [];
         for (var i = 0; i < 12; ++i) {
             $scope.monthOptions[i] = ArrMonth[i];
-            if ($scope.month_year.year === now.getFullYear()) {
-                if (i === now.getMonth()) {
+            if ($scope.month_year.year == now.getFullYear()) {
+                if (i == now.getMonth()) {
                     break;
                 }
             }
