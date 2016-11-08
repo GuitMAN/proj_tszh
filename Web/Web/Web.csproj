@@ -3170,6 +3170,7 @@
     <Content Include="Views\Home\edituk_tpl.cshtml" />
     <Content Include="Views\Admtszh\Articles.cshtml" />
     <Content Include="Views\Home\editarticle_tpl.cshtml" />
+    <Content Include="Views\Home\new_operprof_tpl.cshtml" />
     <None Include="Views\Home\test.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

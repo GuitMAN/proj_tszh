@@ -55,6 +55,41 @@ HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices,
     }
 });
 
+
+/* User`s controllers & services */
+HomeApp.controller('NewOperProfileCtrl', function ($http, $scope, OperServices, Session, $location) {
+
+    //$scope.profmodel = {
+    //    id_uk: '',
+    //    UserId: '',
+    //    Adress: '',
+    //    Apartment: '',
+    //    SurName: '',
+    //    Name: '',
+    //    Patronymic: '',
+    //    Personal_Account: '',
+    //    Email: '',
+    //    phone: '',
+    //    mobile: ''
+    //};
+
+    $scope.status = false;
+    $scope.submit = function (profmodel) {
+        OperServices.createprof(profmodel).then(function (response) {
+            $scope.response = response.data;
+            console.log("data:", response);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+            }
+        });
+        return $location.path('#/');
+    }
+});
+
+
+
+
+
 /* User`s controllers & services */
 HomeApp.controller('CreateOperProfCtrl', function ($http, $scope, OperServices, Session, $location) {
 

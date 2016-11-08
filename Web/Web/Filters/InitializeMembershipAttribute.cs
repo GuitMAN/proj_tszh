@@ -93,6 +93,10 @@ namespace Web.Filter
                 {
                     filterContext.Result = new ViewResult { ViewName = "~/Views/home/no_uk_tpl.cshtml" };
                 }
+                if (isRequareRole("Moder"))
+                {
+                    filterContext.Result = new ViewResult { ViewName = "~/Views/home/new_editprof_tpl.cshtml" };
+                }
                 else
                 {
                     filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");

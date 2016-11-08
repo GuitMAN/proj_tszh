@@ -136,6 +136,10 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               templateUrl: _host + '/home/no_uk_tpl',
               controller: 'No_Uk_Ctrl'
           })
+          .when('/new_prof', {
+              templateUrl: _host + '/home/new_operprof_tpl',
+              controller: 'CreateOperProfCtrl'
+          })
           .otherwise({
               redirectTo: '/'
           });

@@ -7,17 +7,14 @@ using Web.Models.Repository;
 using System.Data;
 using WebMatrix.WebData;
 using System.Web.Security;
-using System.Web;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json;
 using Web.Utils;
 using Web.Filter;
-//using Web.Filter;
-//using Microsoft.AspNet.Identity;
+using System.Net;
+using System.Net.Mail;
 
 namespace Web.Controllers
 {
-    [MyAuthorize(Roles = "Moder")]
+    
     public class AdmtszhController : Controller
     {
         Repo repository;
@@ -35,6 +32,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult Articles()
         {
             Article art;
@@ -52,6 +50,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult EditArticle(int id = 0)
         {
             Article art;
@@ -76,6 +75,7 @@ namespace Web.Controllers
 
         // Перегруженная версия Edit() для сохранения изменений
         [HttpPut]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult EditArticle(Article article)
         {
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
@@ -94,6 +94,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult profile(string returnUrl)
         {
             //---------------------------
@@ -124,7 +125,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult editprof()
         {
             //Проверка на принадлежность пользователя
@@ -161,12 +162,13 @@ namespace Web.Controllers
         }
 
         [HttpPut]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult editprof(Admtszh model)
         {
             //if (!WebSecurity.Initialized)
             //    return RedirectToAction("Index", "Login");
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid&&(model.AdmtszhId == WebSecurity.CurrentUserId))
             {
 
                 repository.SaveAdmtszh(model);
@@ -177,7 +179,43 @@ namespace Web.Controllers
         }
 
 
+
+        //Createprof
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult editprof(newAdmtszh model)
+        {
+            //if (!WebSecurity.Initialized)
+            //    return RedirectToAction("Index", "Login");
+            Admtszh newUser = new Admtszh();
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                newUser.AdmtszhId = WebSecurity.CurrentUserId;
+                newUser.id_uk = uk.id;
+                newUser.SurName = model.SurName;
+                newUser.Name = model.Name;
+                newUser.Patronymic = model.Patronymic;
+                newUser.post = model.post;
+
+                repository.SaveAdmtszh(newUser);
+                return Json(new string[] { "Ok", string.Format("Ваш профиль \"{0}\" был изменен", newUser.id) });
+            };
+            //Send E-mail
+            string title = "Запрос на активацию нового пользователя администрации ТСЖ";
+            string message = " Пользователь"
+                + "Ваши логин: " + newUser.SurName + " " + newUser.Name + " " + newUser.Patronymic
+                + "\n Запросили авторизацию для получения полного доступа к функционалу Вам необходимо заполнить анкету и отправить запрос на активацию.";
+
+            SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, title, message);
+            return Json(new string[] { "Error", "Ошибка при изменении профиля" });
+        }
+
+
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult readFeedBack()
         {
             //if (!WebSecurity.Initialized)
@@ -193,7 +231,7 @@ namespace Web.Controllers
             }
             catch
             {
-                return RedirectToAction("editprof", "Admtszh");
+                return new HttpStatusCodeResult(403, "Authorize Error");
             }
             //var user_ = UserManager.FindById(User.Identity.GetUserId());
 
@@ -206,6 +244,8 @@ namespace Web.Controllers
             return View(list);
         }
 
+
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult DelMess(int id = -1)
         {
             if ((id==-1)||(id==0))
@@ -222,6 +262,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult ViewUsers()
         {
 
@@ -263,6 +304,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult EditUser(int id = 0)
         {       
             //Проверка на принадлежность пользователя
@@ -303,6 +345,7 @@ namespace Web.Controllers
         }
 
         [HttpPut]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult EditUser(UserProfile_form model)
         {
             //Проверка на принадлежность пользователя
@@ -345,12 +388,14 @@ namespace Web.Controllers
 
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult ViewCounter()
         {
             return View();
         }
 
         [HttpPost]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult ViewCounters(int month = 0, int year=0)
         {
             Admtszh admuser = null;
@@ -465,6 +510,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult SetsSatusCounterData(int id, int year, int month, bool status)
         {
             Admtszh admuser = null;
@@ -516,6 +562,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult EditUk()
         {
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
@@ -541,6 +588,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult ViewAddrUk()
         {
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
@@ -554,6 +602,8 @@ namespace Web.Controllers
             }
         }
 
+
+        [MyAuthorize(Roles = "Moder")]
         public JsonResult get_users()
         {
 
@@ -572,6 +622,8 @@ namespace Web.Controllers
             return Json(users, JsonRequestBehavior.AllowGet);
         }
 
+
+        [MyAuthorize(Roles = "Moder")]
         public string get_adr(int id_adr = 0)
         {
             if (id_adr == 0) return "Адрес не назначен";
@@ -581,56 +633,89 @@ namespace Web.Controllers
             return adr.City + ", " + adr.Street + ", " + adr.House;
         }
 
-    }
-/*
-    public class JsonNetFilterAttribute : ActionFilterAttribute
+    
+
+    public static void SendMail(string smtpServer, string from, string password,
+            string mailto, string caption, string message, string attachFile = null)
     {
-        private const string _dateFormat = "";
-
-        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        try
         {
-            if (filterContext.Result is JsonResult == false)
-                return;
-
-            filterContext.Result = new JsonNetResult((JsonResult)filterContext.Result);
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(from);
+            mail.To.Add(new MailAddress(mailto));
+            mail.Subject = caption;
+            mail.Body = message;
+            if (!string.IsNullOrEmpty(attachFile))
+                mail.Attachments.Add(new Attachment(attachFile));
+            SmtpClient client = new SmtpClient();
+            client.Host = smtpServer;
+            client.Port = 587;
+            client.EnableSsl = true;
+            client.Timeout = 15000;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(from, password);//.Split('@')[0]
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.Send(mail);
+            mail.Dispose();
         }
-
-        private class JsonNetResult : JsonResult
+        catch (Exception ex)
         {
-            public JsonNetResult(JsonResult jsonResult)
+            Utils.Log.Write(ex);
+            //ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+        }
+    }
+
+    }
+
+    /*
+        public class JsonNetFilterAttribute : ActionFilterAttribute
+        {
+            private const string _dateFormat = "";
+
+            public override void OnActionExecuted(ActionExecutedContext filterContext)
             {
-                this.ContentEncoding = jsonResult.ContentEncoding;
-                this.ContentType = jsonResult.ContentType;
-                this.Data = jsonResult.Data;
-                this.JsonRequestBehavior = jsonResult.JsonRequestBehavior;
-                this.MaxJsonLength = jsonResult.MaxJsonLength;
-                this.RecursionLimit = jsonResult.RecursionLimit;
+                if (filterContext.Result is JsonResult == false)
+                    return;
+
+                filterContext.Result = new JsonNetResult((JsonResult)filterContext.Result);
             }
 
-            public override void ExecuteResult(ControllerContext context)
+            private class JsonNetResult : JsonResult
             {
-                if (context == null)
-                    throw new ArgumentNullException("context");
-
-                if (this.JsonRequestBehavior == JsonRequestBehavior.DenyGet
-                    && String.Equals(context.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
-                    throw new InvalidOperationException("GET not allowed! Change JsonRequestBehavior to AllowGet.");
-
-                var response = context.HttpContext.Response;
-
-                response.ContentType = String.IsNullOrEmpty(this.ContentType) ? "application/json" : this.ContentType;
-
-                if (this.ContentEncoding != null)
-                    response.ContentEncoding = this.ContentEncoding;
-
-                if (this.Data != null)
+                public JsonNetResult(JsonResult jsonResult)
                 {
-                    var isoConvert = new IsoDateTimeConverter();
-                    isoConvert.DateTimeFormat = _dateFormat;
-                    response.Write(JsonConvert.SerializeObject(this.Data, isoConvert));
+                    this.ContentEncoding = jsonResult.ContentEncoding;
+                    this.ContentType = jsonResult.ContentType;
+                    this.Data = jsonResult.Data;
+                    this.JsonRequestBehavior = jsonResult.JsonRequestBehavior;
+                    this.MaxJsonLength = jsonResult.MaxJsonLength;
+                    this.RecursionLimit = jsonResult.RecursionLimit;
+                }
+
+                public override void ExecuteResult(ControllerContext context)
+                {
+                    if (context == null)
+                        throw new ArgumentNullException("context");
+
+                    if (this.JsonRequestBehavior == JsonRequestBehavior.DenyGet
+                        && String.Equals(context.HttpContext.Request.HttpMethod, "GET", StringComparison.OrdinalIgnoreCase))
+                        throw new InvalidOperationException("GET not allowed! Change JsonRequestBehavior to AllowGet.");
+
+                    var response = context.HttpContext.Response;
+
+                    response.ContentType = String.IsNullOrEmpty(this.ContentType) ? "application/json" : this.ContentType;
+
+                    if (this.ContentEncoding != null)
+                        response.ContentEncoding = this.ContentEncoding;
+
+                    if (this.Data != null)
+                    {
+                        var isoConvert = new IsoDateTimeConverter();
+                        isoConvert.DateTimeFormat = _dateFormat;
+                        response.Write(JsonConvert.SerializeObject(this.Data, isoConvert));
+                    }
                 }
             }
         }
-    }
-    //*/
+        //*/
 }

@@ -1,9 +1,5 @@
 ﻿@model Web.Models.Admtszh
 
-@{
-    ViewBag.Title = "editprof";
-    //   Layout = "~/Views/Shared/_LayoutUk.cshtml";
-}
 @*<div class='ng-modal' ng-show='show'>
     <div class='ng-modal-overlay' ng-click='hideModal()'></div>
     <div class='ng-modal-dialog' ng-style='dialogStyle'>
@@ -15,7 +11,7 @@
 
                 <div class="form-horizontal">
                     <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
                     <input type="hidden" ng-model="profmodel.id" ng-init="profmodel.id = @Model.id">
                     <input type="hidden" ng-model="profmodel.id_uk" ng-init="profmodel.id_uk = @Model.id_uk">

@@ -1,0 +1,60 @@
+﻿
+
+@*<div class='ng-modal' ng-show='show'>
+    <div class='ng-modal-overlay' ng-click='hideModal()'></div>
+    <div class='ng-modal-dialog' ng-style='dialogStyle'>
+        <div class='ng-modal-close' ng-click='hideModal()'>*@
+<h3>Создание профиля</h3>
+Заполните профиль и ожидайте активации Вашего профиля
+<form>
+    @*@Html.AntiForgeryToken()*@
+
+    <div class="form-horizontal">
+        <hr />
+        @*<input type="hidden" ng-model="profmodel.id" ng-init="profmodel.id = 0">*@
+        <input type="hidden" ng-model="profmodel.id_uk" ng-init="profmodel.id_uk = 0">
+        <input type="hidden" ng-model="profmodel.AdmtszhId" ng-init="profmodel.AdmtszhId = 0">
+        <fieldset>
+            <legend></legend>
+            <div class="form-group">
+                Должность
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.post" ng-init="profmodel.post = ''" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                Фамилия
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.SurName" ng-init="profmodel.SurName = ''" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                Имя
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.Name" ng-init="profmodel.Name = ''" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                Отчество
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" type="text" ng-model="profmodel.Patronymic" ng-init="profmodel.Patronymic = ''" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Создать" class="btn btn-default" ng-click="submit(profmodel)">
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</form>
+
+
+@*</div>*@
+@*<div class='ng-modal-dialog-content' ng-transclude></div>
+        </div>
+    </div>*@

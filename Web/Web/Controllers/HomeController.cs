@@ -85,6 +85,20 @@ namespace Web.Models
         }
 
 
+        public ActionResult new_operprof_tpl()
+        {
+            if (!WebSecurity.IsAuthenticated)
+                return RedirectToAction("Index", "Login");
+            int count = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).Count();
+            if (count == 0)
+            {
+                return View();
+            }
+
+            return new HttpStatusCodeResult(403, "Admin`s profile is created");
+        }
+
+
 
         [HttpGet]
         [AllowAnonymous]
