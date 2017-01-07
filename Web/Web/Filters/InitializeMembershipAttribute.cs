@@ -12,7 +12,7 @@ using System.Net;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
 
-namespace Web.Filter
+namespace Web.Filters
 {
     // [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 

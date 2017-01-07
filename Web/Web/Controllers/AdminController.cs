@@ -7,7 +7,7 @@ using Web.Models.Repository;
 using System.Data;
 //using WebMatrix.WebData;
 using System.Web.Security;
-using Web.Filter;
+using Web.Filters;
 
 
 namespace Web.Controllers

@@ -10,6 +10,7 @@ using Web.Models;
 using Web.Models.Repository;
 using System.Net;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
 
 namespace Web.Controllers
 {
@@ -138,11 +139,11 @@ namespace Web.Controllers
                 }
                 if (string.IsNullOrEmpty(model.UserName))
                 {
-                    return Json("Error", "Неправильный E-mail");
+                    return Json("Error", "Введите E-mail");
                 }
                 if (string.IsNullOrEmpty(model.Password))
                 {
-                    return Json("Error", "Ошибка при вводе пароля");
+                    return Json("Error", "Пустой пароль");
                 }
 
             }
@@ -154,6 +155,31 @@ namespace Web.Controllers
         {
             WebSecurity.Logout();
             return new HttpStatusCodeResult(200);
+        }
+
+
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult RecoverPassSendMail(string email)
+        {
+            Regex regex = new Regex(@"/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", RegexOptions.IgnoreCase);
+
+         //   if (regex.IsMatch(email))
+            {
+                string date;
+                Filters.AccountFunctions func = new Filters.AccountFunctions();
+                func.getAccount(email, out date);
+                //Send E-mail
+                string title = "Восстановление пароля";
+                string message = "Для восставноления пароля пройдет по ссылке ниже\n"
+                    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email);
+
+                SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", email, title, message);
+                return View();
+            }
+
+        //    return  Json("Error", "Пользователь с указанным E-mail: " + email + " не найден");
         }
 
 
@@ -274,6 +300,7 @@ namespace Web.Controllers
         {
             return "Доступ запрещен!!! Пшел вон";
         }
+        
         #region Вспомогательные методы
 
         public enum ManageMessageId
@@ -282,6 +309,9 @@ namespace Web.Controllers
             SetPasswordSuccess,
             RemoveLoginSuccess,
         }
+
+
+
 
 
 

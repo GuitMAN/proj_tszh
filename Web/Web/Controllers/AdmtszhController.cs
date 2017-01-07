@@ -8,7 +8,7 @@ using System.Data;
 using WebMatrix.WebData;
 using System.Web.Security;
 using Web.Utils;
-using Web.Filter;
+using Web.Filters;
 using System.Net;
 using System.Net.Mail;
 

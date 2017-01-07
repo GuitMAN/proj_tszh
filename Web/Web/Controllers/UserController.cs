@@ -9,7 +9,7 @@ using Web.Models;
 using Web.Models.Repository;
 using WebMatrix.WebData;
 using Web.Utils;
-using Web.Filter;
+using Web.Filters;
 
 namespace Web.Controllers
 {

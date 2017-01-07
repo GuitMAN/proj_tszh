@@ -227,6 +227,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\NavController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Filters\AccountFunctions.cs" />
     <Compile Include="Filters\InitializeMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -3260,6 +3261,7 @@
     <Content Include="Views\User\AddCounterMonthValue.cshtml" />
     <Content Include="Views\User\ViewDataMeters.cshtml" />
     <Content Include="Views\Nav\menu_moder.cshtml" />
+    <Content Include="Views\Login\RecoverPassSendMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
