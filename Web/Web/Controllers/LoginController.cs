@@ -42,7 +42,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                FormsAuthentication.SetAuthCookie(model.UserName, false);
+                
                 uk_profile uk = null;
                 try
                 {
@@ -59,6 +59,7 @@ namespace Web.Controllers
                         if (requestDomain.Equals(uk.host))
                         {
                             //User have direct company
+                            FormsAuthentication.SetAuthCookie(model.UserName, false);
                             return Json(result);
                     //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
                         }
@@ -68,14 +69,9 @@ namespace Web.Controllers
                             //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
                             WebSecurity.Logout();   
                             return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });                        
-                           }
+                        }
                     }
-                    else
-                    {
-                        //User nobody direct company
-                        
-                        return Json(result);
-                    }                  
+              
                 }
                 catch (Exception ex)
                 {
