@@ -12,11 +12,19 @@ namespace Web.Filters
     public class AccountFunctions
     {
         Repo repository;
+
+        public AccountFunctions(Repo insert_repo)
+        {
+            repository = insert_repo;
+        }
+
         public bool getAccount(string Login, out string RegData)
         {
 
             DataSet ds;
-            repository.SQLstringConnect("SELECT CreateDate FROM webpages_Membership WHERE UserId = (SELECT id FROM UserAccount WHERE Login = "+Login+")", out ds);
+            string sql_str = "SELECT CreateDate FROM [dbo].[webpages_Membership] WHERE UserId = (SELECT id FROM [dbo].[UserAccount] WHERE Login = 'guitman@mail.ru')";
+            repository.SQLstringConnect(sql_str, out ds);
+            RegData = null;
             if (ds.Tables.Count == 1)
             {
 
@@ -26,8 +34,7 @@ namespace Web.Filters
                 {
                     RegData = dr["CreateDate"].ToString();
                 }
-            }
-            RegData = null;
+            }              
             return false;
         }
 

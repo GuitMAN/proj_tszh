@@ -38,7 +38,7 @@ namespace Web.Controllers
         [HttpPost]
         [AllowAnonymous]
  //       [ValidateJsonAntiForgeryToken]
-        public ActionResult Index(LoginModel model, string returnUrl)
+        public ActionResult Index(LoginModel model)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
@@ -168,12 +168,12 @@ namespace Web.Controllers
          //   if (regex.IsMatch(email))
             {
                 string date;
-                Filters.AccountFunctions func = new Filters.AccountFunctions();
+                Filters.AccountFunctions func = new Filters.AccountFunctions(repository);
                 func.getAccount(email, out date);
                 //Send E-mail
                 string title = "Восстановление пароля";
                 string message = "Для восставноления пароля пройдет по ссылке ниже\n"
-                    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email);
+                    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email+date);
 
                 SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", email, title, message);
                 return View();
