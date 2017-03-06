@@ -1324,6 +1324,7 @@
     <Content Include="Views\User\ViewDataMeters.cshtml" />
     <Content Include="Views\Nav\menu_moder.cshtml" />
     <Content Include="Views\Login\RecoverPassSendMail.cshtml" />
+    <Content Include="Views\Login\RecoverPass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

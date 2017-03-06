@@ -37,13 +37,19 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
                     return response;
                 })
         },
-        ForgotPassword: function (username) {
+        RecoverPassSendMail: function (email) {
 
-            //           var config = getHttpConfig();
-            return $http.post(_host + '/login/forgotpassword', username)//, config)
-              .then(function (res) {
-                  Session.create(1, res.data.id, res.data.Role, res.data.Login);
-                  return res;
+            return $http.post(_host + '/login/RecoverPassSendMail', { email: email  })//, config)
+              .then(function (response) {
+                  return response;
+              })
+
+        },
+        RecoverPass: function (model) {
+
+            return $http.post(_host + '/login/RecoverPass', model)//, config)
+              .then(function (response) {
+                  return response;
               })
 
         },
@@ -121,11 +127,7 @@ HomeApp.constant('USER_ROLES', {
 
 /* controller for login form*/
 HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthService, Session, $location) {
-    $scope.credentials = {
-        username: '',
-        password: '',
-        RememberMe: false
-    };
+
     $scope.response = '';
     $scope.login = function (credentials) {
         AuthService.login(credentials)
@@ -135,7 +137,7 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
                     $scope.response = response.data;
 
                 }
-                return location.reload();
+             //   return location.reload();
             });
     };
 
@@ -156,11 +158,7 @@ HomeApp.controller('LogoutCtrl', function ($http, AuthService, $location, Sessio
 
 /* For register form*/
 HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, AuthService, Session) {
-    $scope.reguser = {
-        UserName: '',
-        Password: '',
-        ConfirmPassword: ''
-    };
+
     $scope.Session = Session;
     if (AuthService.isAuthenticated()) {
         return $location.path('#/');
@@ -189,22 +187,34 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
 
 
 /* For register form*/
-HomeApp.controller('ForgotPasswordCtrl', function ($scope, $rootScope, $location, AuthService, Session) {
+HomeApp.controller('RecoverPassSendMailCtrl', function ($scope, $rootScope, $location, AuthService, Session) {
 
-
-    //   $scope.Session = Session;
-    //    if (AuthService.isAuthenticated()) {
-    //        return $location.path('#/');
-    //    }
     $scope.regex = "/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i";
 
-    $scope.ForgotPassword = function (reguser) {
-        AuthService.ForgotPassword(reguser).then(function (response) {
+    $scope.sendmail = function (email) {
+        AuthService.RecoverPassSendMail(email).then(function (response) {
+         //   return $location.path('#/');
+        });
+    };
+
+});
+
+/* For register form*/
+HomeApp.controller('RecoverPassCtrl', function ($scope, $rootScope, $location, $routeParams, AuthService, Session) {
+  //  $scope.model = {
+  //      OldPassword: '',
+   //     NewPassword: '',
+  //      ConfirmPassword: ''
+   // };
+
+    $scope.recover = function (model) {
+        AuthService.RecoverPass(model).then(function (response) {
             return $location.path('#/');
         });
     };
 
 });
+
 
 
 /* controller for logout*/

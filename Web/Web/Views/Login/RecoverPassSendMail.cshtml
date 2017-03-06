@@ -1,13 +1,37 @@
 ﻿
-<!DOCTYPE html>
+<h3>Сброс пароля</h3>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>RecoverPassSendMail</title>
-</head>
-<body>
-    <div> RecoverPassSendMail
+
+    <div class="form-group">
+        <form name="RecoverPassSendMailForm" class="ng-pristine ng-valid ng-scope" @*ng-submit="register(reguser)*@ ">
+
+            <div class="form-horizontal">
+                <fieldset>
+                    <legend></legend>
+                    Введите E-mail, который был указан при регистрации. На него Вам придет письмо с дальнейшими инструкцими по восстановлению пароля.<br>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="UserName">E-mail:</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="UserName" name="UserName" type="text" ng-model="email" /> @*required ng-pattern="/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i">*@
+                        </div>
+                    </div>
+
+                    @*<div class="form-group">
+                        <label class="control-label col-md-2" for="Email">Логин</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" id="Email" name="Email" type="text" ng-model="reguser.Email">
+                        </div>
+                    </div>*@
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Отправить" class="btn btn-default" ng-Click="sendmail(email)" /> @*ng-disabled="RecoverPassSendMailForm.$invalid">*@
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
     </div>
-</body>
-</html>
+
+

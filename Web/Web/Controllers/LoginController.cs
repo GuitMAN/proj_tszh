@@ -153,31 +153,84 @@ namespace Web.Controllers
             return new HttpStatusCodeResult(200);
         }
 
-
-
         [HttpGet]
+        [AllowAnonymous]
+        public ActionResult RecoverPassSendMail()
+        {
+            return View();
+        }
+
+        [HttpPost]
         [AllowAnonymous]
         public ActionResult RecoverPassSendMail(string email)
         {
             Regex regex = new Regex(@"/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", RegexOptions.IgnoreCase);
 
-         //   if (regex.IsMatch(email))
+          //  if (regex.IsMatch(email))
             {
                 string date;
                 Filters.AccountFunctions func = new Filters.AccountFunctions(repository);
                 func.getAccount(email, out date);
+
+                string token = WebSecurity.GeneratePasswordResetToken(email);
+
                 //Send E-mail
                 string title = "Восстановление пароля";
                 string message = "Для восставноления пароля пройдет по ссылке ниже\n"
-                    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email+date);
+                    + "http://localhost:53574/Login/RecoverPass?token" + token;
+                //    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email+date);
 
                 SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", email, title, message);
                 return View();
             }
 
-        //    return  Json("Error", "Пользователь с указанным E-mail: " + email + " не найден");
+            return  Json("Error", "Пользователь с указанным E-mail: " + email + " не найден");
         }
 
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult RecoverPass(string token)
+        {
+            LocalPasswordModel model = new  LocalPasswordModel();
+            // используем поле OldPassword для хранения token пользователя
+            model.OldPassword = token;
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        //        [ValidateAntiForgeryToken]
+        public ActionResult RecoverPass(LocalPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                // В ряде случаев при сбое ChangePassword породит исключение, а не вернет false.
+                bool changePasswordSucceeded;
+                try
+                {
+                    // model.OldPassword - token пользователя, сгенерированный в вызывающем методе 
+                    changePasswordSucceeded = WebSecurity.ResetPassword(model.OldPassword, model.NewPassword);
+                    //  changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                }
+                catch (Exception)
+                {
+                    changePasswordSucceeded = false;
+                }
+
+                if (changePasswordSucceeded)
+                {
+                    return Json(new string[] { "Ok", "Пароль успешно изменен" });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Неправильный текущий пароль или недопустимый новый пароль.");
+                    return Json(new string[] { "Error", "Неправильный текущий пароль или недопустимый новый пароль." });
+                }
+            }
+            // Появление этого сообщения означает наличие ошибки; повторное отображение формы
+            return Json(new string[] { "Error", "Пароль изменить не удалось." });
+        }
 
 
         public string getUser()
