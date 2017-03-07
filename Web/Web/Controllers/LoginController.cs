@@ -177,7 +177,7 @@ namespace Web.Controllers
                 //Send E-mail
                 string title = "Восстановление пароля";
                 string message = "Для восставноления пароля пройдет по ссылке ниже\n"
-                    + "http://localhost:53574/Login/RecoverPass?token" + token;
+                    + "http://mytsn.ru/#/RecoverPass/" + token;
                 //    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email+date);
 
                 SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", email, title, message);

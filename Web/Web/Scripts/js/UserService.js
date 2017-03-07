@@ -278,7 +278,7 @@ HomeApp.factory('UserServices', function ($http) {
             return  $http(
                 {
                     method: 'GET',
-                    url: '/User/editprof',
+                    url: '/User/editprof'
                     //params: { region: region, street: street, house: house }
                 }).then(function (response) {
                     return response;

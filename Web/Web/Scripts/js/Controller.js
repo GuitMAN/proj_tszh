@@ -72,9 +72,10 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               templateUrl: _host + '/login/RecoverPassSendMail',
                controller: 'RecoverPassSendMailCtrl'
           })
-          .when('/RecoverPass', {
-               templateUrl: _host + '/login/RecoverPass',
-               controller: 'RecoverPassCtrl'
+
+          .when('/RecoverPass/:token', {
+              templateUrl: _host + '/login/RecoverPass',
+              controller: 'RecoverPassCtrl'
           })
           .when('/feedback', {
               templateUrl: _host + '/user/feedback',

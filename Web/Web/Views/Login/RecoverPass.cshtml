@@ -1,55 +1,42 @@
 ﻿@model Web.Models.LocalPasswordModel
 
-@{
-    Layout = null;
-}
 
-<!DOCTYPE html>
+<div>
+    <form name="RecoverForm" class="ng-pristine ng-valid ng-scope">
+        {
+        @*  @Html.AntiForgeryToken()*@
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>RecoverPass</title>
-</head>
-<body>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        
         <div class="form-horizontal">
             <h4>LocalPasswordModel</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            
 
-                    @Html.HiddenFor(model => model.OldPassword)
 
+            <input class="form-control text-box single-line" type="text" id="token" ng-model='model.OldPassword'>
             <div class="form-group">
-                @Html.LabelFor(model => model.NewPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="Password">Пароль</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.NewPassword, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line password" id="Password" name="Password" type="password" ng-model="reguser.Password" required>
+                    <span class="error" ng-show="RecoverForm.Password.$error.required">Required!</span><br>
                 </div>
             </div>
-    
+
             <div class="form-group">
-                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2" for="ConfirmPassword">Подтвердите пароль</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                    <input class="form-control text-box single-line password" id="ConfirmPassword" name="ConfirmPassword" type="password" ng-model="reguser.ConfirmPassword" required>
+                    <span class="error" ng-show="RecoverForm.ConfirmPassword.$error.required">Required!</span><br>
                 </div>
             </div>
-    
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                    <input type="submit" value="Сохранить" ng-click="recover(model, RecoverForm)" ng-disabled="RegisterForm.$invalid">
                 </div>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-</body>
-</html>
+        </form>
+
+
+</div>
+

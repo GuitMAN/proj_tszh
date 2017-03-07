@@ -53,6 +53,16 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
               })
 
         },
+        getRecoverPass: function (token) {
+            return $http({
+                method: 'GET',
+                url: _host + '/login/RecoverPass',
+                params: { token: token }
+            }).then(function (response) {
+                    return response;
+                })
+            },
+
         logout: function () {
             return $http.post(_host + '/Login/logoout')//, config)
                .then(function (response) {
@@ -200,12 +210,18 @@ HomeApp.controller('RecoverPassSendMailCtrl', function ($scope, $rootScope, $loc
 });
 
 /* For register form*/
-HomeApp.controller('RecoverPassCtrl', function ($scope, $rootScope, $location, $routeParams, AuthService, Session) {
-  //  $scope.model = {
-  //      OldPassword: '',
-   //     NewPassword: '',
-  //      ConfirmPassword: ''
-   // };
+HomeApp.controller('RecoverPassCtrl', function ($scope, $rootScope, $location, $routeParams, $sce, AuthService, Session) {
+    $scope.model = {
+        OldPassword: $routeParams['token'],
+        NewPassword: '',
+        ConfirmPassword: ''
+     };
+
+    console.log($scope.model);
+
+    AuthService.getRecoverPass($routeParams['token']).then(function (response) {
+        
+    });
 
     $scope.recover = function (model) {
         AuthService.RecoverPass(model).then(function (response) {
