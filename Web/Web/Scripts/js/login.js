@@ -20,7 +20,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
             //           var config = getHttpConfig();
             return $http.post(_host + '/Login', credentials)//, config)
               .then(function (res) {
-                  Session.create(1, res.data.id, res.data.Role, res.data.Login);
+                  Session.create(1, res.data.id, res.data.Roles, res.data.Login);
                   return res;
               })
 
@@ -259,8 +259,8 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, $http, AUTH_EVEN
     var curname = $cookies.get("username");
     var role = $cookies.get("userRole");
     var id = $cookies.get("userId");
-    Session.create(1, id, role, curname);
-    $scope.userRoles = role;
+    Session.create(1, id, roles, curname);
+    $scope.userRoles = roles;
     $scope.isAuthorized = AuthService.isAuthorized;
 
     $scope.items = [

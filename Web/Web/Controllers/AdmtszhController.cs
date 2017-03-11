@@ -293,8 +293,8 @@ namespace Web.Controllers
                 return RedirectToAction("editprof", "Admtszh");
             }
 
-            IEnumerable<webpages_UsersInRoles> uir = repository.webpages_UsersInRoles;
-            ViewData["uir"] = uir.ToList();
+         //   IEnumerable<webpages_UsersInRoles> uir = repository.webpages_UsersInRoles;
+         //   ViewData["uir"] = uir.ToList();
 
             IEnumerable <UserProfile> users = repository.UserProfile.Where(p => p.id_uk.Equals(uk.id)).OrderBy(p => p.SurName);
 
