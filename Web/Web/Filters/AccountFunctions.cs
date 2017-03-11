@@ -22,18 +22,20 @@ namespace Web.Filters
         {
 
             DataSet ds;
-            string sql_str = "SELECT CreateDate FROM [dbo].[webpages_Membership] WHERE UserId = (SELECT id FROM [dbo].[UserAccount] WHERE Login = 'guitman@mail.ru')";
+            string sql_str = "SELECT CreateDate FROM [dbo].[webpages_Membership] WHERE UserId = (SELECT id FROM [dbo].[UserAccount] WHERE Login = '" + Login + "')";
             repository.SQLstringConnect(sql_str, out ds);
             RegData = null;
-            if (ds.Tables.Count == 1)
+            if (ds.Tables[0].Rows.Count == 1)
             {
-
-                RegData = ds.Tables[0].Rows[0]["CreateDate"].ToString();
+                Logger.Log.Info("User: " + Login + " - get CreateDate");
+                //RegData = ds.Tables[0].Rows[0]["CreateDate"].ToString();
                 //Заполняем наш массив данными из таблшицы
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
                     RegData = dr["CreateDate"].ToString();
+                    return true;
                 }
+                
             }              
             return false;
         }

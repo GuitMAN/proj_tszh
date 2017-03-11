@@ -1,42 +1,44 @@
-﻿@model Web.Models.LocalPasswordModel
+﻿
 
 
-<div>
+<div  ng-hide="response[0]=='Ok'">
     <form name="RecoverForm" class="ng-pristine ng-valid ng-scope">
-        {
+        
         @*  @Html.AntiForgeryToken()*@
 
         <div class="form-horizontal">
             <h4>LocalPasswordModel</h4>
             <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <span ng-show="response[0]=='Error'" class="label label-important">
+                {{response[1]}}
+            </span>
 
-
-            <input class="form-control text-box single-line" type="text" id="token" ng-model='model.OldPassword'>
+            <input class="form-control text-box single-line" type="hidden" id="token" ng-model='model.OldPassword'>
             <div class="form-group">
                 <label class="control-label col-md-2" for="Password">Пароль</label>
                 <div class="col-md-10">
-                    <input class="form-control text-box single-line password" id="Password" name="Password" type="password" ng-model="reguser.Password" required>
-                    <span class="error" ng-show="RecoverForm.Password.$error.required">Required!</span><br>
+                    <input class="form-control text-box single-line password" id="Password" name="Password" type="password" ng-model="model.NewPassword" required>
+                    <span class="label label-important" ng-show="RecoverForm.Password.$error.required">Required!</span><br>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label col-md-2" for="ConfirmPassword">Подтвердите пароль</label>
                 <div class="col-md-10">
-                    <input class="form-control text-box single-line password" id="ConfirmPassword" name="ConfirmPassword" type="password" ng-model="reguser.ConfirmPassword" required>
-                    <span class="error" ng-show="RecoverForm.ConfirmPassword.$error.required">Required!</span><br>
+                    <input class="form-control text-box single-line password" id="ConfirmPassword" name="ConfirmPassword" type="password" ng-model="model.ConfirmPassword" required>
+                    <span class="label label-important" ng-show="RecoverForm.ConfirmPassword.$error.required">Required!</span><br>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Сохранить" ng-click="recover(model, RecoverForm)" ng-disabled="RegisterForm.$invalid">
+                    <input type="submit" value="Сохранить" ng-click="recover(model)" ng-disabled="RecoverForm.$invalid">
                 </div>
             </div>
         </div>
         </form>
 
-
 </div>
-
+<span ng-show="response[0]=='Ok'" class="label label-success">
+    {{response[1]}}
+</span>

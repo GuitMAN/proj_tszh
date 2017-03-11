@@ -49,9 +49,14 @@ namespace Web.Controllers
                     Account_model result = new Account_model();
                     result.id = WebSecurity.GetUserId(model.UserName);
                     result.Login = model.UserName;
-                    result.Role = Roles.GetRolesForUser(model.UserName);
+                    result.Roles = Roles.GetRolesForUser(model.UserName);
                     string requestDomain = Request.Headers["host"];
-                    UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
+
+                 //   foreach (var role in result.Roles)
+                  //  {
+                        UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
+
+                 ///   }
                     if (user != null)
                     {
                         uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
@@ -97,8 +102,14 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult Register(RegisterModel model)
         {
+            if (WebSecurity.UserExists(model.UserName))
+            {
+                return Json("Error", "Пользователь с таким логином уже существует");
+            }
+
             if (!WebSecurity.IsAuthenticated)
             {
+              
                 if (ModelState.IsValid)
                 {
                     try
@@ -130,7 +141,7 @@ namespace Web.Controllers
                     catch (MembershipCreateUserException e)
                     {
                         ModelState.AddModelError("Ошибка при регистрации: ", ErrorCodeToString(e.StatusCode));
-                        return new HttpStatusCodeResult(203, "Ошибка при регистрации: " + ErrorCodeToString(e.StatusCode));
+                        return Json("Error", "Ошибка при регистрации: " + ErrorCodeToString(e.StatusCode));
                     }
                 }
                 if (string.IsNullOrEmpty(model.UserName))
@@ -143,7 +154,8 @@ namespace Web.Controllers
                 }
 
             }
-            return new HttpStatusCodeResult(203, "Ошибка при регистрации");
+            WebSecurity.Logout();
+            return Json("Error", "Ошибка при регистрации");
         }
 
         [AllowAnonymous]
@@ -164,38 +176,39 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult RecoverPassSendMail(string email)
         {
-            Regex regex = new Regex(@"/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", RegexOptions.IgnoreCase);
+            //  Regex regex = new Regex(@"/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", RegexOptions.IgnoreCase);
 
-          //  if (regex.IsMatch(email))
+            //if (regex.IsMatch(email))
             {
                 string date;
                 Filters.AccountFunctions func = new Filters.AccountFunctions(repository);
-                func.getAccount(email, out date);
+                if (func.getAccount(email, out date))
+                {
+                    string token = WebSecurity.GeneratePasswordResetToken(email);
 
-                string token = WebSecurity.GeneratePasswordResetToken(email);
+                    //Send E-mail
+                    string title = "Восстановление пароля";
+                    string message = "Для восставноления пароля пройдет по ссылке ниже\n"
+                        + "http://mytsn.ru/#/recoverpass/" + token;
+                    //    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email+date);
 
-                //Send E-mail
-                string title = "Восстановление пароля";
-                string message = "Для восставноления пароля пройдет по ссылке ниже\n"
-                    + "http://mytsn.ru/#/RecoverPass/" + token;
-                //    + "http://mytsn.ru/Login/RecoverPass/" + getMd5Hash(email+date);
-
-                SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", email, title, message);
-                return View();
+                    SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", email, title, message);
+                    return Json(new string[] { "Ok", "На Ваш E-mail отправлено письмо с инструкцией по восстановлению пароля." });
+                }
             }
 
-            return  Json("Error", "Пользователь с указанным E-mail: " + email + " не найден");
+            return  Json(new string[] { "Error", "Пользователь с указанным E-mail: " + email + " не найден" });
         }
 
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult RecoverPass(string token)
+        public ActionResult RecoverPass()
         {
-            LocalPasswordModel model = new  LocalPasswordModel();
+         //   LocalPasswordModel model = new  LocalPasswordModel();
             // используем поле OldPassword для хранения token пользователя
-            model.OldPassword = token;
-            return View(model);
+          //  model.OldPassword = token;
+            return View();
         }
 
         [HttpPost]

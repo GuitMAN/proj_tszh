@@ -30,7 +30,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
     // Allow same origin resource loads.
     'self',
     // Allow loading from our assets domain.  Notice the difference between * and **.
-    'http://localhost**', 'http://moe-tszh.ru**', 'http://xn----itbevkug.xn--p1ai**'
+    'http://localhost**', 'http://mytsn.ru**'
     ]);
  //   $httpProvider.defaults.headers.common = {  'withCredentials': true };
     $httpProvider.defaults.withCredentials = true;
@@ -72,8 +72,11 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               templateUrl: _host + '/login/RecoverPassSendMail',
                controller: 'RecoverPassSendMailCtrl'
           })
-
-          .when('/RecoverPass/:token', {
+          .when('/recoverpass', {
+              templateUrl: _host + '/login/RecoverPass',
+              controller: 'RecoverPassCtrl'
+          })
+          .when('/recoverpass/:token', {
               templateUrl: _host + '/login/RecoverPass',
               controller: 'RecoverPassCtrl'
           })

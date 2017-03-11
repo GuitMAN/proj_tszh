@@ -51,18 +51,7 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
               .then(function (response) {
                   return response;
               })
-
         },
-        getRecoverPass: function (token) {
-            return $http({
-                method: 'GET',
-                url: _host + '/login/RecoverPass',
-                params: { token: token }
-            }).then(function (response) {
-                    return response;
-                })
-            },
-
         logout: function () {
             return $http.post(_host + '/Login/logoout')//, config)
                .then(function (response) {
@@ -200,10 +189,18 @@ HomeApp.controller('RegisterCtrl', function ($scope, $rootScope, $location, Auth
 HomeApp.controller('RecoverPassSendMailCtrl', function ($scope, $rootScope, $location, AuthService, Session) {
 
     $scope.regex = "/^(?:[a-z0-9]+(?:[-_]?[a-z0-9]+)?@[a-z0-9]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i";
-
+    $scope.status = '';
+    console.log($scope.status);
     $scope.sendmail = function (email) {
         AuthService.RecoverPassSendMail(email).then(function (response) {
-         //   return $location.path('#/');
+            $scope.response = response.data;
+            console.log("data:", response.data);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+            }
+            if (response.data[0] == 'Error') {
+                $scope.status = '';
+            }
         });
     };
 
@@ -218,14 +215,14 @@ HomeApp.controller('RecoverPassCtrl', function ($scope, $rootScope, $location, $
      };
 
     console.log($scope.model);
-
-    AuthService.getRecoverPass($routeParams['token']).then(function (response) {
-        
-    });
-
+    $scope.status = false;
     $scope.recover = function (model) {
         AuthService.RecoverPass(model).then(function (response) {
-            return $location.path('#/');
+            $scope.response = response.data;
+            console.log("data:", response);
+            if (response.data[0] == 'Ok') {
+                $scope.status = true;
+            }
         });
     };
 

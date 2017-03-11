@@ -40,5 +40,7 @@
         </fieldset>
     </div>
 </form>
-
-<pre> {{article | json}}</pre>
+@if (User.IsInRole("Admin"))
+{
+    <pre> {{article | json}}</pre>
+}
