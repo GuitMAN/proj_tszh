@@ -214,7 +214,7 @@ namespace Web.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [MyAuthorize(Roles = "Moder")]
         public ActionResult readFeedBack()
         {
@@ -241,7 +241,7 @@ namespace Web.Controllers
             //    }
 
             IEnumerable<feedback> list = repository.feedback.Where(p =>p.id_uk.Equals(uk.id)).OrderByDescending(p => p.datetime);
-            return View(list);
+            return Json(list);
         }
 
 

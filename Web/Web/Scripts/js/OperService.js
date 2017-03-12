@@ -1,5 +1,5 @@
 ﻿/* User`s controllers & services */
-HomeApp.controller('ReadFeedBackCtrl', function ($http, $scope, UserServices, Session) {
+HomeApp.controller('ReadFeedBackCtrl', function ($http, $scope, OperServices, Session) {
 
     $scope.feedmodel = {
         id: 0,
@@ -8,6 +8,20 @@ HomeApp.controller('ReadFeedBackCtrl', function ($http, $scope, UserServices, Se
         title: '',
         message: ''
     };
+
+    OperServices.readfeedback().then(function (response) {
+        $scope.data = response.data;
+        console.log("data:", $scope.data);
+    });
+    
+    $scope.delete = function (id) {
+        console.log("pop:", id);
+        $scope.data = $scope.data.pop();
+        console.log("data:", $scope.data);
+    }
+
+
+
 
 })
 
@@ -49,9 +63,10 @@ HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices,
             console.log("data:", response);
             if (response.data[0] === 'Ok') {
                 $scope.status = true;
+                
             }
         });
-        return $location.path('#/');
+        return $location.path('#/operprof');
     }
 });
 
@@ -82,7 +97,7 @@ HomeApp.controller('NewOperProfileCtrl', function ($http, $scope, OperServices, 
                 $scope.status = true;
             }
         });
-        return $location.path('#/');
+        return $location.path('#/operprof');
     }
 });
 
@@ -226,6 +241,7 @@ HomeApp.controller('SettingsCtrl', function ($scope, OperServices, $http, $sce) 
     $scope.submit = function(model) {
         OperServices.setsettings($scope.model).then(function (response) {
             $scope.resp = response.data;
+            return $location.path('#/operprof');
         });
     };
     OperServices.viewsettings().then(function (response) {
@@ -292,6 +308,12 @@ HomeApp.controller('EditArticleCtrl', function ($scope, OperServices, $routePara
 /* Factory of user`s controller */
 HomeApp.factory('OperServices', function ($http) {
     return {
+        readfeedback: function () {
+            return $http.post(_host + '/admtszh/readFeedBack')
+              .then(function (response) {
+                  return response;
+              })
+        },
         feedback: function (feedmodel) {
             return $http.post(_host + '/admtszh/postfeed', feedmodel)
               .then(function (response) {

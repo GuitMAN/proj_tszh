@@ -1293,7 +1293,7 @@
     <Content Include="Views\Admtszh\editprof.cshtml" />
     <Content Include="Views\Admtszh\EditUser.cshtml" />
     <Content Include="Views\Admtszh\profile.cshtml" />
-    <Content Include="Views\Admtszh\readFeedBack.cshtml" />
+    <Content Include="Views\Home\readFeedBack.cshtml" />
     <Content Include="Views\Admtszh\ViewUsers.cshtml" />
     <Content Include="Views\Home\edituserprof_tpl.cshtml" />
     <Content Include="Views\Home\FeedBack.cshtml" />

@@ -1,0 +1,54 @@
+﻿
+<div >
+    <h3>Сообщения от пользователей</h3>
+
+    <form>
+        <table class="table" border="1">
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Тема
+                </th>
+                <th>
+                    ID User
+                </th>
+                <th>
+                    Сщообщение
+                </th>
+                <th>
+                    Дата и время
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+            <tr ng-repeat="item in data">
+                <td>
+                    {{item.status  | checkmark}}
+                </td>
+                <td>
+                    {{item.title}}
+                </td>
+                <td>
+                    <div id="draggable">
+                        {{item.id_user}}
+                    </div>
+                </td>
+                <td>
+                    {{item.message}}
+                </td>
+                <td>
+                    {{item.datetime}}
+                </td>
+                <td>
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn" ng-click="delete(item)">Удалить</button>
+                    </div>
+                </td>
+                <td> Ответить </td>
+            </tr>
+        </table>
+    </form>
+</div>

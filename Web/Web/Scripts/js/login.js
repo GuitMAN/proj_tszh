@@ -132,11 +132,11 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
         AuthService.login(credentials)
             .then(function (response) {
                 if (response.data[0] == 'Error') {
-                    //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
                     $scope.response = response.data;
 
                 }
-             //   return location.reload();
+                return location.reload();
             });
     };
 
@@ -246,7 +246,7 @@ HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location
                 $scope.status = true;
             }
         })
-        //return $location.path('#/');
+        return $location.path('#/');
     };
 });
 
@@ -257,7 +257,7 @@ HomeApp.controller('ManageCtrl', function ($scope, $http, AuthService, $location
 HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, $http, AUTH_EVENTS, AuthService, $rootScope, Session, $log) {
     $scope.Session = Session;
     var curname = $cookies.get("username");
-    var role = $cookies.get("userRole");
+    var roles = $cookies.get("userRole");
     var id = $cookies.get("userId");
     Session.create(1, id, roles, curname);
     $scope.userRoles = roles;

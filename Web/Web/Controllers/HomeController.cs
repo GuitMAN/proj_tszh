@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Web.Filters;
 using Web.Models.Repository;
 using Web.Utils;
 using WebMatrix.WebData;
@@ -28,6 +29,58 @@ namespace Web.Models
         {
             return View();
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult FeedBack()
+        {
+            //---------------------------
+            //Test Autorize
+            //if (!WebSecurity.IsAuthenticated)
+            //    return RedirectToAction("Index", "Login");
+            //---------------------------
+            //Проверка на принадлежность пользователя
+            UserProfile user = null;
+            uk_profile uk = null;
+            try
+            {
+                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                if (user == null)
+                    return RedirectToAction("No_uk");
+                if (user.id_uk == 0)
+                    return RedirectToAction("No_uk");
+                string requestDomain = Request.Headers["host"];
+                uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
+                if (!requestDomain.Equals(uk.host))
+                {
+                    //                   return Redirect("http://" + uk.host);
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+                return RedirectToAction("LogoOut", "Login");
+            }
+            //----------------------------
+
+            feedback mess = new feedback();
+            mess.status = false;
+            mess.id_uk = user.id_uk;
+            mess.id_user = WebSecurity.CurrentUserId;
+            return View(mess);
+        }
+
+
+        [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
+        public ActionResult readFeedBack()
+        {
+            return View();
+        }
+
+
+
+
         [HttpGet]
         [AllowAnonymous]
         public JsonResult getarticle(string id = "Главная")

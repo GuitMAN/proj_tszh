@@ -81,7 +81,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               controller: 'RecoverPassCtrl'
           })
           .when('/feedback', {
-              templateUrl: _host + '/user/feedback',
+              templateUrl: _host + '/home/feedback',
               controller: 'FeedbackCtrl'
           })
           .when('/profile', {
@@ -117,7 +117,7 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
               controller: 'EditOperProfileCtrl'
           })
           .when('/readfeedback', {
-              templateUrl: _host + '/admtszh/readfeedback',
+              templateUrl: _host + '/home/readfeedback',
               controller: 'ReadFeedBackCtrl'
           })
           .when('/viewusercounters', {

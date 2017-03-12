@@ -13,7 +13,7 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
     $scope.submit = function (feedmodel) {
         UserServices.feedback(feedmodel).then(function (response) {
             $scope.response = response.data;
-            console.log("data:", data);
+            console.log("data:", $scope.response);
             if (response.data[0] == 'Ok') {
                 $scope.status = true;
             }
