@@ -69,7 +69,7 @@ namespace Web.Controllers
             catch (Exception ex)
             {
                 Log.Write(ex);
-                return Redirect("send_profile");
+                return RedirectToAction("No_uk_tpl","Home");
             }
             //----------------------------
             return View(user);
@@ -151,9 +151,9 @@ namespace Web.Controllers
             {
                 user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 if (user == null)
-                    return RedirectToAction("No_uk");
+                    return RedirectToAction("No_uk_tpl","Home");
                 if (user.id_uk == 0)
-                    return RedirectToAction("No_uk");
+                    return RedirectToAction("No_uk_tpl", "Home");
                 string requestDomain = Request.Headers["host"];
                 uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
             }
@@ -162,6 +162,7 @@ namespace Web.Controllers
                 Log.Write(ex);
                 TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
                 string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
+                Logger.Log.Error("Ошибка GET User/FeedBack: ", ex);
                 return Json(res);
             }
             //------------------------------------
@@ -295,7 +296,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Logger.Log.Error("GET User/editprof: ", ex);
             }
             if (user == null)
             {
@@ -328,7 +329,7 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        [MyAuthorize(Roles = "User")]
+        [MyAuthorize]
         public ActionResult ViewMeters()
         {
             return View();
@@ -356,7 +357,7 @@ namespace Web.Controllers
 
         //Добавление счетчика
         [HttpGet]
-        [MyAuthorize(Roles = "User")]
+        [MyAuthorize]
         public ActionResult AddMeter()
         {
             //Test Autorize
@@ -439,7 +440,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [MyAuthorize(Roles = "User")]
+        [MyAuthorize]
         public ActionResult ViewDataMeters()
         {
             return View();
@@ -471,6 +472,7 @@ namespace Web.Controllers
                 Log.Write(ex);
                 TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
                 string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
+                Logger.Log.Error("GET User/ViewDataMeters: ", ex);
                 return Json(res);
             }
             //------------------------------------
@@ -520,8 +522,9 @@ namespace Web.Controllers
                         temp.gasi.Add(cp);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.Log.Error("GET User/ViewDataMeters: gasi", ex);
 
                 }
                 try
@@ -536,8 +539,9 @@ namespace Web.Controllers
                         temp.energoi.Add(cp);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.Log.Error("GET User/ViewDataMeters: energoi", ex);
 
                 }
                 try
@@ -552,8 +556,10 @@ namespace Web.Controllers
                         temp.cwi.Add(cp);
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.Log.Error("GET User/ViewDataMeters: cwi", ex);
+
                 }
                 try
                 {
@@ -568,10 +574,12 @@ namespace Web.Controllers
                     }
 
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Logger.Log.Error("GET User/ViewDataMeters: hwi", ex);
+
                 }
-                model=temp;                         
+                model =temp;                         
             }
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -625,9 +633,10 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
-                //ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+                Logger.Log.Error("GET User/SendMail: ", ex);
+
             }
+        }
         }
 
         [HttpGet]

@@ -64,7 +64,7 @@ namespace Web.Controllers
                                 if (requestDomain.Equals(uk.host))
                                 {
                                     //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, false);
+                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                                     return Json(result);
                                     //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
                                 }
@@ -87,7 +87,7 @@ namespace Web.Controllers
                                 if (requestDomain.Equals(uk.host))
                                 {
                                     //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, false);
+                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                                     return Json(result);
                                     //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
                                 }
@@ -113,7 +113,7 @@ namespace Web.Controllers
                                 if (requestDomain.Equals(uk.host))
                                 {
                                     //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, false);
+                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                                     return Json(result);
                                     //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
                                 }
@@ -130,15 +130,19 @@ namespace Web.Controllers
 
                         }
                     }
-              
+
+                    //Пользователь не принадлежайщий никакому ТСЖ  
+                    //т.е не имеющий роли, просто входит
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    return Json(result);
+
                 }
                 catch (Exception ex)
                 {
-                    string requestDomain = Request.Headers["host"];
+                    Logger.Log.Error("Внутренняя ошибка при авторизации польз" + model.UserName, ex);
                     ModelState.AddModelError("", "Внутренняя ошибка при авторизации");
-                }        
-                WebSecurity.Logout();
-                return Json(new string[] { "Error", "Логин следует вводить с учетом регистра" });       
+                }
+                
             }
             ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");        
             return Json(new string[] { "Error", "Имя пользователя или пароль указаны неверно." }); 

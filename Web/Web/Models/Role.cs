@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Models
 {
-    [Table("vjtncj37_tszh.webpages_Roles")]
+   // [Table("webpages_Roles")]
     public class webpages_Roles
     {
         [Key]
@@ -13,7 +13,7 @@ namespace Web.Models
         public string RoleName { get; set; }
     }
 
-    [Table("vjtncj37_tszh.webpages_UsersInRoles")]
+   // [Table("webpages_UsersInRoles")]
     public class webpages_UsersInRoles
     {
         [Key]
