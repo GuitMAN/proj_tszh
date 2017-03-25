@@ -6,6 +6,9 @@ using Web.Filters;
 using Web.Models.Repository;
 using Web.Utils;
 using WebMatrix.WebData;
+using log4net;
+using log4net.Config;
+using System.Web.Security;
 
 namespace Web.Models
 {
@@ -13,6 +16,9 @@ namespace Web.Models
     public class HomeController : Controller
     {
         Repo repository;
+
+        private static readonly ILog Log = LogManager.GetLogger("LOGGER");
+
         public HomeController()
         {
             repository = new Repo();
@@ -31,7 +37,7 @@ namespace Web.Models
         }
 
         [HttpGet]
-        [Authorize]
+        [MyAuthorize]
         public ActionResult FeedBack()
         {
             //---------------------------
@@ -58,7 +64,7 @@ namespace Web.Models
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Logger.Log.ErrorFormat("GET User/FeedBack " ,ex);
                 return RedirectToAction("LogoOut", "Login");
             }
             //----------------------------
@@ -118,23 +124,22 @@ namespace Web.Models
             }
         }
 
+        [MyAuthorize]
+        [HttpGet]
         public ActionResult No_uk_tpl()
         {
-            if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
             UserProfile user;
-            try
+            user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            if (user != null)
             {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                int id = user.UserId;
-            }
-            catch (Exception ex)
-            {
-                Log.Write(ex);
                 return View();
             }
-
-            return View();
+            else
+            {
+                Log.Warn("Профиль пользователя " + WebSecurity.CurrentUserName + " уже создан");
+                Log.Warn("Доступная роли: " + Roles.GetRolesForUser());
+                return new HttpStatusCodeResult(403, "User`s profile is created");
+            }
         }
 
 
@@ -147,8 +152,9 @@ namespace Web.Models
             {
                 return View();
             }
-
-            return new HttpStatusCodeResult(403, "Admin`s profile is created");
+            Log.Warn("Профиль пользователя " + WebSecurity.CurrentUserName + " уже создан");
+            Log.Warn("Доступная роли: " + Roles.GetRolesForUser());
+            return new HttpStatusCodeResult(403, "User`s profile is created");
         }
 
 
@@ -157,7 +163,14 @@ namespace Web.Models
         [AllowAnonymous]
         public ActionResult test()
         {
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
 
+            Log.Warn("Ошибка доступа Home/test. requestDomain: " + requestDomain + " <> " + uk.host);
+            Log.Warn("Пользователь: " + WebSecurity.CurrentUserName);
+            System.Web.HttpRequestBase ss = Request;
+            return new HttpStatusCodeResult(404, "Fucking duck");
             return View();
         }
 
@@ -165,10 +178,14 @@ namespace Web.Models
         [AllowAnonymous]
         public ActionResult test(string author, string text)
         {
-            System.Web.HttpRequestBase ss = Request;
-            //on.
+            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            string requestDomain = Request.Headers["host"];
+            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
 
-             return new HttpStatusCodeResult(404, "Fucking duck");
+            Log.Warn("Ошибка доступа Home/test. requestDomain: " + requestDomain + " <> " + uk.host);
+            Log.Warn("Пользователь: " + WebSecurity.CurrentUserName);
+            System.Web.HttpRequestBase ss = Request;
+           return new HttpStatusCodeResult(404, "Fucking duck");
            // return Json(author);
         }
 
@@ -199,14 +216,14 @@ namespace Web.Models
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Logger.Log.Error("GET Home/send_profile ", ex);
                 model.UserId = WebSecurity.CurrentUserId;
             }
 
             return View();
         }
 
-        [Authorize]
+        [MyAuthorize]
         [HttpGet]
         public ActionResult edituserprof_tpl()
         {
@@ -219,11 +236,10 @@ namespace Web.Models
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Log.Error("GET Home/edituserprof_tpl", ex);
                 user = new UserProfile();
                 user.UserId = WebSecurity.CurrentUserId;
             }
-
             return View(user);
         }
 
@@ -240,6 +256,8 @@ namespace Web.Models
             }
             else
             {
+                Log.Warn("Ошибка доступа Home/EditArticle_tpl. requestDomain: " + requestDomain + " <> " + uk.host);
+                Log.Warn("Пользователь: " + WebSecurity.CurrentUserName);
                 return new HttpStatusCodeResult(403);
             }
         }

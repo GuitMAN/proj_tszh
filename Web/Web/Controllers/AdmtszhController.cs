@@ -11,6 +11,7 @@ using Web.Utils;
 using Web.Filters;
 using System.Net;
 using System.Net.Mail;
+using log4net;
 
 namespace Web.Controllers
 {
@@ -18,7 +19,7 @@ namespace Web.Controllers
     public class AdmtszhController : Controller
     {
         Repo repository;
-
+        private static readonly ILog Log = LogManager.GetLogger("LOGGER");
         public AdmtszhController()
         {
             repository = new Repo();
@@ -35,7 +36,7 @@ namespace Web.Controllers
         [MyAuthorize(Roles = "Moder")]
         public ActionResult Articles()
         {
-            Article art;
+            //Article art;
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
@@ -45,8 +46,10 @@ namespace Web.Controllers
                 return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
             }
             else
+            {
+                Log.Warn("GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: " + WebSecurity.CurrentUserName);
                 return new HttpStatusCodeResult(403);
-            //return Json(new string[] { "Error", "Нет доступа к данному разделу." });
+            }
         }
 
         [HttpGet]
@@ -97,11 +100,7 @@ namespace Web.Controllers
         [MyAuthorize(Roles = "Moder")]
         public ActionResult profile(string returnUrl)
         {
-            //---------------------------
-            //Проверка на авторизацию
-            //if (!WebSecurity.IsAuthenticated)
-            //    return RedirectToAction("Login", "Home");
-            //Проверка на принадлежность пользователя
+
             Admtszh admuser = null;
             uk_profile uk = null;
             try
@@ -114,6 +113,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error("GET Admtszh/profile Пользователь: " + WebSecurity.CurrentUserName, ex);
                 ViewData["uk_name"] = "нет данных";
                 //       ViewData["user_adr"] = "нет данных";
                 if (admuser == null)
@@ -399,7 +399,7 @@ namespace Web.Controllers
         public ActionResult ViewCounters(int month = 0, int year=0)
         {
             Admtszh admuser = null;
-            uk_profile uk = null;
+           // uk_profile uk = null;
             //Counter_model model = new Counter_model();
             IEnumerable<UserProfile> users = null;
             //string requestDomain = Request.Headers["host"];
@@ -411,7 +411,10 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Log.Error("POST Admtszh/ViewCounters, пользователь: " + WebSecurity.CurrentUserName);
+                Log.Error("Ошибка ", ex);
+               
+
             }
 
             //To do add array of user's counters 
@@ -487,7 +490,7 @@ namespace Web.Controllers
                         }
                         catch (Exception ex)
                         {
-                            Log.Write(ex);
+                            Log.Error(ex);
                         }
                     }
 
@@ -514,7 +517,7 @@ namespace Web.Controllers
         public ActionResult SetsSatusCounterData(int id, int year, int month, bool status)
         {
             Admtszh admuser = null;
-            uk_profile uk = null;
+           // uk_profile uk = null;
             //Counter_model model = new Counter_model();
             IEnumerable<UserProfile> users;
             string requestDomain = Request.Headers["host"];
@@ -526,7 +529,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Log.Error("POST Admtszh/SetsSatusCounterData. Пользователь: " + WebSecurity.CurrentUserName,  ex);
             }
             string result = null;
             using (var context = new EFDbContext())
@@ -608,7 +611,7 @@ namespace Web.Controllers
         {
 
             IEnumerable<UserProfile> users = null;
-            uk_profile uk = null;
+           // uk_profile uk = null;
             string requestDomain = Request.Headers["host"];
             try
             {
@@ -617,7 +620,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Log.Error("POST Admtszh/get_users. Пользователь: " + WebSecurity.CurrentUserName, ex);
             }
             return Json(users, JsonRequestBehavior.AllowGet);
         }
@@ -660,9 +663,9 @@ namespace Web.Controllers
         }
         catch (Exception ex)
         {
-            Utils.Log.Write(ex);
-            //ModelState.AddModelError("City", "УК или ТСЖ не найдена");
-        }
+                Log.Error("POST Admtszh/SendMail. Пользователь: " + WebSecurity.CurrentUserName, ex);
+
+            }
     }
 
     }

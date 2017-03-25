@@ -11,6 +11,8 @@ using Web.Models.Repository;
 using System.Net;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
+using log4net;
+using System.Collections.Generic;
 
 namespace Web.Controllers
 {
@@ -19,6 +21,8 @@ namespace Web.Controllers
     public class LoginController : Controller
     {
         Repo repository;
+        private static readonly ILog Log = LogManager.GetLogger("LOGGER");
+
         public LoginController()
         {
             repository = new Repo();
@@ -49,18 +53,29 @@ namespace Web.Controllers
                     Account_model result = new Account_model();
                     result.id = WebSecurity.GetUserId(model.UserName);
                     result.Login = model.UserName;
-                    result.Roles = Roles.GetRolesForUser(model.UserName);
+                    
+                    UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
+                    Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
                     string requestDomain = Request.Headers["host"];
+                    uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
 
+                    //Если пользователь имеет несколько ролей в разных ТСЖ
+                    var myList = new List<string>();
+                    foreach (var role in Roles.GetRolesForUser(model.UserName))
+                    {
+                        if (requestDomain.Equals(uk.host) && (role.Equals("User") || role.Equals("Moder")))
+                        {
+                            myList.Add(role);
+                        }
+                    }
+                    result.Roles = myList.ToArray();
                     foreach (var role in result.Roles)
                     {
                         if (role.Equals("User"))
                         {
-                            UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
                             if (user != null)
                             {
-                                uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
-
+                                
                                 if (requestDomain.Equals(uk.host))
                                 {
                                     //User have direct company
@@ -78,7 +93,6 @@ namespace Web.Controllers
                         }
                         if (role.Equals("Moder"))
                         {
-                             Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
                             if (admtszh != null)
                             {
                                 uk = repository.uk_profile.Where(p => p.id.Equals(admtszh.id_uk)).SingleOrDefault();
@@ -533,8 +547,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Utils.Log.Write(ex);
-                //ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+                Log.Error("Не удалось отправить письмо на адрес " + mailto, ex);
             }
         }
 

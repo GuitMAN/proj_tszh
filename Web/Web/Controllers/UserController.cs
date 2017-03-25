@@ -10,6 +10,7 @@ using Web.Models.Repository;
 using WebMatrix.WebData;
 using Web.Utils;
 using Web.Filters;
+using log4net;
 
 namespace Web.Controllers
 {
@@ -17,6 +18,7 @@ namespace Web.Controllers
     public class UserController : Controller
     {
         Repo repository;
+        private static readonly ILog Log = LogManager.GetLogger("LOGGER");
         //идентификатор УК ТСЖ
         //const string domain = ".мое-тсж.рф"; 
         //private Repo repo;
@@ -69,7 +71,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Logger.Log.ErrorFormat("GET User/profile: ",ex);
+                Log.ErrorFormat("GET User/profile: ",ex);
                 return new HttpStatusCodeResult(500);
             }
             //----------------------------
@@ -122,7 +124,7 @@ namespace Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log.ErrorFormat("POST User/send_profile :", ex);
+                    Log.Error("POST User/send_profile, не удалось отправить письмо:", ex);
                 }
                 repository.SaveUser(user);
                 string[] res = { "Ok", "Ваша заявка отправлена: ", message };
@@ -160,10 +162,9 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
                 TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
                 string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
-                Logger.Log.Error("GET User/FeedBack: ", ex);
+                Logger.Log.Error("GET User/FeedBack. Пользователь: " + WebSecurity.CurrentUserName, ex);
                 return Json(res);
             }
             //------------------------------------
@@ -225,7 +226,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
+                Log.Error("GET Admtszh/FeedBack_from_nouk. Пользователь: " + WebSecurity.CurrentUserName, ex);         
                 return Redirect("/Login/LogoOut");
             }
             //------------------------------------
@@ -470,10 +471,9 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
                 TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
                 string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
-                Logger.Log.Error("GET User/ViewDataMeters: ", ex);
+                Logger.Log.Error("GET User/ViewDataMeters: Пользователь: " + WebSecurity.CurrentUserName, ex);
                 return Json(res);
             }
             //------------------------------------

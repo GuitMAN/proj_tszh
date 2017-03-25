@@ -258,6 +258,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\mytsn.ru - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\mytsn.ru - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\мое-тсж.рф - Web Deploy.pubxml">
       <SubType>Designer</SubType>
@@ -289,7 +290,6 @@
     <Content Include="Scripts\angular-1.5.6\angular-touch.min.js" />
     <Content Include="Scripts\angular-1.5.6\angular.js" />
     <Content Include="Scripts\angular-1.5.6\angular.min.js" />
-    <Content Include="Scripts\angular-1.5.6\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\angular-1.5.6\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\angular-1.5.6\i18n\angular-locale_aa-et.js" />
     <Content Include="Scripts\angular-1.5.6\i18n\angular-locale_aa.js" />
