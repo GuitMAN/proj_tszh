@@ -54,39 +54,26 @@ namespace Web.Controllers
         [MyAuthorize(Roles = "User")]
         public ActionResult profile(string returnUrl)
         {
-            //---------------------------
-            //Test Autorize
-            if (!WebSecurity.IsAuthenticated)
-                return new HttpStatusCodeResult(403);
+
             //Проверка на принадлежность пользователя
             UserProfile user = null;
             uk_profile uk = null;
             string requestDomain = Request.Headers["host"];
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
-                ViewData["uk_name"] = uk.Name;
-                ViewData["user_adr"] = get_adr(user.Adress);
-            }
-            catch (Exception ex)
-            {
-                Log.ErrorFormat("GET User/profile: ",ex);
-                return new HttpStatusCodeResult(500);
-            }
+
+            user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
+            ViewData["uk_name"] = uk.Name;
+            ViewData["user_adr"] = get_adr(user.Adress);
             //----------------------------
             return View(user);
         }
 
 
-        [Authorize]
+        [MyAuthorize]
         [HttpPost]
         public ActionResult send_profile(UserProfile_nouk_form model)
         {
-            //---------------------------
-            //Проверка на авторизацию
-            if (!WebSecurity.IsAuthenticated && !WebSecurity.Initialized)
-                return RedirectToAction("Index", "Login");
+
             UserProfile user = new UserProfile();
             string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Select(p => p).Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
@@ -135,7 +122,7 @@ namespace Web.Controllers
         }
 
 
-        
+
 
         // Перегруженная версия для сохранения изменений
         [HttpPost]
@@ -143,49 +130,23 @@ namespace Web.Controllers
         [ValidateInput(true)]
         public ActionResult FeedBack(feedback mess)
         {
-            //---------------------------
-            //Test Autorize
-            //if (!WebSecurity.IsAuthenticated)
-            //    return RedirectToAction("Index", "Login");
-            //Проверка на принадлежность пользователя
-            UserProfile user = null;
-            uk_profile uk = null;
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                if (user == null)
-                    return RedirectToAction("No_uk_tpl","Home");
-                if (user.id_uk == 0)
-                    return RedirectToAction("No_uk_tpl", "Home");
-                string requestDomain = Request.Headers["host"];
-                uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
-            }
-            catch (Exception ex)
-            {
-                TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
-                string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
-                Logger.Log.Error("GET User/FeedBack. Пользователь: " + WebSecurity.CurrentUserName, ex);
-                return Json(res);
-            }
+            UserProfile user  = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            uk_profile uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
             //------------------------------------
             mess.datetime = DateTime.UtcNow;
             if (string.IsNullOrEmpty(mess.title))
             {
-                string[] res = { "Error", "Вы не заполнили тему сообщения" };
-                ModelState.AddModelError("message", "Пустое сообщение");
-                return Json(res);
+                return Json(new string[] { "Error", "Вы не заполнили тему сообщения" });
             }
             else if (string.IsNullOrEmpty(mess.message))
             {
-                string[] res = { "Error", "Пустое сообщение" };
-                ModelState.AddModelError("message", "Пустое сообщение");
-                return Json(res);
+  
+                return Json(new string[] { "Error", "Пустое сообщение" });
             }
             else if (mess.message.Length > 2000)
             {
-                string[] res = { "Error", "Недопустимая длина строки" };
-                ModelState.AddModelError("Error", "Недопустимая длина строки");
-                return Json(res);
+ 
+                return Json(new string[] { "Error", "Недопустимая длина строки" });
             }
 
             if (ModelState.IsValid)
@@ -198,8 +159,7 @@ namespace Web.Controllers
                     SendMail("smtp.yandex.ru", "cloudsolution@bitrix24.ru", "321654as", uk.Email, mess.title, mess.message);
                 repository.SaveFeedBack(mess);
                 TempData["message"] = string.Format("Ваша заявка отправлена", mess.title);
-                string[] res = { "Ok", "Ваша заявка отправлена: ", mess.title };
-                return Json(res);
+                return Json(new string[] { "Ok", "Ваша заявка отправлена: ", mess.title });
             }
             return Json(new string[] { "Error", "Ошибка" });
         }
@@ -207,28 +167,11 @@ namespace Web.Controllers
         [Authorize]
         private ActionResult FeedBack_from_nouk(feedback mess)
         {
-            //---------------------------
-            //Test Autorize
-            //if (!WebSecurity.IsAuthenticated)
-            //    return RedirectToAction("Index", "Login");
-            //Проверка на принадлежность пользователя
-            UserProfile user = null;
-            uk_profile uk = null;
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-
-                uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
-                if (uk.id != 0)
-                {
-                    //генерация исключения
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error("GET Admtszh/FeedBack_from_nouk. Пользователь: " + WebSecurity.CurrentUserName, ex);         
-                return Redirect("/Login/LogoOut");
-            }
+            //Определяем домен
+            string requestDomain = Request.Headers["host"];
+            UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            //Ищем ТСЖ по домену, на котором регистируемся
+            uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
             //------------------------------------
             mess.datetime = DateTime.UtcNow;
             if (ModelState.IsValid)
@@ -248,10 +191,6 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult SeekAdress()
         {
-            //---------------------------
-            //Test Autorize
-            //if (!WebSecurity.IsAuthenticated)
-            //    return RedirectToAction("Index", "Login");
             return View();
         }
 
@@ -260,10 +199,6 @@ namespace Web.Controllers
         [Authorize]
         public ActionResult SeekAdress(seek_adress model)
         {
-            //---------------------------
-            //Test Autorize
-            //if (!WebSecurity.IsAuthenticated)
-            //    return RedirectToAction("Index", "Login");
             uk_adress adress;
             if (ModelState.IsValid)
             {
@@ -310,13 +245,9 @@ namespace Web.Controllers
 
 
         [HttpPut]
-        [Authorize]
+        [MyAuthorize]
         public ActionResult editprof(UserProfile model)
         {
-            //---------------------------
-            //Test Autorize
-            if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
 
             if (ModelState.IsValid)
             {
@@ -331,7 +262,7 @@ namespace Web.Controllers
 
         //Вывести все счетчики пользователя
         [HttpGet]
-        [MyAuthorize]
+        [MyAuthorize(Roles = "User")]
         public ActionResult ViewMeters()
         {
             return View();
@@ -341,10 +272,6 @@ namespace Web.Controllers
         [MyAuthorize(Roles = "User")]
         public ActionResult ViewMeters(int id = 0)
         {
-            //Test Autorize
-            if (!WebSecurity.IsAuthenticated)
-                return Json(new string[] { "Error", "Ошибка авторизации" });
-
             IEnumerable<Counter> counter;
             if (id == 0)
             {
@@ -359,7 +286,7 @@ namespace Web.Controllers
 
         //Добавление счетчика
         [HttpGet]
-        [MyAuthorize]
+        [MyAuthorize(Roles = "User")]
         public ActionResult AddMeter()
         {
             //Test Autorize
@@ -421,9 +348,6 @@ namespace Web.Controllers
         [MyAuthorize(Roles = "User")]
         public ActionResult AddValueMeter(Counter_data model_data)
         {
-            //Test Autorize
-            if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
 
             //int li = repository.context.Database.SqlQuery<int>("LAST_INSERT_ID()").FirstOrDefault();
 
@@ -442,7 +366,7 @@ namespace Web.Controllers
 
 
         [HttpGet]
-        [MyAuthorize]
+        [MyAuthorize(Roles = "User")]
         public ActionResult ViewDataMeters()
         {
             return View();
@@ -455,27 +379,8 @@ namespace Web.Controllers
 
             UserProfile user = null;
             uk_profile uk = null;
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                if (user == null)
-                    return RedirectToAction("No_uk");
-                if (user.id_uk == 0)
-                    return RedirectToAction("No_uk");
-                string requestDomain = Request.Headers["host"];
-                uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
-                if (!requestDomain.Equals(uk.host))
-                {
-                    //                   return Redirect("http://" + uk.host);
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
-                string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
-                Logger.Log.Error("GET User/ViewDataMeters: Пользователь: " + WebSecurity.CurrentUserName, ex);
-                return Json(res);
-            }
+          //      user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+           //     uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
             //------------------------------------
             //To do add array of user's counters 
 

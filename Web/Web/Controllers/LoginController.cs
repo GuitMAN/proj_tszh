@@ -47,7 +47,8 @@ namespace Web.Controllers
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 
-                uk_profile uk = null;
+                uk_profile uk_u = null;
+                uk_profile uk_a = null;
                 try
                 {
                     Account_model result = new Account_model();
@@ -57,13 +58,13 @@ namespace Web.Controllers
                     UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
                     Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
                     string requestDomain = Request.Headers["host"];
-                    uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
-
+                    uk_u = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
+                    uk_a = repository.uk_profile.Where(p => p.id.Equals(admtszh.id_uk)).SingleOrDefault();
                     //Если пользователь имеет несколько ролей в разных ТСЖ
                     var myList = new List<string>();
                     foreach (var role in Roles.GetRolesForUser(model.UserName))
                     {
-                        if (requestDomain.Equals(uk.host) && (role.Equals("User") || role.Equals("Moder")))
+                        if ((requestDomain.Equals(uk_u.host) && role.Equals("User")) || (requestDomain.Equals(uk_a.host)&& role.Equals("Moder")))
                         {
                             myList.Add(role);
                         }
@@ -74,9 +75,8 @@ namespace Web.Controllers
                         if (role.Equals("User"))
                         {
                             if (user != null)
-                            {
-                                
-                                if (requestDomain.Equals(uk.host))
+                            {                          
+                                if (requestDomain.Equals(uk_u.host))
                                 {
                                     //User have direct company
                                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
@@ -95,9 +95,7 @@ namespace Web.Controllers
                         {
                             if (admtszh != null)
                             {
-                                uk = repository.uk_profile.Where(p => p.id.Equals(admtszh.id_uk)).SingleOrDefault();
-
-                                if (requestDomain.Equals(uk.host))
+                                if (requestDomain.Equals(uk_a.host))
                                 {
                                     //User have direct company
                                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);

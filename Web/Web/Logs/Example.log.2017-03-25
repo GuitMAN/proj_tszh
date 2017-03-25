@@ -1,0 +1,14 @@
+2017-03-25 18:57:21,875  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\HomeController.cs:170) Ошибка доступа Home/test. requestDomain: localhost:53574 <> localhost:53574
+2017-03-25 18:57:22,171  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\HomeController.cs:171) Пользователь: Test
+2017-03-25 19:04:13,642  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\AdmtszhController.cs:50) GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: Vladimir
+2017-03-25 19:05:19,933  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\AdmtszhController.cs:50) GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: Vladimir
+2017-03-25 19:07:58,471  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\AdmtszhController.cs:50) GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: Vladimir
+2017-03-25 19:34:59,953  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\AdmtszhController.cs:50) GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: Vladimir
+2017-03-25 19:36:30,857  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\AdmtszhController.cs:50) GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: Vladimir
+2017-03-25 19:36:35,517  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\AdmtszhController.cs:50) GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: Vladimir
+2017-03-25 21:19:15,075  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\AdmtszhController.cs:50) GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: Vladimir
+2017-03-25 22:27:54,796  ERROR (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\HomeController.cs:67) GET User/FeedBack 
+2017-03-25 22:28:41,828  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\HomeController.cs:139) Профиль пользователя  уже создан
+2017-03-25 22:28:41,830  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\HomeController.cs:140) Доступная роли: System.String[]
+2017-03-25 22:31:10,917  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\HomeController.cs:139) Профиль пользователя  уже создан
+2017-03-25 22:31:10,920  WARN  (C:\Users\vdementev\Source\Repos\proj_tszh2\Web\Web\Controllers\HomeController.cs:140) Доступная роли: System.String[]

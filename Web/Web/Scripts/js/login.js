@@ -143,9 +143,9 @@ HomeApp.constant('AUTH_EVENTS', {
 
 
 HomeApp.constant('USER_ROLES', {
-    Admin: 'Admin',
-    Moder: 'Moder',
-    User: 'User'
+    Admin: "Admin",
+    Moder: "Moder",
+    User: "User"
 });
 
 /* controller for login form*/

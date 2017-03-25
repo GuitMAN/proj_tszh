@@ -3,7 +3,7 @@
 /* User`s controllers & services */
 HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Session, USER_ROLES, $location) {
 
-    if (isElementArray(Session.userRoles, USER_ROLES.User)) {
+    if (Session.userRoles.indexOf(USER_ROLES.User)+1) {
 
         $scope.feedmodel = {
             id: 0,
@@ -44,7 +44,7 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
 
 /* User`s controllers & services */
 HomeApp.controller('EditProfCtrl', function ($http, $scope, UserServices, Session, $location, USER_ROLES) {
-    if (isElementArray(Session.userRoles, USER_ROLES.User)) {
+    if (Session.userRoles.indexOf(USER_ROLES.User) + 1) {
 
         $scope.profmodel = {
             id_uk: '',
@@ -121,7 +121,7 @@ HomeApp.controller('CreateProfCtrl', function ($http, $rootScope, $scope, UserSe
 
 //View all meters of user
 HomeApp.controller('MetersCtrl', function ($http, $scope, UserServices, Session, USER_ROLES) {
-    if (isElementArray(Session.userRoles, USER_ROLES.User)) {
+    if (Session.userRoles.indexOf(USER_ROLES.User)+1) {
 
         UserServices.viewmeters().then(function (response) {
             $scope.meters = response.data;
@@ -135,7 +135,7 @@ HomeApp.controller('MetersCtrl', function ($http, $scope, UserServices, Session,
 
 //Add meter from user
 HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session, USER_ROLES) {
-    if (isElementArray(Session.userRoles, USER_ROLES.User)) {
+    if (Session.userRoles.indexOf(USER_ROLES.User)+1) {
         $scope.meter = {
             UserId: Session.userId,
             Name: '',
@@ -262,7 +262,7 @@ HomeApp.controller('AddMeterCtrl', function ($scope, UserServices, Session, USER
 
 //View all meters of user
 HomeApp.controller('ViewDataMetersCtrl', function ($http, $scope, $rootScope, UserServices, Session, USER_ROLES) {
-    if (isElementArray(Session.userRoles, USER_ROLES.User)) {
+    if (Session.userRoles.indexOf(USER_ROLES.User)+1) {
         data =
         {
             "id": '',

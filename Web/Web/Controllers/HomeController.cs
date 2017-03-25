@@ -7,7 +7,6 @@ using Web.Models.Repository;
 using Web.Utils;
 using WebMatrix.WebData;
 using log4net;
-using log4net.Config;
 using System.Web.Security;
 
 namespace Web.Models
@@ -37,38 +36,11 @@ namespace Web.Models
         }
 
         [HttpGet]
-        [MyAuthorize]
+        [MyAuthorize(Roles = "User")]
         public ActionResult FeedBack()
         {
-            //---------------------------
-            //Test Autorize
-            //if (!WebSecurity.IsAuthenticated)
-            //    return RedirectToAction("Index", "Login");
-            //---------------------------
-            //Проверка на принадлежность пользователя
-            UserProfile user = null;
-            uk_profile uk = null;
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                if (user == null)
-                    return RedirectToAction("No_uk");
-                if (user.id_uk == 0)
-                    return RedirectToAction("No_uk");
-                string requestDomain = Request.Headers["host"];
-                uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
-                if (!requestDomain.Equals(uk.host))
-                {
-                    //                   return Redirect("http://" + uk.host);
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.ErrorFormat("GET User/FeedBack " ,ex);
-                return RedirectToAction("LogoOut", "Login");
-            }
+            UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             //----------------------------
-
             feedback mess = new feedback();
             mess.status = false;
             mess.id_uk = user.id_uk;
@@ -108,20 +80,13 @@ namespace Web.Models
         }
 
         [HttpGet]
+        [MyAuthorize(Roles = "Moder")]
         public ActionResult edituk_tpl()
         {
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
-            if (uk.host.Equals(requestDomain))
-            {
+            return View();
 
-                return View();
-            }
-            else
-            {
-                return new HttpStatusCodeResult(403);
-            }
         }
 
         [MyAuthorize]
@@ -137,16 +102,14 @@ namespace Web.Models
             else
             {
                 Log.Warn("Профиль пользователя " + WebSecurity.CurrentUserName + " уже создан");
-                Log.Warn("Доступная роли: " + Roles.GetRolesForUser());
                 return new HttpStatusCodeResult(403, "User`s profile is created");
             }
         }
 
-
+        [MyAuthorize]
         public ActionResult new_operprof_tpl()
         {
-            if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
+
             int count = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).Count();
             if (count == 0)
             {
@@ -170,7 +133,7 @@ namespace Web.Models
             Log.Warn("Ошибка доступа Home/test. requestDomain: " + requestDomain + " <> " + uk.host);
             Log.Warn("Пользователь: " + WebSecurity.CurrentUserName);
             System.Web.HttpRequestBase ss = Request;
-            return new HttpStatusCodeResult(404, "Fucking duck");
+       //     return new HttpStatusCodeResult(404, "Fucking duck");
             return View();
         }
 
@@ -190,40 +153,28 @@ namespace Web.Models
         }
 
 
-        [Authorize]
+        [MyAuthorize]
         [HttpGet]
         public ActionResult send_profile()
         {
             //---------------------------
-            //Test Autorize
-            if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
+
             UserProfile user = null;
             UserProfile_nouk_form model = new UserProfile_nouk_form();
-            try
-            {
-                user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-                model.UserId = user.UserId;
-                model.SurName = user.SurName;
-                model.Name = user.Name;
-                model.Patronymic = user.Patronymic;
-                model.Personal_Account = user.Personal_Account;
-                model.Adress = user.Adress;
-                model.Apartment = user.Apartment;
-                model.Email = user.Email;
-                model.phone = user.phone;
-
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error("GET Home/send_profile ", ex);
-                model.UserId = WebSecurity.CurrentUserId;
-            }
-
-            return View();
+            //user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+            model.UserId = user.UserId;
+            model.SurName = user.SurName;
+            model.Name = user.Name;
+            model.Patronymic = user.Patronymic;
+            model.Personal_Account = user.Personal_Account;
+            model.Adress = user.Adress;
+            model.Apartment = user.Apartment;
+            model.Email = user.Email;
+            model.phone = user.phone;
+            return View(model);
         }
 
-        [MyAuthorize]
+        [MyAuthorize(Roles = "User")]
         [HttpGet]
         public ActionResult edituserprof_tpl()
         {
@@ -244,22 +195,10 @@ namespace Web.Models
         }
 
         [HttpGet]
+        [MyAuthorize(Roles = "User")]
         public ActionResult EditArticle_tpl()
         {
-            Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            string requestDomain = Request.Headers["host"];
-            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
-            if (uk.host.Equals(requestDomain))
-            {
-
-                return View();
-            }
-            else
-            {
-                Log.Warn("Ошибка доступа Home/EditArticle_tpl. requestDomain: " + requestDomain + " <> " + uk.host);
-                Log.Warn("Пользователь: " + WebSecurity.CurrentUserName);
-                return new HttpStatusCodeResult(403);
-            }
+            return View();
         }
 
 

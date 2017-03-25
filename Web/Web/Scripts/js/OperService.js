@@ -1,6 +1,6 @@
 ﻿/* User`s controllers & services */
 HomeApp.controller('ReadFeedBackCtrl', function ($http, $scope, OperServices, Session, USER_ROLES) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
         $scope.feedmodel = {
             id: 0,
             id_uk: 0,
@@ -31,7 +31,7 @@ HomeApp.controller('ReadFeedBackCtrl', function ($http, $scope, OperServices, Se
 
 
 HomeApp.controller('ProfileCtrl', function ($scope, USER_ROLES, Session) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
         $scope.modalShown = false;
         $scope.toggleModal = function () {
             $scope.modalShown = !$scope.modalShown;
@@ -41,13 +41,13 @@ HomeApp.controller('ProfileCtrl', function ($scope, USER_ROLES, Session) {
 
 
 HomeApp.controller('OperProfileCtrl', function (USER_ROLES, Session) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
     }
 });
 
 /* User`s controllers & services */
 HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices, Session, $location, USER_ROLES) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
         //$scope.profmodel = {
         //    id_uk: '',
         //    UserId: '',
@@ -139,7 +139,7 @@ HomeApp.controller('CreateOperProfCtrl', function ($http, $scope, OperServices, 
 });
 
 HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices, Session, $location, $routeParams, USER_ROLES) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
         $scope.month_year = {
             month: '',
             year: ''
@@ -238,26 +238,29 @@ HomeApp.controller('ViewUserCountersCtrl', function ($http, $scope, OperServices
 
 
 HomeApp.controller('ViewUsersCtrl', function ($scope, USER_ROLES, Session) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
     }
 })
 
 HomeApp.controller('SettingsCtrl', function ($scope, OperServices, $http, $sce, USER_ROLES, Session) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
-        $scope.model = {
-            id: ''
-        };
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
 
+        $scope.status = "";
         $scope.submit = function (model) {
-            OperServices.setsettings($scope.model).then(function (response) {
+            OperServices.setsettings(model).then(function (response) {
                 $scope.resp = response.data;
-                return $location.path('#/operprof');
+                
+                if (response.data == 'Ok') {
+                    console.log("data:", response);
+                    $scope.status = true;
+                }
+                //return $location.path('#/operprof');
             });
         };
         OperServices.viewsettings().then(function (response) {
             $scope.model = response.data;
 
-            $http.get(_host + '/admin/ViewAddrUk', { params: { id: $scope.model.id } }).then(function (response) {
+            $http.get(_host + '/admtszh/EditUk', { params: { id: $scope.model.id } }).then(function (response) {
                 $scope.sce = $sce;
                 $scope.t = response.data;
             })
@@ -270,7 +273,7 @@ HomeApp.controller('SettingsCtrl', function ($scope, OperServices, $http, $sce, 
 })
 
 HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams, $sce, USER_ROLES, Session) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
         OperServices.viewuseredit($routeParams['id']).then(function (response) {
             $scope.profmodel = response.data;
         });
@@ -290,12 +293,12 @@ HomeApp.controller('EditUsersCtrl', function ($scope, OperServices, $routeParams
 })
 
 HomeApp.controller('ArticlesCtrl', function (USER_ROLES, Session) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
     }
 });
 
 HomeApp.controller('EditArticleCtrl', function ($scope, OperServices, $routeParams, $sce, USER_ROLES, Session) {
-    if (isElementArray(Session.userRoles, USER_ROLES.Moder)) {
+    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
         OperServices.editarticle_get($routeParams['id']).then(function (response) {
             $scope.article = response.data;
         });
