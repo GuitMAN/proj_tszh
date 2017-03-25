@@ -66,7 +66,6 @@ namespace Web.Controllers
                                     //User have direct company
                                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                                     return Json(result);
-                                    //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
                                 }
                                 else
                                 {
@@ -105,29 +104,9 @@ namespace Web.Controllers
                         }
                         if (role.Equals("Admin"))
                         {
-                            Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
-                            if (admtszh != null)
-                            {
-                                uk = repository.uk_profile.Where(p => p.id.Equals(admtszh.id_uk)).SingleOrDefault();
-
-                                if (requestDomain.Equals(uk.host))
-                                {
-                                    //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                    return Json(result);
-                                    //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
-                                }
-                                else
-                                {
-                                    //User have no current direct company
-                                    //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                                    WebSecurity.Logout();
-                                    return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
-
-                                }
-
-                            }
-
+                            //Админов просто авторизовать
+                            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                            return Json(result);
                         }
                     }
 
@@ -139,7 +118,7 @@ namespace Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log.Error("Внутренняя ошибка при авторизации польз" + model.UserName, ex);
+                    Logger.Log.Error("Внутренняя ошибка при авторизации пользователя" + model.UserName, ex);
                     ModelState.AddModelError("", "Внутренняя ошибка при авторизации");
                 }
                 

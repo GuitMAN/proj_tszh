@@ -1,4 +1,6 @@
-﻿/// <reference path="UserService.js" />
+﻿;
+
+/// <reference path="UserService.js" />
 /* for token verification  */
 function getHttpConfig() {
     var token = angular.element("input[name='__RequestVerificationToken']").val();
@@ -21,6 +23,8 @@ HomeApp.factory('AuthService', function ($http, $cookies, Session) {
             return $http.post(_host + '/Login', credentials)//, config)
               .then(function (res) {
                   Session.create(1, res.data.id, res.data.Roles, res.data.Login);
+
+
                   return res;
               })
 
@@ -87,6 +91,27 @@ HomeApp.service('Session', function ($cookies) {
         this.currentUser = currentUser;
         this.userRoles = userRoles;
         this.status = status;
+
+      /*  
+        if (isElementArray(userRoles, USER_ROLES.Admin)) {
+            console.log("Пользователь имеет права админа ", userRoles);
+        }
+        else {
+            console.log("У пользователя нет админских прав ", userRoles);
+        }
+
+        if (isElementArray(userRoles, USER_ROLES.Moder)) {
+            console.log("Пользователь имеет права модератора ", userRoles);
+        }
+        else {
+            console.log("У пользователя нет модераторских прав ", userRoles);
+        }
+        if (isElementArray(userRoles, USER_ROLES.User)) {
+            console.log("Пользователь имеет права обычного пользователя ", userRoles);
+        }
+        else {
+            console.log("У пользователя нет пользовательских прав ", userRoles);
+        }*/
         $cookies.put('userId', userId);
         $cookies.put('username', currentUser);
         $cookies.put('userRole', userRoles)
@@ -118,10 +143,9 @@ HomeApp.constant('AUTH_EVENTS', {
 
 
 HomeApp.constant('USER_ROLES', {
-    all: '*',
-    admin: 'Admin',
-    editor: 'Moder',
-    guest: 'User'
+    Admin: 'Admin',
+    Moder: 'Moder',
+    User: 'User'
 });
 
 /* controller for login form*/
@@ -132,10 +156,13 @@ HomeApp.controller('LoginCtrl', function ($scope, $rootScope, AUTH_EVENTS, AuthS
         AuthService.login(credentials)
             .then(function (response) {
                 if (response.data[0] == 'Error') {
-                    $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-                    $scope.response = response.data;
-
+                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
                 }
+                if (response.data[0] == 'Ok') {
+                    $rootScope.$broadcast(AUTH_EVENTS.loginSucsses);
+
+                 }
+                $scope.response = response.data;
                 return location.reload();
             });
     };

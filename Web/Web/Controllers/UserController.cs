@@ -49,12 +49,13 @@ namespace Web.Controllers
 
 
         [Authorize]
+        [MyAuthorize(Roles = "User")]
         public ActionResult profile(string returnUrl)
         {
             //---------------------------
             //Test Autorize
             if (!WebSecurity.IsAuthenticated)
-                return RedirectToAction("Index", "Login");
+                return new HttpStatusCodeResult(403);
             //Проверка на принадлежность пользователя
             UserProfile user = null;
             uk_profile uk = null;
@@ -68,8 +69,8 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Log.Write(ex);
-                return RedirectToAction("No_uk_tpl","Home");
+                Logger.Log.ErrorFormat("GET User/profile: ",ex);
+                return new HttpStatusCodeResult(500);
             }
             //----------------------------
             return View(user);
@@ -121,7 +122,7 @@ namespace Web.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Write(ex);
+                    Logger.Log.ErrorFormat("POST User/send_profile :", ex);
                 }
                 repository.SaveUser(user);
                 string[] res = { "Ok", "Ваша заявка отправлена: ", message };
@@ -136,7 +137,7 @@ namespace Web.Controllers
 
         // Перегруженная версия для сохранения изменений
         [HttpPost]
-        [Authorize]
+        [MyAuthorize(Roles = "User")]
         [ValidateInput(true)]
         public ActionResult FeedBack(feedback mess)
         {
@@ -162,7 +163,7 @@ namespace Web.Controllers
                 Log.Write(ex);
                 TempData["message"] = string.Format("Ошибка доступа \"{0}\"", ex.Message);
                 string[] res = { "Error", string.Format("Ошибка доступа \"{0}\"", ex.Message) };
-                Logger.Log.Error("Ошибка GET User/FeedBack: ", ex);
+                Logger.Log.Error("GET User/FeedBack: ", ex);
                 return Json(res);
             }
             //------------------------------------

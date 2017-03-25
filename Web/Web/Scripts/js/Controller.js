@@ -228,3 +228,14 @@ ArrMonth = [
 
 
 
+function isElementArray(Arr, Elem) {
+    if (Arr && Arr.length) {
+        for (var i = 0, len = Arr.length; i < len; i++) {
+            if (Arr[i] == Elem) {
+                return true;
+            };
+        }
+    }
+    return false;
+};
+
