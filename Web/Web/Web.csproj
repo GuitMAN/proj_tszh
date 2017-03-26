@@ -1238,6 +1238,7 @@
     <Content Include="Views\Admtszh\Articles.cshtml" />
     <Content Include="Views\Home\editarticle_tpl.cshtml" />
     <Content Include="Views\Home\new_operprof_tpl.cshtml" />
+    <Content Include="Views\Admin\ViewModers.cshtml" />
     <None Include="Views\Home\test.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

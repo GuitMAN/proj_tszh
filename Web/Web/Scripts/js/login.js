@@ -92,26 +92,6 @@ HomeApp.service('Session', function ($cookies) {
         this.userRoles = userRoles;
         this.status = status;
 
-      /*  
-        if (isElementArray(userRoles, USER_ROLES.Admin)) {
-            console.log("Пользователь имеет права админа ", userRoles);
-        }
-        else {
-            console.log("У пользователя нет админских прав ", userRoles);
-        }
-
-        if (isElementArray(userRoles, USER_ROLES.Moder)) {
-            console.log("Пользователь имеет права модератора ", userRoles);
-        }
-        else {
-            console.log("У пользователя нет модераторских прав ", userRoles);
-        }
-        if (isElementArray(userRoles, USER_ROLES.User)) {
-            console.log("Пользователь имеет права обычного пользователя ", userRoles);
-        }
-        else {
-            console.log("У пользователя нет пользовательских прав ", userRoles);
-        }*/
         $cookies.put('userId', userId);
         $cookies.put('username', currentUser);
         $cookies.put('userRole', userRoles)
@@ -289,7 +269,10 @@ HomeApp.controller('LoginInfoCtrl', function ($scope, $cookies, $http, AUTH_EVEN
     Session.create(1, id, roles, curname);
     $scope.userRoles = roles;
     $scope.isAuthorized = AuthService.isAuthorized;
-
+    if (!(undefined== roles))
+    if (roles.indexOf("Moder") + 1) {
+        $scope.isModer = true;
+    }
     $scope.items = [
   'The first choice!',
   'And another choice for you.',

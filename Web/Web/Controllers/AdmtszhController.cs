@@ -38,18 +38,7 @@ namespace Web.Controllers
         {
             //Article art;
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            string requestDomain = Request.Headers["host"];
-            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
-
-            if (uk.host.Equals(requestDomain))
-            {
-                return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
-            }
-            else
-            {
-                Log.Warn("GET Admtszh/Articles. Нет доступа к данному разделу.Пользователь: " + WebSecurity.CurrentUserName);
-                return new HttpStatusCodeResult(403);
-            }
+            return View(repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).OrderBy(p => p.id_uk));
         }
 
         [HttpGet]
@@ -58,22 +47,16 @@ namespace Web.Controllers
         {
             Article art;
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
-
-            if (uk.host.Equals(requestDomain))
+            if (id == 0)
             {
-                if (id == 0)
-                {
-                    art = new Article();
-                }
-                else
-                {
-                    art = repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).Where(q => q.id == id).Single();
-                }
-                return Json(art, JsonRequestBehavior.AllowGet);
+                art = new Article();
             }
-            return new HttpStatusCodeResult(403);
+            else
+            {
+                art = repository.Articles.Where(a => a.id_uk.Equals(admuser.id_uk)).Where(q => q.id == id).Single();
+            }
+            return Json(art, JsonRequestBehavior.AllowGet);
         }
 
         // Перегруженная версия Edit() для сохранения изменений
@@ -82,17 +65,18 @@ namespace Web.Controllers
         public ActionResult EditArticle(Article article)
         {
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            string requestDomain = Request.Headers["host"];
             uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
-
-            if (uk.host.Equals(requestDomain))
+            article.publicDate = DateTime.UtcNow;// -TimeZone.CurrentTimeZone; ;
+            try
             {
-                article.publicDate = DateTime.UtcNow;// -TimeZone.CurrentTimeZone; ;
                 repository.SaveArticle(article);
                 return Json(new string[] { "Ok", "Страница обновлена" });
             }
-
-            return Json(new string[] { "Error", "Не удалось обновить статью" });
+            catch (Exception ex)
+            {
+                Log.Error("Не удалось обновить статью");
+                return Json(new string[] { "Error", "Не удалось обновить статью"});
+            }
         }
 
 
@@ -125,23 +109,11 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        [MyAuthorize(Roles = "Moder")]
+        [MyAuthorize]
         public ActionResult editprof()
         {
             //Проверка на принадлежность пользователя
             Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            string requestDomain = Request.Headers["host"];
-            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
-
-            // string requestDomain = Request.Headers["host"];
-            if (admuser == null)
-            {
-                admuser = new Admtszh();
-                uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
-                if (uk != null)
-                    admuser.id_uk = uk.id;
-            }
-
             return View(admuser);
         }
 
@@ -165,10 +137,10 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult editprof(newAdmtszh model)
         {
-            Admtszh newUser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
-            uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(newUser.id_uk)).SingleOrDefault();
+            string requestDomain = Request.Headers["host"];       
+            uk_profile uk = repository.uk_profile.Where(p => p.host.Equals(requestDomain)).SingleOrDefault();
 
-
+            Admtszh newUser = new Admtszh();
             if (ModelState.IsValid)
             {
                 newUser.AdmtszhId = WebSecurity.CurrentUserId;
@@ -504,7 +476,26 @@ namespace Web.Controllers
             return adr.City + ", " + adr.Street + ", " + adr.House;
         }
 
-
+        public string getModerLogin(int id)
+        {
+            List<UserInRole_model_> list = new List<UserInRole_model_>();
+            DataSet ds;
+            //MemberShip.GetAllUsers() не пашет, лень ковыряться
+            //Поэтому обращаемся на прямую в базу )) 
+            //Необходимо дополнить страничный вывод
+            repository.SQLstringConnect("SELECT login FROM UserAccount WHERE id IN  ( " + id + " )", out ds);
+            //Заполняем наш массив данными из таблшицы
+            string login = "-1";
+            if (ds.Tables[0].Rows.Count == 1)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    //UserInRole_model_ res = new UserInRole_model_();
+                    login = dr["Login"].ToString();
+                }
+            }
+            return login;
+        }
 
         public static void SendMail(string smtpServer, string from, string password,
                 string mailto, string caption, string message, string attachFile = null)

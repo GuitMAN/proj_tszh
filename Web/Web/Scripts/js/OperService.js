@@ -47,21 +47,6 @@ HomeApp.controller('OperProfileCtrl', function (USER_ROLES, Session) {
 
 /* User`s controllers & services */
 HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices, Session, $location, USER_ROLES) {
-    if (Session.userRoles.indexOf(USER_ROLES.Moder) + 1) {
-        //$scope.profmodel = {
-        //    id_uk: '',
-        //    UserId: '',
-        //    Adress: '',
-        //    Apartment: '',
-        //    SurName: '',
-        //    Name: '',
-        //    Patronymic: '',
-        //    Personal_Account: '',
-        //    Email: '',
-        //    phone: '',
-        //    mobile: ''
-        //};
-
         $scope.status = false;
         $scope.submit = function (profmodel) {
             OperServices.editprof(profmodel).then(function (response) {
@@ -73,27 +58,14 @@ HomeApp.controller('EditOperProfileCtrl', function ($http, $scope, OperServices,
                 }
             });
             return $location.path('#/operprof');
+
         }
-    }
 });
 
 
 /* User`s controllers & services */
 HomeApp.controller('NewOperProfileCtrl', function ($http, $scope, OperServices, Session, $location) {
 
-    //$scope.profmodel = {
-    //    id_uk: '',
-    //    UserId: '',
-    //    Adress: '',
-    //    Apartment: '',
-    //    SurName: '',
-    //    Name: '',
-    //    Patronymic: '',
-    //    Personal_Account: '',
-    //    Email: '',
-    //    phone: '',
-    //    mobile: ''
-    //};
 
     $scope.status = false;
     $scope.submit = function (profmodel) {

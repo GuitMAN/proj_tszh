@@ -8,7 +8,7 @@ using System.Data;
 //using WebMatrix.WebData;
 using System.Web.Security;
 using Web.Filters;
-
+using WebMatrix.WebData;
 
 namespace Web.Controllers
 {
@@ -86,13 +86,21 @@ namespace Web.Controllers
             IEnumerable<UserProfile> users = repository.UserProfile.OrderBy(q => q.id_uk);
             return View(users);
         }
-       
- 
+
+
+        public ViewResult ViewModers()
+        {
+
+            IEnumerable<Admtszh> amdtszh = repository.Admtszh.OrderBy(q => q.id_uk);
+            return View(amdtszh);
+        }
+
+
 
         //public ActionResult EditUser(int id = 0)
         //{
         //    UserProfile profile = repository.UserProfile.Where(i => i.UserId == id).SingleOrDefault();
- 
+
         //    IEnumerable<uk_profile> list_uk = repository.uk_profile.OrderBy(p => p.id);
         //    ViewData["uk_profile"] = from n in list_uk
         //                       select new SelectListItem { Text = n.Name, Value = n.id.ToString() };
