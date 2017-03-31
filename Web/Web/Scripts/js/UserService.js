@@ -20,7 +20,12 @@ HomeApp.controller('FeedbackCtrl', function ($http, $scope, UserServices, Sessio
                 console.log("data:", $scope.response);
                 if (response.data[0] == 'Ok') {
                     $scope.status = true;
+                } else 
+                    if (response.status == 403) {
+                        $scope.status = false;
+                        console.log("response.status = ", response.status);
                 }
+                
             });
         }
 

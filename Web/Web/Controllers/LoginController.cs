@@ -81,60 +81,64 @@ namespace Web.Controllers
                     }
 
                     result.Roles = myList.ToArray();
-                    foreach (var role in result.Roles)
-                    {
-                        if (role.Equals("User"))
+
+                    if (result.Roles.Count() >0) {
+                        foreach (var role in result.Roles)
                         {
-                            if (user != null)
+                            if (role.Equals("User"))
                             {
-                                if (requestDomain.Equals(uk_u.host))
+                                if (user != null)
                                 {
-                                    //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                    return Json(result);
-                                }
-                                else
-                                {
-                                    //User have no current direct company
-                                    //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                                    WebSecurity.Logout();
-                                    return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
+                                    if (requestDomain.Equals(uk_u.host))
+                                    {
+                                        //User have direct company
+                                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                        return Json(result);
+                                    }
+                                    else
+                                    {
+                                        //User have no current direct company
+                                        //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                                        //WebSecurity.Logout();
+                                        return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
+                                    }
                                 }
                             }
-                        }
-                        if (role.Equals("Moder"))
-                        {
-                            if (admtszh != null)
+                            if (role.Equals("Moder"))
                             {
-                                if (requestDomain.Equals(uk_a.host))
+                                if (admtszh != null)
                                 {
-                                    //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                    return Json(result);
-                                    //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
-                                }
-                                else
-                                {
-                                    //User have no current direct company
-                                    //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                                    WebSecurity.Logout();
-                                    return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
+                                    if (requestDomain.Equals(uk_a.host))
+                                    {
+                                        //User have direct company
+                                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                        return Json(result);
+                                        //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
+                                    }
+                                    else
+                                    {
+                                        //User have no current direct company
+                                        //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                                        //
+                                        return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
+
+                                    }
 
                                 }
 
                             }
-
+                            if (role.Equals("Admin"))
+                            {
+                                //Админов просто авторизовать
+                                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                return Json(result);
+                            }
                         }
-                        if (role.Equals("Admin"))
-                        {
-                            //Админов просто авторизовать
-                            FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                            return Json(result);
-                        }
+                        WebSecurity.Logout();
                     }
-
                     //Пользователь не принадлежайщий никакому ТСЖ  
                     //т.е не имеющий роли, просто входит
+
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     return Json(result);
 
@@ -146,7 +150,6 @@ namespace Web.Controllers
                 }
 
             }
-            ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");
             return Json(new string[] { "Error", "Имя пользователя или пароль указаны неверно." });
         }
 

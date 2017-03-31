@@ -26,6 +26,7 @@ HomeApp.filter('JsonDate', function () {
 HomeApp.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', '$httpProvider',
 function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider) {
 
+    $httpProvider.interceptors.push('responseObserver');
     $sceDelegateProvider.resourceUrlWhitelist([
     // Allow same origin resource loads.
     'self',
@@ -157,6 +158,25 @@ function ($routeProvide, $locationProvider, $sceDelegateProvider, $httpProvider)
           });
   }
 ]);
+
+
+HomeApp.factory('responseObserver', function responseObserver($q, $window) {
+    return {
+        'responseError': function (errorResponse) {
+            switch (errorResponse.status) {
+                case 403:
+
+                    $routeProvide = 
+                    $window.location = '/Login/Error_401';
+                    break;
+                case 500:
+                    $window.location = './500.html';
+                    break;
+            }
+            return $q.reject(errorResponse);
+        }
+    };
+});
 
 HomeApp.run(['$http', '$cookies', function($http, $cookies) {
     $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
