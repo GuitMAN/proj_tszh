@@ -97,12 +97,12 @@ namespace Web.Models
             user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
             if (user != null)
             {
-                return View();
+                Log.Warn("Профиль пользователя " + WebSecurity.CurrentUserName + " уже создан");
+                return new HttpStatusCodeResult(403, "User`s profile is created");
             }
             else
             {
-                Log.Warn("Профиль пользователя " + WebSecurity.CurrentUserName + " уже создан");
-                return new HttpStatusCodeResult(403, "User`s profile is created");
+                return View();
             }
         }
 

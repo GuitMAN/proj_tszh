@@ -422,9 +422,9 @@ namespace Web.Controllers
             return Json(new string[] { "Error", "Пароль изменить не удалось." });
         }
 
-        public string Error_401()
+        public string Error_401(string str ="Доступ запрещен")
         {
-            return "Доступ запрещен!!! Пшел вон";
+            return str;
         }
         
         #region Вспомогательные методы

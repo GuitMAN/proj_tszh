@@ -133,7 +133,7 @@ namespace Web.Filters
                     catch (Exception ex)
                     {
                         Log.Fatal("OnAuthorization: Отсутствует профиль пользователя " + WebSecurity.CurrentUserName);
-                        filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
+                        filterContext.Result = new ViewResult { ViewName = "~/Views/home/no_uk_tpl.cshtml" };
                     }
                 }
             }
@@ -142,8 +142,10 @@ namespace Web.Filters
                 if (isRequareRole("User"))
                 {
                     filterContext.Result = new ViewResult { ViewName = "~/Views/home/no_uk_tpl.cshtml" };
-                }
-                if (isRequareRole("Moder"))
+                    return;
+                }  
+                if 
+                    (isRequareRole("Moder"))
                 {
                     filterContext.Result = new ViewResult { ViewName = "~/Views/home/new_operprof_tpl.cshtml" };
                 }

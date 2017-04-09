@@ -167,7 +167,7 @@ HomeApp.factory('responseObserver', function responseObserver($q, $window) {
                 case 403:
 
                     $routeProvide = 
-                    $window.location = '/Login/Error_401';
+                    $window.location = '/Login/Error_401?str=Access Denied!!!';
                     break;
                 case 500:
                     $window.location = './500.html';
