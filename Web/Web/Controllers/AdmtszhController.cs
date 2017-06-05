@@ -301,17 +301,17 @@ namespace Web.Controllers
             List<Counter_model> model = new List<Counter_model>();
             IEnumerable<Counter> ListCounter = null;
             IEnumerable<Counter_data> ListData = null;
-
-
+            Admtszh admuser;
+            string requestDomain = Request.Headers["host"];
             try
             {
-                Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
                 uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
                 users = repository.UserProfile.Where(p => p.id_uk.Equals(uk.id));
             }
             catch (Exception ex)
             {
-                Log.Error(ex);
+                Log.Error(Request.ToString() + " User: " + WebSecurity.CurrentUserName);
             }
 
             using (var context = new EFDbContext())
@@ -360,13 +360,14 @@ namespace Web.Controllers
                         if (j == 2) temp.energoi = new List<count_place>();
                         if (j == 3) temp.cwi = new List<count_place>();
                         if (j == 4) temp.hwi = new List<count_place>();
-                        try
-                        {
+
                             IEnumerable<Counter> counters = ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.Type.Equals(j));
-                            foreach (Counter counter in counters)
+                        foreach (Counter counter in counters)
+                        {
+                            Counter_data t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).SingleOrDefault();
+                            //                                foreach (var it in t_data)
+                            if (t_data != null)
                             {
-                                Counter_data t_data = ListData.Where(m => m.id.Equals(counter.id)).Where(d => d.write >= d_start).Where(d => d.write < d_end).SingleOrDefault();
-                                //                                foreach (var it in t_data)
                                 count_place cp = new count_place();
                                 cp.id = t_data.id;
                                 cp.data = t_data.data;
@@ -379,13 +380,8 @@ namespace Web.Controllers
                                 if (j == 4) temp.hwi.Add(cp);
                                 cp = null;
                             }
-                            //                 temp.gas =      ListData.Where(m => m.id.Equals(ListCounter.Where(p => p.UserId.Equals(user.UserId)).Where(t => t.type.Equals(1)).FirstOrDefault().id)).Where(d =>d.write >= d_start).Where(d => d.write < d_end).FirstOrDefault().data;
                         }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex);
-                        }
-                    }
+                     }
 
 
                     if ((temp.gasi.Count == 0) && (temp.energoi.Count == 0) && (temp.cwi.Count == 0) && (temp.hwi.Count == 0))

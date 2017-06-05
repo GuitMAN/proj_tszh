@@ -57,6 +57,15 @@ namespace Web.Controllers
 
                     UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
                     Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
+
+                    if ((user == null) && (admtszh == null))
+                    {
+                        //Пользователь не принадлежайщий никакому ТСЖ  
+                        //т.е не имеющий роли, просто входит
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        return Json(result);
+                    }
+
                     string requestDomain = Request.Headers["host"];
                     if (user != null)
                         uk_u = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
@@ -136,17 +145,11 @@ namespace Web.Controllers
                         }
                         WebSecurity.Logout();
                     }
-                    //Пользователь не принадлежайщий никакому ТСЖ  
-                    //т.е не имеющий роли, просто входит
-
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    return Json(result);
 
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log.Error("Внутренняя ошибка при авторизации пользователя" + model.UserName, ex);
-                    ModelState.AddModelError("", "Внутренняя ошибка при авторизации");
+                    Logger.Log.Error("Внутренняя ошибка при авторизации пользователя" + model.UserName, ex);                  
                 }
 
             }
@@ -223,7 +226,7 @@ namespace Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult LogoOut(string ReturnUrl)
+        public ActionResult LogOut(string ReturnUrl)
         {
             WebSecurity.Logout();
             return new HttpStatusCodeResult(200);
