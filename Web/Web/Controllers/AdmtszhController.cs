@@ -301,6 +301,19 @@ namespace Web.Controllers
             List<Counter_model> model = new List<Counter_model>();
             IEnumerable<Counter> ListCounter = null;
             IEnumerable<Counter_data> ListData = null;
+
+
+            try
+            {
+                Admtszh admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                uk_profile uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
+                users = repository.UserProfile.Where(p => p.id_uk.Equals(uk.id));
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+
             using (var context = new EFDbContext())
             {
                 string u = "";

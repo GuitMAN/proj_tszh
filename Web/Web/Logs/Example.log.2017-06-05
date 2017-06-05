@@ -1,0 +1,160 @@
+2017-06-05 23:45:20,201  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:20,684  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:20,752  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:20,792  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:28,135  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:28,161  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:28,185  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:28,206  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:32,469  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:32,535  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:32,567  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:32,595  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:38,917  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:38,945  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:39,002  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:39,028  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:43,249  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:43,269  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:43,291  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:43,312  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:46,756  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:46,774  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:46,791  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:46,809  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:51,142  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:51,177  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:51,202  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:51,225  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:53,533  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:53,552  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:53,575  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:53,616  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:55,736  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:55,777  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:55,820  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:45:55,843  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:50:48,723  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:50:48,763  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:50:48,802  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:50:48,852  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:52:29,665  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:52:29,690  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:52:29,719  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:52:29,755  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:58:53,084  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:58:53,120  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:58:53,178  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:58:53,200  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:23,929  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:23,974  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:24,076  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:24,160  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:30,000  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:30,026  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:30,051  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:30,070  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:33,668  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:33,712  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:33,736  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:33,764  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:37,210  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:37,229  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:37,246  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:37,264  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:40,375  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:40,401  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:40,591  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:40,634  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:43,569  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:43,746  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:43,875  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:43,900  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:47,068  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:47,090  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:47,112  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:47,135  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:50,692  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:50,760  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:50,789  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
+2017-06-05 23:59:57,001  ERROR (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:386) System.NullReferenceException: Object reference not set to an instance of an object.
+   at Web.Controllers.AdmtszhController.ViewCounters(Int32 month, Int32 year) in C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\AdmtszhController.cs:line 371
