@@ -11,6 +11,8 @@ using System.Web;
 using System.Net;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
+using log4net;
+using Web.Models.Repository;
 
 namespace Web.Filters
 {
@@ -18,6 +20,9 @@ namespace Web.Filters
 
     public class MyAuthorizeAttribute : AuthorizeAttribute
     {
+        Repo repository;
+
+        private static readonly ILog Log = LogManager.GetLogger("LOGGER");
 
         private string[] allowedUsers = new string[] { };
         private string[] allowedRoles = new string[] { };
@@ -79,23 +84,70 @@ namespace Web.Filters
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            AuthorizeCore(filterContext.HttpContext);
+            repository = new Repo();
+            bool isAuth = AuthorizeCore(filterContext.HttpContext);
+
+            Admtszh admuser;
+            uk_profile uk;
+            UserProfile user;
             if (Role(filterContext.HttpContext))
             {
-                //if (!AuthorizeCore(filterContext.HttpContext))
-                //{
-                //    filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
-                //}
+                string requestDomain = filterContext.HttpContext.Request.Headers["host"];
+                if (Roles.Equals("Moder"))
+                {
+                    try
+                    {
+                        admuser = repository.Admtszh.Where(p => p.AdmtszhId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                        uk = repository.uk_profile.Where(p => p.id.Equals(admuser.id_uk)).SingleOrDefault();
+                        if (uk.host.Equals(requestDomain))
+                        {
+
+                        }
+                        else
+                        {
+                            filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Fatal("OnAuthorization: Отсутствует профиль модератора " + WebSecurity.CurrentUserName);
+                        filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
+                    }
+
+                }
+                if (Roles.Equals("User"))
+                {
+                    try
+                    {
+                        user = repository.UserProfile.Where(p => p.UserId.Equals(WebSecurity.CurrentUserId)).SingleOrDefault();
+                        uk = repository.uk_profile.Where(p => p.id == user.id_uk).SingleOrDefault();
+                        if (uk.host.Equals(requestDomain))
+                        {
+
+                        }
+                        else
+                        {
+                            filterContext.Result = new HttpStatusCodeResult(403, "Authorize Error");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Fatal("OnAuthorization: Отсутствует профиль пользователя " + WebSecurity.CurrentUserName);
+                        filterContext.Result = new ViewResult { ViewName = "~/Views/home/no_uk_tpl.cshtml" };
+                    }
+                }
             }
             else
             {
                 if (isRequareRole("User"))
                 {
                     filterContext.Result = new ViewResult { ViewName = "~/Views/home/no_uk_tpl.cshtml" };
-                }
-                if (isRequareRole("Moder"))
+                    return;
+                }  
+                if 
+                    (isRequareRole("Moder"))
                 {
-                    filterContext.Result = new ViewResult { ViewName = "~/Views/home/new_editprof_tpl.cshtml" };
+                    filterContext.Result = new ViewResult { ViewName = "~/Views/home/new_operprof_tpl.cshtml" };
                 }
                 else
                 {
@@ -103,10 +155,7 @@ namespace Web.Filters
                 }
             }
         }
-
-    }
-
-
+    } 
 
 
 

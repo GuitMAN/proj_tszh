@@ -10,7 +10,9 @@ using Web.Models;
 using Web.Models.Repository;
 using System.Net;
 using System.Net.Mail;
-//using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
+using log4net;
+using System.Collections.Generic;
 
 namespace Web.Controllers
 {
@@ -19,6 +21,8 @@ namespace Web.Controllers
     public class LoginController : Controller
     {
         Repo repository;
+        private static readonly ILog Log = LogManager.GetLogger("LOGGER");
+
         public LoginController()
         {
             repository = new Repo();
@@ -37,115 +41,119 @@ namespace Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
- //       [ValidateJsonAntiForgeryToken]
+        //       [ValidateJsonAntiForgeryToken]
         public ActionResult Index(LoginModel model)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
-                
-                uk_profile uk = null;
+
+                uk_profile uk_u = null;
+                uk_profile uk_a = null;
                 try
                 {
                     Account_model result = new Account_model();
                     result.id = WebSecurity.GetUserId(model.UserName);
                     result.Login = model.UserName;
-                    result.Roles = Roles.GetRolesForUser(model.UserName);
-                    string requestDomain = Request.Headers["host"];
 
-                    foreach (var role in result.Roles)
+                    UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
+                    Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
+
+                    if ((user == null) && (admtszh == null))
                     {
-                        if (role.Equals("User"))
-                        {
-                            UserProfile user = repository.UserProfile.Where(p => p.UserId.Equals(result.id)).SingleOrDefault();
-                            if (user != null)
-                            {
-                                uk = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
+                        //Пользователь не принадлежайщий никакому ТСЖ  
+                        //т.е не имеющий роли, просто входит
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        return Json(result);
+                    }
 
-                                if (requestDomain.Equals(uk.host))
-                                {
-                                    //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                    return Json(result);
-                                    //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
-                                }
-                                else
-                                {
-                                    //User have no current direct company
-                                    //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                                    WebSecurity.Logout();
-                                    return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
-                                }
+                    string requestDomain = Request.Headers["host"];
+                    if (user != null)
+                        uk_u = repository.uk_profile.Where(p => p.id.Equals(user.id_uk)).SingleOrDefault();
+                    if (admtszh != null)
+                        uk_a = repository.uk_profile.Where(p => p.id.Equals(admtszh.id_uk)).SingleOrDefault();
+                    //Если пользователь имеет несколько ролей в разных ТСЖ
+                    var myList = new List<string>();
+                    foreach (var role in Roles.GetRolesForUser(model.UserName))
+                    {
+                        if (user != null) {
+                            if (requestDomain.Equals(uk_u.host) && role.Equals("User"))
+                            {
+                                myList.Add(role);
                             }
                         }
-                        if (role.Equals("Moder"))
-                        {
-                             Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
-                            if (admtszh != null)
+                        if (admtszh != null) {
+                            if (requestDomain.Equals(uk_a.host) && role.Equals("Moder"))
                             {
-                                uk = repository.uk_profile.Where(p => p.id.Equals(admtszh.id_uk)).SingleOrDefault();
-
-                                if (requestDomain.Equals(uk.host))
-                                {
-                                    //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                    return Json(result);
-                                    //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
-                                }
-                                else
-                                {
-                                    //User have no current direct company
-                                    //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                                    WebSecurity.Logout();
-                                    return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
-
-                                }
-
+                                myList.Add(role);
                             }
-                      
-                        }
-                        if (role.Equals("Admin"))
-                        {
-                            Admtszh admtszh = repository.Admtszh.Where(p => p.AdmtszhId.Equals(result.id)).SingleOrDefault();
-                            if (admtszh != null)
-                            {
-                                uk = repository.uk_profile.Where(p => p.id.Equals(admtszh.id_uk)).SingleOrDefault();
-
-                                if (requestDomain.Equals(uk.host))
-                                {
-                                    //User have direct company
-                                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                                    return Json(result);
-                                    //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
-                                }
-                                else
-                                {
-                                    //User have no current direct company
-                                    //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
-                                    WebSecurity.Logout();
-                                    return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
-
-                                }
-
-                            }
-
                         }
                     }
 
-                    //Пользователь не принадлежайщий никакому ТСЖ  
-                    //т.е не имеющий роли, просто входит
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    return Json(result);
+                    result.Roles = myList.ToArray();
+
+                    if (result.Roles.Count() >0) {
+                        foreach (var role in result.Roles)
+                        {
+                            if (role.Equals("User"))
+                            {
+                                if (user != null)
+                                {
+                                    if (requestDomain.Equals(uk_u.host))
+                                    {
+                                        //User have direct company
+                                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                        return Json(result);
+                                    }
+                                    else
+                                    {
+                                        //User have no current direct company
+                                        //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                                        //WebSecurity.Logout();
+                                        return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
+                                    }
+                                }
+                            }
+                            if (role.Equals("Moder"))
+                            {
+                                if (admtszh != null)
+                                {
+                                    if (requestDomain.Equals(uk_a.host))
+                                    {
+                                        //User have direct company
+                                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                        return Json(result);
+                                        //        return new HttpStatusCodeResult(200, "{id:"+ WebSecurity.CurrentUserId.ToString() + "}");
+                                    }
+                                    else
+                                    {
+                                        //User have no current direct company
+                                        //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
+                                        //
+                                        return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
+
+                                    }
+
+                                }
+
+                            }
+                            if (role.Equals("Admin"))
+                            {
+                                //Админов просто авторизовать
+                                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                                return Json(result);
+                            }
+                        }
+                        WebSecurity.Logout();
+                    }
 
                 }
                 catch (Exception ex)
                 {
-                    Logger.Log.Error("Внутренняя ошибка при авторизации польз" + model.UserName, ex);
-                    ModelState.AddModelError("", "Внутренняя ошибка при авторизации");
+                    Logger.Log.Error("Внутренняя ошибка при авторизации пользователя" + model.UserName, ex);                  
                 }
-                
+
             }
-            ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");        
-            return Json(new string[] { "Error", "Имя пользователя или пароль указаны неверно." }); 
+            return Json(new string[] { "Error", "Имя пользователя или пароль указаны неверно." });
         }
 
         [HttpGet]
@@ -218,7 +226,7 @@ namespace Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult LogoOut(string ReturnUrl)
+        public ActionResult LogOut(string ReturnUrl)
         {
             WebSecurity.Logout();
             return new HttpStatusCodeResult(200);
@@ -417,9 +425,9 @@ namespace Web.Controllers
             return Json(new string[] { "Error", "Пароль изменить не удалось." });
         }
 
-        public string Error_401()
+        public string Error_401(string str ="Доступ запрещен")
         {
-            return "Доступ запрещен!!! Пшел вон";
+            return str;
         }
         
         #region Вспомогательные методы
@@ -554,8 +562,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                Utils.Log.Write(ex);
-                //ModelState.AddModelError("City", "УК или ТСЖ не найдена");
+                Log.Error("Не удалось отправить письмо на адрес " + mailto, ex);
             }
         }
 

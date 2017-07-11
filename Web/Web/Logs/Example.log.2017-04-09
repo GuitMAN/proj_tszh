@@ -1,0 +1,9 @@
+2017-04-09 21:18:26,799  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:18:32,095  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:19:07,488  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:19:49,445  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:20:18,435  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:21:42,362  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:26:37,381  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:29:31,645  FATAL (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Filters\InitializeMembershipAttribute.cs:135) OnAuthorization: Отсутствует профиль пользователя test
+2017-04-09 21:55:22,619  WARN  (C:\Users\User\Source\Repos\proj_tszh\Web\Web\Controllers\HomeController.cs:100) Профиль пользователя test уже создан

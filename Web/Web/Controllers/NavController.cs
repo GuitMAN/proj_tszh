@@ -7,7 +7,9 @@ using System.Web.Mvc;
 using System.Data;
 //using Web.Models;
 using Web.Models.Repository;
-
+using Web.Models;
+using WebMatrix.WebData;
+using Web.Filters;
 
 namespace Web.Controllers
 {
@@ -55,6 +57,8 @@ namespace Web.Controllers
             return PartialView(categories);
         }
 
+
+        
         public PartialViewResult menu_moder()
         {
             return PartialView();
