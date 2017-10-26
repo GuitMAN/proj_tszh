@@ -50,7 +50,6 @@ namespace Web.Controllers
 
 
 
-        [Authorize]
         [MyAuthorize(Roles = "User")]
         public ActionResult profile(string returnUrl)
         {

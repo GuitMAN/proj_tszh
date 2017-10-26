@@ -130,7 +130,6 @@ namespace Web.Controllers
                                         //TempData["message"] = string.Format("Хост: \"{0}\" ", requestDomain);
                                         //
                                         return Json(new string[] { "Error", "Имя пользователя или пароль не принадлежат данному домену" });
-
                                     }
 
                                 }

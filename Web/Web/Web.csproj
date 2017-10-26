@@ -258,11 +258,6 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <None Include="Properties\PublishProfiles\mytsn.ru - Web Deploy %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\mytsn.ru - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\мое-тсж.рф - Web Deploy.pubxml">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Scripts\angular-1.5.6\angular-animate.js" />
     <Content Include="Scripts\angular-1.5.6\angular-animate.min.js" />
     <Content Include="Scripts\angular-1.5.6\angular-aria.js" />
@@ -1230,6 +1225,7 @@
     <Content Include="Scripts\angular-1.5.6\errors.json" />
     <Content Include="Scripts\angular-1.5.6\version.json" />
     <Content Include="Views\Admtszh\templ_test.cshtml" />
+    <None Include="Properties\PublishProfiles\mytsn.ru - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
